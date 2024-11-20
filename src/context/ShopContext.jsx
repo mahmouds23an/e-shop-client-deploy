@@ -60,9 +60,7 @@ const ShopContextProvider = (props) => {
       return;
     }
     if (cartItems[itemId] && cartItems[itemId][size]) {
-      toast.error(
-        "This selected size from this product is already in the cart"
-      );
+      toast.error("Already added");
       return;
     }
     let cartData = structuredClone(cartItems || {});
@@ -73,7 +71,6 @@ const ShopContextProvider = (props) => {
       cartData[itemId] = { [size]: 1 };
     }
     setCartItems(cartData);
-    toast.success("Product added to cart");
 
     setShowCartDropdown(true);
     setTimeout(() => setShowCartDropdown(false), 6000);

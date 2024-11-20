@@ -38,7 +38,8 @@ const CartDropdown = ({ show }) => {
 
   return (
     <div
-      className={`absolute right-0 z-50 border border-black -mt-2 w-80 bg-white shadow-lg rounded-lg p-4 transition-transform duration-300 transform ${
+      className={`absolute right-0 z-50 border border-black -mt-2 md:-mr-1 -mr-3 w-80 bg-white shadow-lg rounded-lg 
+        p-4 transition-transform duration-300 transform ${
         show ? "translate-y-0 opacity-100" : "-translate-y-4 opacity-0"
       }`}
       style={{ maxHeight: "300px", overflowY: "auto" }}

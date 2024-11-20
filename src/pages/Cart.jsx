@@ -94,13 +94,13 @@ const Cart = () => {
           <div className="mt-4">
             <Link
               to="/"
-              className="bg-white text-black hover:bg-black hover:text-white px-4 py-2 rounded-md transition duration-300 mr-2"
+              className="bg-white border border-gray-400 text-black hover:bg-black hover:text-white px-4 py-2 rounded-md transition duration-300 mr-2"
             >
               Home
             </Link>
             <Link
               to="/collection"
-              className="bg-white text-black hover:bg-black hover:text-white px-4 py-2 rounded-md transition duration-300"
+              className="bg-white border border-gray-400 text-black hover:bg-black hover:text-white px-4 py-2 rounded-md transition duration-300"
             >
               Collection
             </Link>

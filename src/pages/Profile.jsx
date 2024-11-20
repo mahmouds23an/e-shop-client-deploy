@@ -98,9 +98,10 @@ const Profile = () => {
           {currentOrders.map((order) => (
             <div
               key={order._id}
-              className="flex justify-between items-center p-4 border border-gray-400 rounded-md hover:bg-gray-50 transition"
+              className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 border border-gray-400 
+              rounded-md hover:bg-gray-50 transition"
             >
-              <div>
+              <div className="mb-4 sm:mb-0">
                 <p className="text-lg font-medium">Order #{order._id}</p>
                 <p className="text-sm text-gray-500">
                   Status: {order?.status || "Pending"}
@@ -112,7 +113,8 @@ const Profile = () => {
               </div>
               <Link
                 to={`/orders/${order._id}`}
-                className="text-blue-500 hover:underline"
+                className="text-blue-500 px-4 py-2 rounded-md border border-gray-400 
+                sm:ml-4 sm:self-start sm:w-auto w-full text-center hover:bg-black hover:text-white transition duration-300"
               >
                 View Details &rarr;
               </Link>
@@ -128,9 +130,9 @@ const Profile = () => {
               onClick={() => handlePageChange(index + 1)}
               className={`px-4 py-2 rounded-md ${
                 currentPage === index + 1
-                  ? "bg-blue-500 text-white"
-                  : "bg-gray-200 text-gray-700"
-              } hover:bg-blue-400 transition`}
+                  ? "bg-black text-white"
+                  : "bg-white text-black border border-gray-400"
+              } hover:bg-black hover:text-white transition duration-300`}
             >
               {index + 1}
             </button>
@@ -147,20 +149,21 @@ const Profile = () => {
           {currentReviews.map((review) => (
             <div
               key={review._id}
-              className="flex justify-between items-center p-4 border border-gray-400 rounded-md"
+              className="flex justify-between items-center p-4 border border-gray-400 rounded-md w-full"
             >
-              <div>
-                <p className="text-lg font-medium">
+              <div className="w-full">
+                <p className="text-lg font-medium truncate">
                   {review.productId?.name || "Unknown Product"}
                 </p>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-gray-500 truncate">
                   Rating: {review.rating} ★
                 </p>
-                <p className="text-sm mt-1">{review.comment}</p>
+                <p className="text-sm mt-1 break-words">{review.comment}</p>
               </div>
             </div>
           ))}
         </div>
+
         <div className="mt-4 flex justify-center space-x-2">
           {Array.from({ length: totalReviewPages }, (_, index) => (
             <button
@@ -168,9 +171,9 @@ const Profile = () => {
               onClick={() => handleReviewPageChange(index + 1)}
               className={`px-4 py-2 rounded-md ${
                 currentReviewPage === index + 1
-                  ? "bg-blue-500 text-white"
-                  : "bg-gray-200 text-gray-700"
-              } hover:bg-blue-400 transition`}
+                  ? "bg-black text-white"
+                  : "bg-white text-black border border-gray-400"
+              } hover:bg-black hover:text-white transition duration-300`}
             >
               {index + 1}
             </button>
