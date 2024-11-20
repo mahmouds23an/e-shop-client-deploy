@@ -1,0 +1,161 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Prata&display=swap");
+
+.prata-regular {
+  font-family: "Prata", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+* {
+  font-family: Outfit;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+a.active hr {
+  display: block;
+}
+
+a.active {
+  color: black;
+}
+
+.single-line {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scroll {
+  overflow: hidden;
+}
+
+.currency {
+  margin-left: 4px;
+  font-size: small;
+  color: gray;
+}
+
+.cart-dropdown {
+  transition: transform 0.3s ease;
+  transform: translateY(-20px);
+  opacity: 0;
+}
+.cart-dropdown.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.navbar-dropdown {
+  display: none;
+  position: absolute;
+  background-color: white;
+  min-width: 200px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.navbar-item:hover .navbar-dropdown {
+  display: block;
+  opacity: 1;
+  visibility: visible;
+}
+
+.navbar-item {
+  position: relative;
+}
+
+.navbar-item:hover .navbar-dropdown {
+  transition-delay: 0.3s;
+}
+
+.dropdown-toggle {
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.dropdown-toggle .down-arrow {
+  margin-left: 5px;
+}
+
+.navbar-dropdown ul {
+  list-style: none;
+  padding: 0;
+}
+
+.navbar-dropdown li {
+  padding: 5px;
+}
+
+.navbar-dropdown li a {
+  text-decoration: none;
+  color: #333;
+}
+
+.navbar-dropdown {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 640px) {
+  a.active {
+    background-color: black;
+    color: white;
+  }
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.product-name {
+  font-size: 2rem;
+  line-height: 1.2;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+}
+
+.product-description {
+  font-size: 1.2rem;
+  line-height: 1.5;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+}
+
+.sticky-navbar {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: white;
+}
