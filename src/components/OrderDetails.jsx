@@ -109,14 +109,17 @@ const OrderDetails = () => {
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <div className="ml-4 flex-1">
-                  <p className="text-lg font-medium text-gray-700">
+                <div className="ml-4 flex-1 w-full">
+                  <p className="text-lg font-medium text-gray-700 truncate max-w-[180px] md:max-w-full">
                     {item.name}
                   </p>
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-gray-500 truncate">
                     Quantity: {item.quantity}
                   </p>
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-gray-500 truncate">
+                    Size: {item.size}
+                  </p>
+                  <p className="text-sm text-gray-500 truncate">
                     Price: {item.price.toFixed(2)}
                     <span className="currency">{currency}</span>
                   </p>

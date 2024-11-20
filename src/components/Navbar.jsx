@@ -93,7 +93,7 @@ const Navbar = () => {
         </NavLink>
       </ul>
       {token ? (
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-6 -mr-14 md:-mr-0">
           <div className="relative" ref={profileDropdownRef}>
             <div className="flex items-center gap-2">
               <img
