@@ -94,10 +94,7 @@ const Profile = () => {
 
       if (response.data.success) {
         toast.success("Profile updated successfully!");
-        setCurrentUser({
-          ...currentUser,
-          ...response.data.updatedUser,
-        });
+        setCurrentUser(response.data.updatedUser);
         setIsEditModalOpen(false);
       } else {
         toast.error(response.data.message);
@@ -186,7 +183,7 @@ const Profile = () => {
               <label className="block text-sm font-medium mb-1">
                 Profile Picture
               </label>
-              <input type="file" onChange={handleImageUpload} />
+              <input type="file" name="image" onChange={handleImageUpload} />
               {previewImage && (
                 <img
                   src={previewImage}
