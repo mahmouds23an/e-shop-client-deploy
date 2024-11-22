@@ -94,7 +94,12 @@ const Profile = () => {
 
       if (response.data.success) {
         toast.success("Profile updated successfully!");
-        setCurrentUser(response.data.updatedUser);
+        setCurrentUser((prevUser) => ({
+          ...prevUser,
+          name: updatedName,
+          email: updatedEmail,
+          image: response.data.updatedUser?.image || prevUser.image,
+        }));
         setIsEditModalOpen(false);
       } else {
         toast.error(response.data.message);
