@@ -7,11 +7,25 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const Profile = () => {
-  const { currentUser, token, backendUrl, currency, currentUserReviews } =
-    useContext(ShopContext);
+  const {
+    currentUser,
+    setCurrentUser,
+    token,
+    backendUrl,
+    currency,
+    currentUserReviews,
+  } = useContext(ShopContext);
   const [orderData, setOrderData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [currentReviewPage, setCurrentReviewPage] = useState(1);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [updatedName, setUpdatedName] = useState(currentUser?.name || "");
+  const [updatedEmail, setUpdatedEmail] = useState(currentUser?.email || "");
+  const [profilePicture, setProfilePicture] = useState(
+    currentUser?.image || ""
+  );
+  const [previewImage, setPreviewImage] = useState(null);
+
   const ordersPerPage = 3;
   const reviewsPerPage = 3;
 
@@ -47,6 +61,56 @@ const Profile = () => {
     setCurrentReviewPage(page);
   };
 
+  const handleEditProfile = () => {
+    setUpdatedName(currentUser?.name || "");
+    setUpdatedEmail(currentUser?.email || "");
+    setPreviewImage(currentUser?.image || "");
+    setIsEditModalOpen(true);
+  };
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setProfilePicture(file);
+      setPreviewImage(URL.createObjectURL(file));
+    }
+  };
+
+  const handleUpdateProfile = async () => {
+    if (!token) return;
+
+    try {
+      const formData = new FormData();
+      formData.append("name", updatedName);
+      formData.append("email", updatedEmail);
+      if (profilePicture && typeof profilePicture !== "string") {
+        formData.append("image", profilePicture);
+      }
+      const response = await axios.post(
+        `${backendUrl}/api/user/update-profile`,
+        formData,
+        { headers: { token } }
+      );
+
+      if (response.data.success) {
+        toast.success("Profile updated successfully!");
+        setCurrentUser({
+          ...currentUser,
+          ...response.data.updatedUser,
+        });
+        setIsEditModalOpen(false);
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  const handleCloseModal = () => {
+    setIsEditModalOpen(false);
+  };
+
   // Pagination logic
   const indexOfLastOrder = currentPage * ordersPerPage;
   const indexOfLastReview = currentReviewPage * reviewsPerPage;
@@ -66,14 +130,18 @@ const Profile = () => {
     return <UnAuthorized />;
   }
 
+  console.log(currentUser);
+
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       {/* User Information */}
       <div className="bg-white shadow rounded-lg p-6 mb-8 border border-gray-400">
         <div className="flex items-center gap-6">
-          <div className="w-20 h-20 rounded-full bg-gray-300 flex items-center justify-center text-gray-600 ">
-            {currentUser?.name?.[0]?.toUpperCase() || "U"}
-          </div>
+          <img
+            src={currentUser?.image || ""}
+            alt="Profile"
+            className="w-20 h-20 rounded-full object-cover"
+          />
           <div>
             <h2 className="text-2xl font-bold">
               {currentUser?.name || "User"}
@@ -82,7 +150,7 @@ const Profile = () => {
               {currentUser?.email || "user@example.com"}
             </p>
             <button
-              onClick={() => alert("Edit profile feature coming soon!")}
+              onClick={handleEditProfile}
               className="mt-2 text-sm text-blue-500 hover:underline"
             >
               Edit Profile
@@ -90,6 +158,60 @@ const Profile = () => {
           </div>
         </div>
       </div>
+
+      {/* Edit Profile Modal */}
+      {isEditModalOpen && (
+        <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-50">
+          <div className="bg-white rounded-lg p-6 w-full max-w-md">
+            <h3 className="text-xl font-semibold mb-4">Edit Profile</h3>
+            <div className="mb-4">
+              <label className="block text-sm font-medium mb-1">Name</label>
+              <input
+                type="text"
+                value={updatedName}
+                onChange={(e) => setUpdatedName(e.target.value)}
+                className="w-full px-4 py-2 border rounded-md"
+              />
+            </div>
+            <div className="mb-4">
+              <label className="block text-sm font-medium mb-1">Email</label>
+              <input
+                type="email"
+                value={updatedEmail}
+                onChange={(e) => setUpdatedEmail(e.target.value)}
+                className="w-full px-4 py-2 border rounded-md"
+              />
+            </div>
+            <div className="mb-4">
+              <label className="block text-sm font-medium mb-1">
+                Profile Picture
+              </label>
+              <input type="file" onChange={handleImageUpload} />
+              {previewImage && (
+                <img
+                  src={previewImage}
+                  alt="Preview"
+                  className="w-20 h-20 rounded-full mt-4 object-cover"
+                />
+              )}
+            </div>
+            <div className="flex justify-end space-x-2">
+              <button
+                onClick={handleCloseModal}
+                className="px-4 py-2 bg-gray-300 rounded-md"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleUpdateProfile}
+                className="px-4 py-2 bg-blue-500 text-white rounded-md"
+              >
+                Save Changes
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Order Tracking */}
       <div className="bg-white shadow rounded-lg p-6 mb-8 border border-gray-400">
