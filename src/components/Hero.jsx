@@ -38,7 +38,7 @@ const Hero = () => {
   useEffect(() => {
     const intervalId = setInterval(() => {
       changeEvent((currentEventIndex + 1) % events.length);
-    }, 10000); 
+    }, 10000);
 
     return () => clearInterval(intervalId);
   }, [events, currentEventIndex]);
@@ -97,15 +97,12 @@ const Hero = () => {
   const currentEvent = events[currentEventIndex];
 
   return (
-    <div className="flex flex-col sm:flex-row border border-gray-400 h-[700px] w-full sm:h-[600px] relative overflow-hidden">
+    <div className="flex flex-col sm:flex-row border border-gray-300 h-[700px] w-full sm:h-[600px] relative overflow-hidden bg-white shadow-lg rounded-lg">
       {/* Hero Left */}
-      <div
-        className="w-full flex-col sm:w-1/2 h-[400px] md:h-auto flex items-center 
-      justify-center py-10 sm:py-0 relative"
-      >
-        <div className="text-[#414141] transition-opacity duration-500">
+      <div className="w-full sm:w-1/2 h-[400px] md:h-auto flex flex-col items-center justify-center py-10 sm:py-0 relative bg-gradient-to-r from-gray-100 to-gray-200">
+        <div className="text-gray-800 transition-opacity duration-500">
           <div className="flex items-center gap-2">
-            <p className="w-8 md:w-11 h-[2px] bg-[#414141]"></p>
+            <p className="w-8 md:w-11 h-[2px] bg-gray-800"></p>
             <h1 className="prata-regular text-3xl sm:py-3 lg:text-5xl leading-relaxed">
               {currentEvent.title}
             </h1>
@@ -113,11 +110,11 @@ const Hero = () => {
           <p className="font-medium text-sm md:text-base">
             {currentEvent.description}
           </p>
-          <div className="flex items-center gap-2">
-            <button className="prata-regular text-3xl sm:py-3 lg:text-5xl leading-relaxed">
+          <div className="flex items-center gap-2 mt-4">
+            <button className="prata-regular text-3xl sm:py-3 lg:text-5xl leading-relaxed bg-gray-800 text-white px-4 py-2 rounded-md shadow hover:bg-gray-700 transition">
               {currentEvent.linkText || "SHOP NOW"}
             </button>
-            <p className="w-8 md:w-11 h-[2px] bg-[#414141]"></p>
+            <p className="w-8 md:w-11 h-[2px] bg-gray-800"></p>
           </div>
         </div>
 
@@ -128,7 +125,7 @@ const Hero = () => {
               {timers[currentEventIndex].split(" ").map((part, index) => (
                 <div
                   key={index}
-                  className="bg-black text-white px-2 py-1 rounded-md font-medium text-center"
+                  className="bg-gray-800 text-white px-2 py-1 rounded-md font-medium text-center"
                 >
                   {part}
                 </div>
@@ -144,7 +141,7 @@ const Hero = () => {
               key={index}
               onClick={() => changeEvent(index)} // Change event on dot click
               className={`w-3 h-3 rounded-full cursor-pointer transition-all duration-300 ${
-                index === currentEventIndex ? "bg-black" : "bg-gray-400"
+                index === currentEventIndex ? "bg-gray-800" : "bg-gray-400"
               }`}
             ></div>
           ))}
@@ -153,23 +150,23 @@ const Hero = () => {
 
       {/* Hero Right */}
       <img
-        className={`w-full sm:w-1/2 h-full object-cover transition-opacity duration-500`}
+        className="w-full sm:w-1/2 h-full object-cover transition-opacity duration-500 rounded-r-lg"
         src={currentEvent.imageUrl}
         alt="Event"
       />
 
       {/* Arrows */}
       <button
-        className="absolute left-14 top-8 transform md:px-2 py-0.5 -translate-y-1/2 
-        bg-white text-black border text-xl rounded-full p-2 shadow hover:opacity-70 transition"
+        className="absolute left-14 top-7 transform -translate-y-1/2 bg-white text-gray-800 border text-xl rounded-full p-2 shadow hover:opacity-70 transition"
         onClick={() => changeEvent((currentEventIndex + 1) % events.length)}
       >
         &gt; {/* Right Arrow Icon */}
       </button>
       <button
-        className="absolute left-4 top-8 transform -translate-y-1/2 bg-white border text-xl 
-        md:px-2 py-0.5 text-black rounded-full p-2 shadow hover:opacity-70 transition"
-        onClick={() => changeEvent((currentEventIndex - 1 + events.length) % events.length)}
+        className="absolute left-4 top-7 transform -translate-y-1/2 bg-white border text-xl text-gray-800 rounded-full p-2 shadow hover:opacity-70 transition"
+        onClick={() =>
+          changeEvent((currentEventIndex - 1 + events.length) % events.length)
+        }
       >
         &lt; {/* Left Arrow Icon */}
       </button>
