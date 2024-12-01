@@ -300,6 +300,7 @@ const Product = () => {
           <div className="mt-3 border border-gray-100 rounded-lg">
             {Array.isArray(reviews) && reviews.length > 0 ? (
               reviews.map((review) => (
+                console.log(review),
                 <div
                   key={review._id}
                   className="bg-white flex justify-between items-center p-3 rounded-lg shadow-md border mb-4 border-gray-300"
@@ -307,15 +308,15 @@ const Product = () => {
                   <div className="flex items-center gap-4">
                     {/* User Profile Picture */}
                     <div>
-                      {review.userId.profilePic ? (
+                      {review.userId?.profilePicture ? (
                         <img
-                          src={review.userId.profilePic}
-                          alt={`${review.userId.name}'s profile`}
-                          className="md:w-16 w-10 md:h-16 h-10 rounded-full object-cover"
+                          src={review.userId?.profilePicture}
+                          alt={`${review.userId?.firstName}'s profile`}
+                          className="md:w-16 w-10 md:h-16 h-10 rounded-full object-fill"
                         />
                       ) : (
                         <div className="md:w-16 w-10 md:h-16 h-10 rounded-full bg-gray-300 flex items-center justify-center text-gray-600">
-                          {review.userId.name[0]}
+                          {review.userId?.firstName}
                         </div>
                       )}
                     </div>
@@ -326,7 +327,7 @@ const Product = () => {
                           <p className="text-lg font-semibold">
                             {currentUser?._id === review.userId?._id
                               ? "Your review"
-                              : review.userId.name}
+                              : review.userId.firstName}
                           </p>
                           <p className="text-gray-500 text-xs">
                             ({new Date(review.createdAt).toDateString()})

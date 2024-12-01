@@ -5,6 +5,13 @@ import { Link } from "react-router-dom";
 import UnAuthorized from "../components/UnAuthorized";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { Upload, X, Star, Package, ChevronRight } from "lucide-react";
+
+const LoadingSpinner = () => (
+  <div className="flex justify-center items-center">
+    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+  </div>
+);
 
 const Profile = () => {
   const {
@@ -15,10 +22,12 @@ const Profile = () => {
     currency,
     currentUserReviews,
   } = useContext(ShopContext);
+
   const [orderData, setOrderData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [currentReviewPage, setCurrentReviewPage] = useState(1);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [updatedFirstName, setUpdatedFirstName] = useState(
     currentUser?.firstName || ""
   );
@@ -36,14 +45,12 @@ const Profile = () => {
 
   const loadOrdersData = async () => {
     if (!token) return;
-
     try {
       const response = await axios.post(
         `${backendUrl}/api/order/user-orders`,
         {},
         { headers: { token } }
       );
-
       if (response.data.success) {
         setOrderData(response.data.orders.reverse());
       } else {
@@ -58,13 +65,8 @@ const Profile = () => {
     loadOrdersData();
   }, [token]);
 
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
-
-  const handleReviewPageChange = (page) => {
-    setCurrentReviewPage(page);
-  };
+  const handlePageChange = (page) => setCurrentPage(page);
+  const handleReviewPageChange = (page) => setCurrentReviewPage(page);
 
   const handleEditProfile = () => {
     setUpdatedFirstName(currentUser?.firstName || "");
@@ -84,14 +86,14 @@ const Profile = () => {
 
   const handleUpdateProfile = async () => {
     if (!token) return;
-
+    setIsLoading(true);
     try {
       const formData = new FormData();
       formData.append("firstName", updatedFirstName);
       formData.append("lastName", updatedLastName);
       formData.append("email", updatedEmail);
       if (profilePicture && typeof profilePicture !== "string") {
-        formData.append("image", profilePicture);
+        formData.append("profilePicture", profilePicture);
       }
       const response = await axios.post(
         `${backendUrl}/api/user/update-profile`,
@@ -114,11 +116,9 @@ const Profile = () => {
       }
     } catch (error) {
       toast.error(error.message);
+    } finally {
+      setIsLoading(false);
     }
-  };
-
-  const handleCloseModal = () => {
-    setIsEditModalOpen(false);
   };
 
   // Pagination logic
@@ -136,191 +136,267 @@ const Profile = () => {
     currentUserReviews.length / reviewsPerPage
   );
 
-  if (!token) {
-    return <UnAuthorized />;
-  }
+  if (!token) return <UnAuthorized />;
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      {/* User Information */}
-      <div className="bg-white shadow rounded-lg p-6 mb-8 border border-gray-400">
-        <div className="flex items-center gap-6">
-          <img
-            src={currentUser?.image || ""}
-            alt="Profile"
-            className="w-20 h-20 rounded-full object-cover"
-          />
-          <div>
-            <h2 className="text-2xl font-bold">
-              {currentUser?.firstName + " " + currentUser?.lastName || "User"}
-            </h2>
-            <p className="text-gray-500">
-              {currentUser?.email || "user@example.com"}
-            </p>
+    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto space-y-8">
+        {/* Profile Header */}
+        <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+          <div className="relative h-20 bg-gradient-to-r from-blue-500 to-purple-600">
+            <div className="absolute -bottom-16 left-8">
+              <div className="relative group">
+                <img
+                  src={
+                    currentUser?.profilePicture ||
+                    "https://via.placeholder.com/150"
+                  }
+                  alt="Profile"
+                  className="w-32 h-32 rounded-full border-4 border-white shadow-lg object-fill"
+                />
+                <button
+                  onClick={handleEditProfile}
+                  className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-full 
+                  opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                >
+                  <Upload className="w-8 h-8 text-white" />
+                </button>
+              </div>
+            </div>
+          </div>
+
+
+          
+          <div className="pt-20 pb-6 px-8">
+            <h1 className="text-3xl font-bold text-gray-900">
+              {currentUser?.firstName} {currentUser?.lastName}
+            </h1>
+            <p className="text-gray-600 mt-1">{currentUser?.email}</p>
             <button
               onClick={handleEditProfile}
-              className="mt-2 text-sm text-blue-500 hover:underline"
+              className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300"
             >
               Edit Profile
             </button>
+          </div>
+        </div>
+
+        {/* Orders Section */}
+        <div className="bg-white rounded-2xl shadow-xl p-8">
+          <div className="flex items-center mb-6">
+            <Package className="w-6 h-6 text-blue-600 mr-2" />
+            <h2 className="text-2xl font-bold text-gray-900">Your Orders</h2>
+          </div>
+          <div className="space-y-4">
+            {currentOrders.map((order) => (
+              <div
+                key={order._id}
+                className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-6 bg-gray-50 rounded-xl hover:bg-gray-100 transition duration-300"
+              >
+                <div className="flex-grow">
+                  <p className="text-lg font-semibold text-gray-900">
+                    Order #{order._id}
+                  </p>
+                  <div className="mt-2 space-y-1">
+                    <p className="text-sm text-gray-600">
+                      Status:{" "}
+                      <span className="font-medium">
+                        {order?.status || "Pending"}
+                      </span>
+                    </p>
+                    <p className="text-sm text-gray-600">
+                      Total:{" "}
+                      <span className="font-medium">
+                        {order.amount.toFixed(2)} {currency}
+                      </span>
+                    </p>
+                  </div>
+                </div>
+                <Link
+                  to={`/orders/${order._id}`}
+                  className="mt-4 sm:mt-0 group flex items-center px-6 py-3 bg-white rounded-lg border border-gray-200 hover:border-blue-500 transition duration-300"
+                >
+                  <span className="text-gray-700 group-hover:text-blue-600">
+                    View Details
+                  </span>
+                  <ChevronRight className="ml-2 w-4 h-4 text-gray-400 group-hover:text-blue-600" />
+                </Link>
+              </div>
+            ))}
+          </div>
+
+          {/* Orders Pagination */}
+          <div className="flex justify-center mt-8 space-x-2">
+            {Array.from({ length: totalPages }, (_, index) => (
+              <button
+                key={index + 1}
+                onClick={() => handlePageChange(index + 1)}
+                className={`px-4 py-2 rounded-lg transition duration-300 ${
+                  currentPage === index + 1
+                    ? "bg-blue-600 text-white"
+                    : "bg-white text-gray-700 border border-gray-200 hover:border-blue-500"
+                }`}
+              >
+                {index + 1}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Reviews Section */}
+        <div className="bg-white rounded-2xl shadow-xl p-8">
+          <div className="flex items-center mb-6">
+            <Star className="w-6 h-6 text-blue-600 mr-2" />
+            <h2 className="text-2xl font-bold text-gray-900">
+              Your Reviews ({currentUserReviews.length})
+            </h2>
+          </div>
+          <div className="space-y-4">
+            {currentReviews.map((review) => (
+              <div
+                key={review._id}
+                className="p-6 bg-gray-50 rounded-xl hover:bg-gray-100 transition duration-300"
+              >
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-lg font-semibold text-gray-900">
+                    {review.productId?.name || "Unknown Product"}
+                  </h3>
+                  <div className="flex items-center">
+                    {Array.from({ length: review.rating }).map((_, index) => (
+                      <Star
+                        key={index}
+                        className="w-5 h-5 text-yellow-400 fill-current"
+                      />
+                    ))}
+                  </div>
+                </div>
+                <p className="text-gray-600">{review.comment}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Reviews Pagination */}
+          <div className="flex justify-center mt-8 space-x-2">
+            {Array.from({ length: totalReviewPages }, (_, index) => (
+              <button
+                key={index + 1}
+                onClick={() => handleReviewPageChange(index + 1)}
+                className={`px-4 py-2 rounded-lg transition duration-300 ${
+                  currentReviewPage === index + 1
+                    ? "bg-blue-600 text-white"
+                    : "bg-white text-gray-700 border border-gray-200 hover:border-blue-500"
+                }`}
+              >
+                {index + 1}
+              </button>
+            ))}
           </div>
         </div>
       </div>
 
       {/* Edit Profile Modal */}
       {isEditModalOpen && (
-        <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-[1100]">
-          <div className="bg-white rounded-lg p-6 w-full max-w-md">
-            <h3 className="text-xl font-semibold mb-4">Edit Profile</h3>
-            <div className="mb-4">
-              <label className="block text-sm font-medium mb-1">
-                First Name
-              </label>
-              <input
-                type="text"
-                value={updatedFirstName}
-                onChange={(e) => setUpdatedFirstName(e.target.value)}
-                className="w-full px-4 py-2 border rounded-md border-gray-400"
-              />
-              <label className="block text-sm font-medium mb-1">
-                Last Name
-              </label>
-              <input
-                type="text"
-                value={updatedLastName}
-                onChange={(e) => setUpdatedLastName(e.target.value)}
-                className="w-full px-4 py-2 border rounded-md border-gray-400"
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block text-sm font-medium mb-1">Email</label>
-              <input
-                type="email"
-                value={updatedEmail}
-                onChange={(e) => setUpdatedEmail(e.target.value)}
-                className="w-full px-4 py-2 border rounded-md border-gray-400"
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block text-sm font-medium mb-1">
-                Profile Picture
-              </label>
-              <input type="file" name="image" onChange={handleImageUpload} />
-              {previewImage && (
-                <img
-                  src={previewImage}
-                  alt="Preview"
-                  className="w-20 h-20 rounded-full mt-4 object-cover"
-                />
-              )}
-            </div>
-            <div className="flex justify-end space-x-2">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[1100] px-4">
+          <div className="bg-white rounded-2xl w-full max-w-md p-8 transform transition-all duration-300">
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-2xl font-bold text-gray-900">Edit Profile</h3>
               <button
-                onClick={handleCloseModal}
-                className="px-4 py-2 bg-gray-300 rounded-md"
+                onClick={() => setIsEditModalOpen(false)}
+                className="p-2 hover:bg-gray-100 rounded-full transition duration-200"
+              >
+                <X className="w-6 h-6 text-gray-500" />
+              </button>
+            </div>
+
+            <div className="relative group mb-8">
+              <div className="flex flex-col items-center">
+                <div className="relative w-32 h-32">
+                  <img
+                    src={
+                      previewImage ||
+                      currentUser?.profilePicture ||
+                      "https://via.placeholder.com/150"
+                    }
+                    alt="Profile Preview"
+                    className="w-full h-full rounded-full object-fill border-4 border-gray-100 shadow-lg transition-all duration-300"
+                  />
+                  <label className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-full cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <Upload className="w-8 h-8 text-white" />
+                    <input
+                      type="file"
+                      onChange={handleImageUpload}
+                      className="hidden"
+                      accept="image/*"
+                    />
+                  </label>
+                </div>
+                <span className="text-sm text-gray-500 mt-2">
+                  Click to upload new image
+                </span>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  First Name
+                </label>
+                <input
+                  type="text"
+                  value={updatedFirstName}
+                  onChange={(e) => setUpdatedFirstName(e.target.value)}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Last Name
+                </label>
+                <input
+                  type="text"
+                  value={updatedLastName}
+                  onChange={(e) => setUpdatedLastName(e.target.value)}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  value={updatedEmail}
+                  onChange={(e) => setUpdatedEmail(e.target.value)}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+                />
+              </div>
+            </div>
+
+            <div className="flex justify-end mt-8 space-x-3">
+              <button
+                onClick={() => setIsEditModalOpen(false)}
+                className="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition duration-200"
               >
                 Cancel
               </button>
               <button
                 onClick={handleUpdateProfile}
-                className="px-4 py-2 bg-blue-500 text-white rounded-md"
+                disabled={isLoading}
+                className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
               >
-                Save Changes
+                {isLoading ? (
+                  <>
+                    <LoadingSpinner />
+                    <span className="ml-2">Saving...</span>
+                  </>
+                ) : (
+                  "Save Changes"
+                )}
               </button>
             </div>
           </div>
         </div>
       )}
-
-      {/* Order Tracking */}
-      <div className="bg-white shadow rounded-lg p-6 mb-8 border border-gray-400">
-        <h3 className="text-xl font-semibold mb-4">Your Orders</h3>
-        <div className="space-y-4">
-          {currentOrders.map((order) => (
-            <div
-              key={order._id}
-              className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 border border-gray-400 
-              rounded-md hover:bg-gray-50 transition"
-            >
-              <div className="mb-4 sm:mb-0">
-                <p className="text-lg font-medium">Order #{order._id}</p>
-                <p className="text-sm text-gray-500">
-                  Status: {order?.status || "Pending"}
-                </p>
-                <p className="text-sm text-gray-500">
-                  Total Amount: {order.amount.toFixed(2)}
-                  <span className="currency">{currency}</span>
-                </p>
-              </div>
-              <Link
-                to={`/orders/${order._id}`}
-                className="text-blue-500 px-4 py-2 rounded-md border border-gray-400 
-                sm:ml-4 sm:self-start sm:w-auto w-full text-center hover:bg-black hover:text-white transition duration-300"
-              >
-                View Details &rarr;
-              </Link>
-            </div>
-          ))}
-        </div>
-
-        {/* Pagination Controls */}
-        <div className="mt-4 flex justify-center space-x-2">
-          {Array.from({ length: totalPages }, (_, index) => (
-            <button
-              key={index + 1}
-              onClick={() => handlePageChange(index + 1)}
-              className={`px-4 py-2 rounded-md ${
-                currentPage === index + 1
-                  ? "bg-black text-white"
-                  : "bg-white text-black border border-gray-400"
-              } hover:bg-black hover:text-white transition duration-300`}
-            >
-              {index + 1}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Reviews Section */}
-      <div className="bg-white shadow rounded-lg p-6 mb-8 border border-gray-400">
-        <h3 className="text-xl font-semibold mb-4">
-          Your Reviews ({currentUserReviews.length})
-        </h3>
-        <div className="space-y-4">
-          {currentReviews.map((review) => (
-            <div
-              key={review._id}
-              className="flex justify-between items-center p-4 border border-gray-400 rounded-md w-full"
-            >
-              <div className="w-full">
-                <p className="text-lg font-medium truncate">
-                  {review.productId?.name || "Unknown Product"}
-                </p>
-                <p className="text-sm text-gray-500 truncate">
-                  Rating: {review.rating} ★
-                </p>
-                <p className="text-sm mt-1 break-words">{review.comment}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-4 flex justify-center space-x-2">
-          {Array.from({ length: totalReviewPages }, (_, index) => (
-            <button
-              key={index + 1}
-              onClick={() => handleReviewPageChange(index + 1)}
-              className={`px-4 py-2 rounded-md ${
-                currentReviewPage === index + 1
-                  ? "bg-black text-white"
-                  : "bg-white text-black border border-gray-400"
-              } hover:bg-black hover:text-white transition duration-300`}
-            >
-              {index + 1}
-            </button>
-          ))}
-        </div>
-      </div>
     </div>
   );
 };
