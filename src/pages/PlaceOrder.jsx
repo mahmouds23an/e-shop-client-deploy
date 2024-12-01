@@ -29,7 +29,9 @@ const PlaceOrder = () => {
     delivery_fee,
     setDeliveryFee,
     products,
+    currentUser,
   } = useContext(ShopContext);
+  console.log(currentUser);
 
   const validatePhoneNumber = (phone) => {
     const phoneRegex = /^(010|011|012|015)\d{8}$/;
@@ -37,9 +39,9 @@ const PlaceOrder = () => {
   };
 
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
+    firstName: currentUser.firstName || "", 
+    lastName: currentUser.lastName || "",
+    email: currentUser.email || "",
     street: "",
     city: "",
     country: "Egypt",

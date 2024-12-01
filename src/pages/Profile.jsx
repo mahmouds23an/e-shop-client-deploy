@@ -19,7 +19,12 @@ const Profile = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [currentReviewPage, setCurrentReviewPage] = useState(1);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [updatedName, setUpdatedName] = useState(currentUser?.name || "");
+  const [updatedFirstName, setUpdatedFirstName] = useState(
+    currentUser?.firstName || ""
+  );
+  const [updatedLastName, setUpdatedLastName] = useState(
+    currentUser?.lastName || ""
+  );
   const [updatedEmail, setUpdatedEmail] = useState(currentUser?.email || "");
   const [profilePicture, setProfilePicture] = useState(
     currentUser?.image || ""
@@ -62,7 +67,8 @@ const Profile = () => {
   };
 
   const handleEditProfile = () => {
-    setUpdatedName(currentUser?.name || "");
+    setUpdatedFirstName(currentUser?.firstName || "");
+    setUpdatedLastName(currentUser?.lastName || "");
     setUpdatedEmail(currentUser?.email || "");
     setPreviewImage(currentUser?.image || "");
     setIsEditModalOpen(true);
@@ -81,7 +87,8 @@ const Profile = () => {
 
     try {
       const formData = new FormData();
-      formData.append("name", updatedName);
+      formData.append("firstName", updatedFirstName);
+      formData.append("lastName", updatedLastName);
       formData.append("email", updatedEmail);
       if (profilePicture && typeof profilePicture !== "string") {
         formData.append("image", profilePicture);
@@ -96,7 +103,8 @@ const Profile = () => {
         toast.success("Profile updated successfully!");
         setCurrentUser((prevUser) => ({
           ...prevUser,
-          name: updatedName,
+          firstName: updatedFirstName,
+          lastName: updatedLastName,
           email: updatedEmail,
           image: response.data.updatedUser?.image || prevUser.image,
         }));
@@ -132,8 +140,6 @@ const Profile = () => {
     return <UnAuthorized />;
   }
 
-  console.log(currentUser);
-
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       {/* User Information */}
@@ -146,7 +152,7 @@ const Profile = () => {
           />
           <div>
             <h2 className="text-2xl font-bold">
-              {currentUser?.name || "User"}
+              {currentUser?.firstName + " " + currentUser?.lastName || "User"}
             </h2>
             <p className="text-gray-500">
               {currentUser?.email || "user@example.com"}
@@ -167,12 +173,23 @@ const Profile = () => {
           <div className="bg-white rounded-lg p-6 w-full max-w-md">
             <h3 className="text-xl font-semibold mb-4">Edit Profile</h3>
             <div className="mb-4">
-              <label className="block text-sm font-medium mb-1">Name</label>
+              <label className="block text-sm font-medium mb-1">
+                First Name
+              </label>
               <input
                 type="text"
-                value={updatedName}
-                onChange={(e) => setUpdatedName(e.target.value)}
-                className="w-full px-4 py-2 border rounded-md"
+                value={updatedFirstName}
+                onChange={(e) => setUpdatedFirstName(e.target.value)}
+                className="w-full px-4 py-2 border rounded-md border-gray-400"
+              />
+              <label className="block text-sm font-medium mb-1">
+                Last Name
+              </label>
+              <input
+                type="text"
+                value={updatedLastName}
+                onChange={(e) => setUpdatedLastName(e.target.value)}
+                className="w-full px-4 py-2 border rounded-md border-gray-400"
               />
             </div>
             <div className="mb-4">
@@ -181,7 +198,7 @@ const Profile = () => {
                 type="email"
                 value={updatedEmail}
                 onChange={(e) => setUpdatedEmail(e.target.value)}
-                className="w-full px-4 py-2 border rounded-md"
+                className="w-full px-4 py-2 border rounded-md border-gray-400"
               />
             </div>
             <div className="mb-4">

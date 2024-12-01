@@ -104,7 +104,7 @@ const Navbar = () => {
               />
               <div className="flex gap-1 items-center text-sm">
                 <p className="text-gray-500">Hi, </p>
-                <p className="text-gray-500">{currentUser?.name}</p>
+                <p className="text-gray-500">{currentUser?.firstName}</p>
               </div>
             </div>
 
