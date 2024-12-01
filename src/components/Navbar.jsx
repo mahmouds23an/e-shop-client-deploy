@@ -122,19 +122,28 @@ const Navbar = () => {
               <div className="absolute z-50 right-0 mt-2 w-64 bg-white shadow-lg p-4 border border-black rounded-lg">
                 <div className="flex flex-col gap-2 text-gray-500">
                   <p
-                    onClick={() => navigate("/profile")}
+                    onClick={() => {
+                      navigate("/profile");
+                      setProfileDropdownVisible(false);
+                    }}
                     className="cursor-pointer hover:text-black"
                   >
                     My Profile
                   </p>
                   <p
-                    onClick={() => navigate("/orders")}
+                    onClick={() => {
+                      navigate("/orders");
+                      setProfileDropdownVisible(false);
+                    }}
                     className="cursor-pointer hover:text-black"
                   >
                     Orders
                   </p>
                   <p
-                    onClick={logout}
+                    onClick={() => {
+                      logout();
+                      setProfileDropdownVisible(false);
+                    }}
                     className="cursor-pointer hover:text-black"
                   >
                     Logout
