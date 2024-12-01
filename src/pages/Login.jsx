@@ -7,7 +7,8 @@ import { toast } from "react-toastify";
 const Login = () => {
   const [currentState, setCurrentState] = useState("Login");
   const { token, setToken, navigate, backendUrl } = useContext(ShopContext);
-  const [name, setName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -16,7 +17,8 @@ const Login = () => {
     try {
       if (currentState === "Sign Up") {
         const response = await axios.post(backendUrl + "/api/user/register", {
-          name,
+          firstName,
+          lastName,
           email,
           password,
         });
@@ -71,14 +73,24 @@ const Login = () => {
       {currentState === "Login" ? (
         ""
       ) : (
-        <input
-          type="text"
-          className="w-full px-3 py-2 border border-gray-800"
-          placeholder="Name"
-          required
-          onChange={(e) => setName(e.target.value)}
-          value={name}
-        />
+        <>
+          <input
+            type="text"
+            className="w-full px-3 py-2 border border-gray-800"
+            placeholder="First Name"
+            required
+            onChange={(e) => setFirstName(e.target.value)}
+            value={firstName}
+          />
+          <input
+            type="text"
+            className="w-full px-3 py-2 border border-gray-800"
+            placeholder="Last Name"
+            required
+            onChange={(e) => setLastName(e.target.value)}
+            value={lastName}
+          />
+        </>
       )}
       <input
         type="email"
