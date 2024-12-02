@@ -5,13 +5,61 @@ import { Link } from "react-router-dom";
 import UnAuthorized from "../components/UnAuthorized";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { Upload, X, Star, Package, ChevronRight } from "lucide-react";
+import {
+  Upload,
+  X,
+  Star,
+  Package,
+  ChevronRight,
+  ZoomIn,
+  ZoomOut,
+} from "lucide-react";
+import Cropper from "react-easy-crop";
 
 const LoadingSpinner = () => (
   <div className="flex justify-center items-center">
-    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+    <div className="animate-spin rounded-full h-3 w-3 border-t-2 border-blue-600"></div>
   </div>
 );
+
+const createImage = (url) =>
+  new Promise((resolve, reject) => {
+    const image = new Image();
+    image.addEventListener("load", () => resolve(image));
+    image.addEventListener("error", (error) => reject(error));
+    image.src = url;
+  });
+
+const getCroppedImg = async (imageSrc, pixelCrop) => {
+  const image = await createImage(imageSrc);
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d");
+
+  if (!ctx) {
+    return null;
+  }
+
+  canvas.width = pixelCrop.width;
+  canvas.height = pixelCrop.height;
+
+  ctx.drawImage(
+    image,
+    pixelCrop.x,
+    pixelCrop.y,
+    pixelCrop.width,
+    pixelCrop.height,
+    0,
+    0,
+    pixelCrop.width,
+    pixelCrop.height
+  );
+
+  return new Promise((resolve) => {
+    canvas.toBlob((blob) => {
+      resolve(blob);
+    }, "image/jpeg");
+  });
+};
 
 const Profile = () => {
   const {
@@ -35,10 +83,19 @@ const Profile = () => {
     currentUser?.lastName || ""
   );
   const [updatedEmail, setUpdatedEmail] = useState(currentUser?.email || "");
-  const [profilePicture, setProfilePicture] = useState(
-    currentUser?.image || ""
+  const [profilePicture, setProfilePicture] = useState(null);
+  const [previewImage, setPreviewImage] = useState(currentUser?.image || "");
+  const [showRemoveButton, setShowRemoveButton] = useState(
+    currentUser?.profilePicture &&
+    currentUser.profilePicture !== "https://w7.pngwing.com/pngs/463/441/png-transparent-avatar-human-people-profile-user-web-user-interface-icon.png"
   );
-  const [previewImage, setPreviewImage] = useState(null);
+
+  // Cropper state
+  const [isCropperOpen, setIsCropperOpen] = useState(false);
+  const [crop, setCrop] = useState({ x: 0, y: 0 });
+  const [zoom, setZoom] = useState(1);
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+  const [tempImageUrl, setTempImageUrl] = useState(null);
 
   const ordersPerPage = 3;
   const reviewsPerPage = 3;
@@ -79,8 +136,28 @@ const Profile = () => {
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setProfilePicture(file);
-      setPreviewImage(URL.createObjectURL(file));
+      setTempImageUrl(URL.createObjectURL(file));
+      setIsCropperOpen(true);
+    }
+  };
+
+  const onCropComplete = (croppedArea, croppedAreaPixels) => {
+    setCroppedAreaPixels(croppedAreaPixels);
+  };
+
+  const handleCropConfirm = async () => {
+    try {
+      const croppedBlob = await getCroppedImg(tempImageUrl, croppedAreaPixels);
+      const croppedUrl = URL.createObjectURL(croppedBlob);
+      setPreviewImage(croppedUrl);
+      setProfilePicture(
+        new File([croppedBlob], "profile.jpg", { type: "image/jpeg" })
+      );
+      setIsCropperOpen(false);
+      URL.revokeObjectURL(tempImageUrl);
+    } catch (error) {
+      toast.error("Error cropping image");
+      console.error(error);
     }
   };
 
@@ -92,7 +169,7 @@ const Profile = () => {
       formData.append("firstName", updatedFirstName);
       formData.append("lastName", updatedLastName);
       formData.append("email", updatedEmail);
-      if (profilePicture && typeof profilePicture !== "string") {
+      if (profilePicture) {
         formData.append("profilePicture", profilePicture);
       }
       const response = await axios.post(
@@ -103,13 +180,18 @@ const Profile = () => {
 
       if (response.data.success) {
         toast.success("Profile updated successfully!");
+        const updatedImage = response.data.updatedUser?.image || currentUser.image;
         setCurrentUser((prevUser) => ({
           ...prevUser,
           firstName: updatedFirstName,
           lastName: updatedLastName,
           email: updatedEmail,
-          image: response.data.updatedUser?.image || prevUser.image,
+          image: updatedImage,
+          profilePicture: updatedImage
         }));
+        setShowRemoveButton(
+          updatedImage !== "https://w7.pngwing.com/pngs/463/441/png-transparent-avatar-human-people-profile-user-web-user-interface-icon.png"
+        );
         setProfilePicture(null);
         setIsEditModalOpen(false);
       } else {
@@ -124,12 +206,6 @@ const Profile = () => {
 
   const handleRemoveProfilePicture = async () => {
     if (!token) return;
-
-    const confirmed = window.confirm(
-      "Are you sure you want to remove your profile picture?"
-    );
-    if (!confirmed) return;
-
     setIsLoading(true);
     try {
       const response = await axios.post(
@@ -139,14 +215,16 @@ const Profile = () => {
       );
 
       if (response.data.success) {
-        toast.success("Picture removed successfully!");
+        toast.success("Profile picture removed successfully!");
         const defaultImage =
           "https://w7.pngwing.com/pngs/463/441/png-transparent-avatar-human-people-profile-user-web-user-interface-icon.png";
         setCurrentUser((prevUser) => ({
           ...prevUser,
           image: defaultImage,
+          profilePicture: defaultImage
         }));
         setPreviewImage(defaultImage);
+        setShowRemoveButton(false);
       } else {
         toast.error(response.data.message);
       }
@@ -156,8 +234,6 @@ const Profile = () => {
       setIsLoading(false);
     }
   };
-
-  console.log(currentUser);
 
   // Pagination logic
   const indexOfLastOrder = currentPage * ordersPerPage;
@@ -177,21 +253,21 @@ const Profile = () => {
   if (!token) return <UnAuthorized />;
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto space-y-8">
         {/* Profile Header */}
-        <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
-          <div className="relative h-20 bg-gradient-to-r from-blue-500 to-purple-600">
+        <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-400">
+          <div className="relative h-20 bg-gradient-to-r from-gray-300 to-gray-500">
             <div className="absolute -bottom-16 left-8">
               <div className="relative group">
                 <img
                   src={
-                    previewImage ||
-                    currentUser?.profilePicture ||
-                    "https://via.placeholder.com/150"
+                    currentUser?.profilePicture
+                      ? currentUser.profilePicture
+                      : previewImage || "https://via.placeholder.com/150"
                   }
                   alt="Profile Preview"
-                  className="w-32 h-32 rounded-full border-4 border-white shadow-lg object-fill"
+                  className="w-32 h-32 rounded-full border-4 border-white shadow-lg object-cover"
                 />
                 <button
                   onClick={handleEditProfile}
@@ -215,16 +291,16 @@ const Profile = () => {
             >
               Edit Profile
             </button>
-            {/* Remove Profile Picture Button */}
-            {currentUser?.profilePicture !==
-              "https://w7.pngwing.com/pngs/463/441/png-transparent-avatar-human-people-profile-user-web-user-interface-icon.png" && (
+            {showRemoveButton && (
               <button
                 onClick={handleRemoveProfilePicture}
                 className="mt-4 ml-4 px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition duration-300"
+                disabled={isLoading}
               >
                 {isLoading ? (
                   <div className="flex items-center gap-2">
-                    <span className="">Removing...</span>
+                    <LoadingSpinner />
+                    <span>Removing...</span>
                   </div>
                 ) : (
                   "Remove Profile Picture"
@@ -235,7 +311,7 @@ const Profile = () => {
         </div>
 
         {/* Orders Section */}
-        <div className="bg-white rounded-2xl shadow-xl p-8">
+        <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-400">
           <div className="flex items-center mb-6">
             <Package className="w-6 h-6 text-blue-600 mr-2" />
             <h2 className="text-2xl font-bold text-gray-900">Your Orders</h2>
@@ -297,7 +373,7 @@ const Profile = () => {
         </div>
 
         {/* Reviews Section */}
-        <div className="bg-white rounded-2xl shadow-xl p-8">
+        <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-400">
           <div className="flex items-center mb-6">
             <Star className="w-6 h-6 text-blue-600 mr-2" />
             <h2 className="text-2xl font-bold text-gray-900">
@@ -354,99 +430,159 @@ const Profile = () => {
             <div className="flex justify-between items-center mb-6">
               <h3 className="text-2xl font-bold text-gray-900">Edit Profile</h3>
               <button
-                onClick={() => setIsEditModalOpen(false)}
+                onClick={() => {
+                  setIsEditModalOpen(false);
+                  setIsCropperOpen(false);
+                  URL.revokeObjectURL(tempImageUrl);
+                }}
                 className="p-2 hover:bg-gray-100 rounded-full transition duration-200"
               >
                 <X className="w-6 h-6 text-gray-500" />
               </button>
             </div>
 
-            <div className="relative group mb-8">
-              <div className="flex flex-col items-center">
-                <div className="relative w-32 h-32">
-                  <img
-                    src={
-                      previewImage ||
-                      currentUser?.profilePicture ||
-                      "https://via.placeholder.com/150"
-                    }
-                    alt="Profile Preview"
-                    className="w-full h-full rounded-full object-fill border-4 border-gray-100 shadow-lg transition-all duration-300"
+            {isCropperOpen ? (
+              <div className="space-y-4">
+                <div className="relative h-[300px] w-full">
+                  <Cropper
+                    image={tempImageUrl}
+                    crop={crop}
+                    zoom={zoom}
+                    aspect={1}
+                    onCropChange={setCrop}
+                    onZoomChange={setZoom}
+                    onCropComplete={onCropComplete}
+                    cropShape="round"
+                    showGrid={false}
                   />
-                  <label className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-full cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <Upload className="w-8 h-8 text-white" />
-                    <input
-                      type="file"
-                      onChange={handleImageUpload}
-                      className="hidden"
-                      accept="image/*"
-                    />
-                  </label>
                 </div>
-                <span className="text-sm text-gray-500 mt-2">
-                  Click to upload new image
-                </span>
+                <div className="flex items-center justify-center space-x-4">
+                  <button
+                    onClick={() => setZoom(Math.max(1, zoom - 0.1))}
+                    className="p-2 hover:bg-gray-100 rounded-full"
+                  >
+                    <ZoomOut className="w-6 h-6" />
+                  </button>
+                  <input
+                    type="range"
+                    value={zoom}
+                    min={1}
+                    max={3}
+                    step={0.1}
+                    onChange={(e) => setZoom(parseFloat(e.target.value))}
+                    className="w-1/2"
+                  />
+                  <button
+                    onClick={() => setZoom(Math.min(3, zoom + 0.1))}
+                    className="p-2 hover:bg-gray-100 rounded-full"
+                  >
+                    <ZoomIn className="w-6 h-6" />
+                  </button>
+                </div>
+                <div className="flex justify-end space-x-3">
+                  <button
+                    onClick={() => {
+                      setIsCropperOpen(false);
+                      URL.revokeObjectURL(tempImageUrl);
+                    }}
+                    className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={handleCropConfirm}
+                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                  >
+                    Crop & Save
+                  </button>
+                </div>
               </div>
-            </div>
+            ) : (
+              <>
+                <div className="relative group mb-8">
+                  <div className="flex flex-col items-center">
+                    <div className="relative w-32 h-32">
+                      <img
+                        src={previewImage || "https://via.placeholder.com/150"}
+                        alt="Profile Preview"
+                        className="w-full h-full rounded-full object-cover border-4 border-gray-100 shadow-lg transition-all duration-300"
+                      />
+                      <label className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-full cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <Upload className="w-8 h-8 text-white" />
+                        <input
+                          type="file"
+                          onChange={handleImageUpload}
+                          className="hidden"
+                          accept="image/*"
+                        />
+                      </label>
+                    </div>
+                    <span className="text-sm text-gray-500 mt-2">
+                      Click to upload new image
+                    </span>
+                  </div>
+                </div>
 
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  First Name
-                </label>
-                <input
-                  type="text"
-                  value={updatedFirstName}
-                  onChange={(e) => setUpdatedFirstName(e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Last Name
-                </label>
-                <input
-                  type="text"
-                  value={updatedLastName}
-                  onChange={(e) => setUpdatedLastName(e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  value={updatedEmail}
-                  onChange={(e) => setUpdatedEmail(e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
-                />
-              </div>
-            </div>
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      First Name
+                    </label>
+                    <input
+                      type="text"
+                      value={updatedFirstName}
+                      onChange={(e) => setUpdatedFirstName(e.target.value)}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Last Name
+                    </label>
+                    <input
+                      type="text"
+                      value={updatedLastName}
+                      onChange={(e) => setUpdatedLastName(e.target.value)}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      value={updatedEmail}
+                      onChange={(e) => setUpdatedEmail(e.target.value)}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+                    />
+                  </div>
+                </div>
 
-            <div className="flex justify-end mt-8 space-x-3">
-              <button
-                onClick={() => setIsEditModalOpen(false)}
-                className="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition duration-200"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleUpdateProfile}
-                disabled={isLoading}
-                className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
-              >
-                {isLoading ? (
-                  <>
-                    <LoadingSpinner />
-                    <span className="ml-2">Saving...</span>
-                  </>
-                ) : (
-                  "Save Changes"
-                )}
-              </button>
-            </div>
+                <div className="flex justify-end mt-8 space-x-3">
+                  <button
+                    onClick={() => setIsEditModalOpen(false)}
+                    className="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition duration-200"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={handleUpdateProfile}
+                    disabled={isLoading}
+                    className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
+                  >
+                    {isLoading ? (
+                      <>
+                        <LoadingSpinner />
+                        <span className="ml-2">Saving...</span>
+                      </>
+                    ) : (
+                      "Save Changes"
+                    )}
+                  </button>
+                </div>
+              </>
+            )}
           </div>
         </div>
       )}
