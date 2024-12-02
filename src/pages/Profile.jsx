@@ -224,7 +224,6 @@ const Profile = () => {
               >
                 {isLoading ? (
                   <div className="flex items-center gap-2">
-                    
                     <span className="">Removing...</span>
                   </div>
                 ) : (
