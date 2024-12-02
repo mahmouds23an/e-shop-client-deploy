@@ -300,7 +300,6 @@ const Product = () => {
           <div className="mt-3 border border-gray-100 rounded-lg">
             {Array.isArray(reviews) && reviews.length > 0 ? (
               reviews.map((review) => (
-                console.log(review),
                 <div
                   key={review._id}
                   className="bg-white flex justify-between items-center p-3 rounded-lg shadow-md border mb-4 border-gray-300"
@@ -323,8 +322,8 @@ const Product = () => {
 
                     <div>
                       <div>
-                        <div className="flex items-center gap-2">
-                          <p className="text-lg font-semibold">
+                        <div className="flex items-center gap-2 justify-between w-full">
+                          <p className="text-base font-semibold">
                             {currentUser?._id === review.userId?._id
                               ? "Your review"
                               : review.userId.firstName}
@@ -370,7 +369,6 @@ const Product = () => {
                     {/* Edit and Delete buttons for the current user's review */}
                     {currentUser?._id === review.userId?._id && (
                       <div className="flex gap-4 mt-4">
-                        <FaEdit className="text-gray-500 hover:text-black duration-300 cursor-pointer hover:scale-x-125" />
                         <MdDelete
                           onClick={() => showDeleteConfirmation(review._id)}
                           className="text-gray-500 hover:text-black duration-300 cursor-pointer mr-5 hover:scale-x-125"
