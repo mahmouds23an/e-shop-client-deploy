@@ -110,6 +110,7 @@ const Profile = () => {
           email: updatedEmail,
           image: response.data.updatedUser?.image || prevUser.image,
         }));
+        setProfilePicture(null);
         setIsEditModalOpen(false);
       } else {
         toast.error(response.data.message);
@@ -120,6 +121,43 @@ const Profile = () => {
       setIsLoading(false);
     }
   };
+
+  const handleRemoveProfilePicture = async () => {
+    if (!token) return;
+
+    const confirmed = window.confirm(
+      "Are you sure you want to remove your profile picture?"
+    );
+    if (!confirmed) return;
+
+    setIsLoading(true);
+    try {
+      const response = await axios.post(
+        `${backendUrl}/api/user/remove-profile-picture`,
+        {},
+        { headers: { token } }
+      );
+
+      if (response.data.success) {
+        toast.success("Picture removed successfully!");
+        const defaultImage =
+          "https://w7.pngwing.com/pngs/463/441/png-transparent-avatar-human-people-profile-user-web-user-interface-icon.png";
+        setCurrentUser((prevUser) => ({
+          ...prevUser,
+          image: defaultImage,
+        }));
+        setPreviewImage(defaultImage);
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  console.log(currentUser);
 
   // Pagination logic
   const indexOfLastOrder = currentPage * ordersPerPage;
@@ -148,10 +186,11 @@ const Profile = () => {
               <div className="relative group">
                 <img
                   src={
+                    previewImage ||
                     currentUser?.profilePicture ||
                     "https://via.placeholder.com/150"
                   }
-                  alt="Profile"
+                  alt="Profile Preview"
                   className="w-32 h-32 rounded-full border-4 border-white shadow-lg object-fill"
                 />
                 <button
@@ -165,8 +204,6 @@ const Profile = () => {
             </div>
           </div>
 
-
-          
           <div className="pt-20 pb-6 px-8">
             <h1 className="text-3xl font-bold text-gray-900">
               {currentUser?.firstName} {currentUser?.lastName}
@@ -178,6 +215,23 @@ const Profile = () => {
             >
               Edit Profile
             </button>
+            {/* Remove Profile Picture Button */}
+            {currentUser?.profilePicture !==
+              "https://w7.pngwing.com/pngs/463/441/png-transparent-avatar-human-people-profile-user-web-user-interface-icon.png" && (
+              <button
+                onClick={handleRemoveProfilePicture}
+                className="mt-4 ml-4 px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition duration-300"
+              >
+                {isLoading ? (
+                  <div className="flex items-center gap-2">
+                    
+                    <span className="">Removing...</span>
+                  </div>
+                ) : (
+                  "Remove Profile Picture"
+                )}
+              </button>
+            )}
           </div>
         </div>
 

@@ -196,15 +196,15 @@ const Login = () => {
             <div className="bg-gray-50 p-4 rounded-lg border border-gray-400 space-y-1">
               <RequirementIndicator
                 met={passwordRequirements.hasUpperCase}
-                text="Contains uppercase letter"
+                text="Contains uppercase letter (A-Z)"
               />
               <RequirementIndicator
                 met={passwordRequirements.hasLowerCase}
-                text="Contains lowercase letter"
+                text="Contains lowercase letter (a-z)"
               />
               <RequirementIndicator
                 met={passwordRequirements.hasMinLength}
-                text="At least 6 characters long"
+                text="At least 8 characters long"
               />
             </div>
           )}

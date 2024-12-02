@@ -15,16 +15,16 @@ const Hero = () => {
     const fetchEventData = async () => {
       try {
         const response = await axios.get(backendUrl + "/api/event/get");
-        const activeEvents = response.data.events.filter(
+        const activeEvents = response?.data?.events.filter(
           (event) =>
-            event.isActive &&
-            (!event.endDate || new Date(event.endDate) > new Date())
+            event?.isActive &&
+            (!event?.endDate || new Date(event?.endDate) > new Date())
         );
         setEvents(activeEvents);
 
         activeEvents.forEach((event, index) => {
-          if (event.endDate) {
-            startCountdown(index, event.endDate);
+          if (event?.endDate) {
+            startCountdown(index, event?.endDate);
           }
         });
       } catch (error) {
@@ -37,7 +37,7 @@ const Hero = () => {
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      changeEvent((currentEventIndex + 1) % events.length);
+      changeEvent((currentEventIndex + 1) % events?.length);
     }, 10000);
 
     return () => clearInterval(intervalId);
@@ -47,8 +47,8 @@ const Hero = () => {
     setCurrentEventIndex(index);
     const event = events[index];
 
-    if (event.endDate) {
-      startCountdown(index, event.endDate);
+    if (event?.endDate) {
+      startCountdown(index, event?.endDate);
     }
   };
 
@@ -92,7 +92,7 @@ const Hero = () => {
     return () => clearInterval(intervalId);
   };
 
-  if (events.length === 0) return <HeroSection />;
+  if (events?.length === 0) return <HeroSection />;
 
   const currentEvent = events[currentEventIndex];
 
@@ -104,15 +104,15 @@ const Hero = () => {
           <div className="flex items-center gap-2">
             <p className="w-8 md:w-11 h-[2px] bg-gray-800"></p>
             <h1 className="prata-regular text-3xl sm:py-3 lg:text-5xl leading-relaxed">
-              {currentEvent.title}
+              {currentEvent?.title}
             </h1>
           </div>
           <p className="font-medium text-sm md:text-base">
-            {currentEvent.description}
+            {currentEvent?.description}
           </p>
           <div className="flex items-center gap-2 mt-4">
             <button className="prata-regular text-3xl sm:py-3 lg:text-5xl leading-relaxed bg-gray-800 text-white px-4 py-2 rounded-md shadow hover:bg-gray-700 transition">
-              {currentEvent.linkText || "SHOP NOW"}
+              {currentEvent?.linkText || "SHOP NOW"}
             </button>
             <p className="w-8 md:w-11 h-[2px] bg-gray-800"></p>
           </div>
@@ -151,7 +151,7 @@ const Hero = () => {
       {/* Hero Right */}
       <img
         className="w-full sm:w-1/2 h-full object-cover transition-opacity duration-500 rounded-r-lg"
-        src={currentEvent.imageUrl}
+        src={currentEvent?.imageUrl}
         alt="Event"
       />
 
