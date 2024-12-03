@@ -10,7 +10,6 @@ import axios from "axios";
 export const ShopContext = createContext();
 
 const deliveryFees = {
-  initial: 0,
   Cairo: 10,
   Alexandria: 15,
   Giza: 12,
@@ -96,6 +95,23 @@ const ShopContextProvider = (props) => {
       } catch (error) {
         toast.error(error.message);
       }
+    }
+  };
+
+  const addToWishlist = async (productId) => {
+    try {
+      const response = await axios.post(
+        backendUrl + "/api/user/add-to-favorites",
+        { productId },
+        { headers: { token } }
+      );
+      if (response.data.success) {
+        toast.success(response.data.message);
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
     }
   };
 
@@ -187,7 +203,15 @@ const ShopContextProvider = (props) => {
         headers: { token },
       });
       if (response.data.success) {
+        const { user } = response.data;
+
         setCurrentUser(response.data.user);
+
+        const favorites = user.favoriteProducts.map((product) => ({
+          id: product._id,
+          name: product.name,
+        }));
+
         setCurrentUserReviews(response.data.reviews);
       } else {
         toast.error(response.data.message);
@@ -224,6 +248,7 @@ const ShopContextProvider = (props) => {
     showCartDropdown,
     currentUser,
     currentUserReviews,
+    addToWishlist,
     setCurrentUserReviews,
     setCurrentUser,
     closeCartDropdown,

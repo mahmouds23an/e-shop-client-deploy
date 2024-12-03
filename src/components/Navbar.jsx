@@ -59,6 +59,10 @@ const Navbar = () => {
     navigate("/cart");
   };
 
+  const goToWishlistPage = () => {
+    navigate("/wishlist");
+  };
+
   return (
     <div className="flex items-center justify-between py-5 font-medium relative">
       <Link to="/">
@@ -151,6 +155,18 @@ const Navbar = () => {
                 </div>
               </div>
             )}
+          </div>
+
+          <div className="relative">
+            <img
+              onClick={goToWishlistPage}
+              src={assets.wishlist}
+              className="w-7 cursor-pointer"
+              alt="Cart"
+            />
+            {/* <p className="absolute right-[-8px] bottom-[-8px] w-4 text-center leading-4 bg-black text-white aspect-square rounded-full text-[8px]">
+              {getWishlistCount()}
+            </p> */}
           </div>
 
           <div className="relative">

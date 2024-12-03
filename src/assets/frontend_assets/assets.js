@@ -76,6 +76,8 @@ import no_results_icon from "./no_results_icon.png";
 import empty_cart_icon from "./emptyCart.jpeg";
 import orders from "./orders.jpg";
 import paymob from "./paymob.png";
+import wishlist from "./wishlistlogo.jpg";
+import redWish from "./wishlistredlogo.png";
 
 export const assets = {
   logo,
@@ -100,6 +102,8 @@ export const assets = {
   empty_cart_icon,
   orders,
   paymob,
+  wishlist,
+  redWish,
 };
 
 export const products = [
