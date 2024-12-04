@@ -19,7 +19,7 @@ a.active hr {
 }
 
 a.active {
-  color: black;
+  scale: 1.2;
 }
 
 .single-line {
@@ -117,13 +117,6 @@ a.active {
   }
 }
 
-@media (max-width: 640px) {
-  a.active {
-    background-color: black;
-    color: white;
-  }
-}
-
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -155,7 +148,17 @@ input[type="number"] {
   position: sticky;
   top: 0;
   left: 0;
-  width: 100%;
+  width: 101%;
   z-index: 1000;
   background-color: white;
+  margin-left: -8px;
+  border-radius: 0 0 10px 10px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  margin-bottom: 3px;
+}
+
+@media (max-width: 640px) {
+  .sticky-navbar {
+    width: 104%;
+  }
 }

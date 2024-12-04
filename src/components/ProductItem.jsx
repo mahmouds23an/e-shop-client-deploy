@@ -33,7 +33,7 @@ const ProductItem = ({
       <div className="w-full max-w-xs mx-auto bg-white shadow-md rounded-lg flex flex-col items-center p-4 transition-shadow duration-200 ease-in-out hover:shadow-xl">
         {/* Discount Badge */}
         {showDiscountBadge && discountPercentage > 0 && (
-          <div className="absolute top-0 right-0 z-50 bg-red-500 text-white text-sm font-bold px-2 py-1 rounded-sm">
+          <div className="absolute top-[0.5px] left-[0.5px] z-50 bg-red-500 text-white text-sm font-bold px-2 py-1 rounded-tl-lg rounded-br-lg">
             -{discountPercentage}%
           </div>
         )}

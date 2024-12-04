@@ -4,11 +4,10 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext";
 import { toast } from "react-toastify";
 import CartDropdown from "./CartDropdown";
-import { FaBars, FaTimes } from "react-icons/fa";
+import { FaHome, FaThLarge, FaInfoCircle, FaEnvelope } from "react-icons/fa";
 
 const Navbar = () => {
   const [profileDropdownVisible, setProfileDropdownVisible] = useState(false);
-  const [menuVisible, setMenuVisible] = useState(false);
   const {
     setShowSearch,
     getCartCount,
@@ -16,10 +15,12 @@ const Navbar = () => {
     setToken,
     setCartItems,
     showCartDropdown,
+    setShowCartDropdown,
     currentUser,
   } = useContext(ShopContext);
 
   const profileDropdownRef = useRef(null);
+  const cartDropdownRef = useRef(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -30,6 +31,12 @@ const Navbar = () => {
       ) {
         setProfileDropdownVisible(false);
       }
+      if (
+        cartDropdownRef.current &&
+        !cartDropdownRef.current.contains(event.target)
+      ) {
+        setShowCartDropdown(false);
+      }
     };
 
     document.addEventListener("mousedown", handleClickOutside);
@@ -37,7 +44,7 @@ const Navbar = () => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  }, [setShowCartDropdown]);
 
   const logout = () => {
     navigate("/login");
@@ -51,51 +58,36 @@ const Navbar = () => {
     setProfileDropdownVisible(!profileDropdownVisible);
   };
 
-  const toggleMenu = () => {
-    setMenuVisible(!menuVisible);
-  };
-
-  const goToCartPage = () => {
-    navigate("/cart");
-  };
-
-  const goToWishlistPage = () => {
-    navigate("/wishlist");
-  };
-
   return (
-    <div className="flex items-center justify-between py-5 font-medium relative">
+    <div className="flex items-center justify-between px-4 py-2 font-medium relative">
       <Link to="/">
         <img src={assets.logo} alt="Logo" className="w-36" />
       </Link>
 
-      {/* Large screen navigation */}
-      <ul className="hidden sm:flex gap-5 text-sm text-gray-700">
-        <NavLink
-          to="/"
-          className="flex flex-col items-center gap-1 uppercase text-gray-400"
-        >
+      <ul className="hidden lg:flex gap-5 text-sm text-gray-700">
+        <NavLink to="/" className="uppercase text-gray-400 hover:text-black">
           Home
         </NavLink>
         <NavLink
           to="/collection"
-          className="flex flex-col items-center gap-1 uppercase text-gray-400"
+          className="uppercase text-gray-400 hover:text-black"
         >
           Collection
         </NavLink>
         <NavLink
           to="/about"
-          className="flex flex-col items-center gap-1 uppercase text-gray-400"
+          className="uppercase text-gray-400 hover:text-black"
         >
           About
         </NavLink>
         <NavLink
           to="/contact"
-          className="flex flex-col items-center gap-1 uppercase text-gray-400"
+          className="uppercase text-gray-400 hover:text-black"
         >
           Contact-Us
         </NavLink>
       </ul>
+
       {token ? (
         <div className="flex items-center gap-6">
           <div className="relative" ref={profileDropdownRef}>
@@ -107,19 +99,9 @@ const Navbar = () => {
                 alt="Profile"
               />
               <div className="flex gap-1 items-center text-sm">
-                <p className="text-gray-500">Hi, </p>
-                <p className="text-gray-500">{currentUser?.firstName}</p>
+                <p>Hello,</p>
+                <p>{currentUser?.firstName}</p>
               </div>
-            </div>
-
-            <div
-              className={`absolute -right-11 mt-6 w-80 bg-white shadow-md rounded-md transition-transform transform duration-500 ease-out ${
-                showCartDropdown
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 -translate-y-4 pointer-events-none"
-              }`}
-            >
-              {showCartDropdown && <CartDropdown show={true} />}
             </div>
 
             {profileDropdownVisible && (
@@ -136,12 +118,21 @@ const Navbar = () => {
                   </p>
                   <p
                     onClick={() => {
+                      navigate("/wishlist");
+                      setProfileDropdownVisible(false);
+                    }}
+                    className="cursor-pointer hover:text-black"
+                  >
+                    My Wishlist
+                  </p>
+                  <p
+                    onClick={() => {
                       navigate("/orders");
                       setProfileDropdownVisible(false);
                     }}
                     className="cursor-pointer hover:text-black"
                   >
-                    Orders
+                    My Orders
                   </p>
                   <p
                     onClick={() => {
@@ -157,21 +148,9 @@ const Navbar = () => {
             )}
           </div>
 
-          <div className="relative">
+          <div className="relative" ref={cartDropdownRef}>
             <img
-              onClick={goToWishlistPage}
-              src={assets.wishlist}
-              className="w-7 cursor-pointer"
-              alt="Cart"
-            />
-            {/* <p className="absolute right-[-8px] bottom-[-8px] w-4 text-center leading-4 bg-black text-white aspect-square rounded-full text-[8px]">
-              {getWishlistCount()}
-            </p> */}
-          </div>
-
-          <div className="relative">
-            <img
-              onClick={goToCartPage}
+              onClick={() => setShowCartDropdown(!showCartDropdown)}
               src={assets.cart_icon}
               className="w-5 cursor-pointer"
               alt="Cart"
@@ -179,6 +158,7 @@ const Navbar = () => {
             <p className="absolute right-[-8px] bottom-[-8px] w-4 text-center leading-4 bg-black text-white aspect-square rounded-full text-[8px]">
               {getCartCount()}
             </p>
+            {showCartDropdown && <CartDropdown show={true} />}
           </div>
         </div>
       ) : (
@@ -196,45 +176,64 @@ const Navbar = () => {
           </Link>
         </div>
       )}
-      <button
-        className="block sm:hidden text-gray-700 text-2xl"
-        onClick={toggleMenu}
+
+      <div
+        className="fixed -bottom-2 left-0.5 rounded-t-2xl w-full bg-gradient-to-r from-gray-500 via-gray-700 
+      to-gray-500 text-white shadow-lg flex justify-around items-center py-3 lg:hidden"
       >
-        {menuVisible ? <FaTimes /> : <FaBars />}
-      </button>
-      {/* Dropdown menu for small screens */}
-      {menuVisible && (
-        <ul className="absolute top-20 right-0 bg-white shadow-lg border border-gray-400 rounded-lg flex flex-col w-48 p-4 gap-2 z-50 sm:hidden">
-          <NavLink
-            to="/"
-            className="text-gray-400 p-2 rounded-md"
-            onClick={() => setMenuVisible(false)}
-          >
-            Home
-          </NavLink>
-          <NavLink
-            to="/collection"
-            className="text-gray-400 p-2 rounded-md"
-            onClick={() => setMenuVisible(false)}
-          >
-            Collection
-          </NavLink>
-          <NavLink
-            to="/about"
-            className="text-gray-400 p-2 rounded-md"
-            onClick={() => setMenuVisible(false)}
-          >
-            About
-          </NavLink>
-          <NavLink
-            to="/contact"
-            className="text-gray-400 p-2 rounded-md"
-            onClick={() => setMenuVisible(false)}
-          >
-            Contact-Us
-          </NavLink>
-        </ul>
-      )}
+        <NavLink
+          to="/"
+          className={({ isActive }) =>
+            `flex flex-col items-center text-sm ${
+              isActive
+                ? "text-black font-bold scale-110 border-black"
+                : "hover:text-black"
+            }`
+          }
+        >
+          <FaHome className="text-2xl" />
+          <span className="mt-1">Home</span>
+        </NavLink>
+        <NavLink
+          to="/collection"
+          className={({ isActive }) =>
+            `flex flex-col items-center text-sm ${
+              isActive
+                ? "text-black font-bold scale-110 border-black"
+                : "hover:text-black"
+            }`
+          }
+        >
+          <FaThLarge className="text-2xl" />
+          <span className="mt-1">Collection</span>
+        </NavLink>
+        <NavLink
+          to="/about"
+          className={({ isActive }) =>
+            `flex flex-col items-center text-sm ${
+              isActive
+                ? "text-black font-bold scale-110 border-black"
+                : "hover:text-black"
+            }`
+          }
+        >
+          <FaInfoCircle className="text-2xl" />
+          <span className="mt-1">About</span>
+        </NavLink>
+        <NavLink
+          to="/contact"
+          className={({ isActive }) =>
+            `flex flex-col items-center text-sm ${
+              isActive
+                ? "text-black font-bold scale-110 border-black"
+                : "hover:text-black"
+            }`
+          }
+        >
+          <FaEnvelope className="text-2xl" />
+          <span className="mt-1">Contact</span>
+        </NavLink>
+      </div>
     </div>
   );
 };
