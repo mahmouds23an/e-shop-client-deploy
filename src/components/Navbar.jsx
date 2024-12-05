@@ -4,7 +4,13 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext";
 import { toast } from "react-toastify";
 import CartDropdown from "./CartDropdown";
-import { FaHome, FaThLarge, FaInfoCircle, FaEnvelope } from "react-icons/fa";
+import {
+  FaHome,
+  FaThLarge,
+  FaInfoCircle,
+  FaEnvelope,
+  FaShoppingCart,
+} from "react-icons/fa";
 
 const Navbar = () => {
   const [profileDropdownVisible, setProfileDropdownVisible] = useState(false);
@@ -148,9 +154,9 @@ const Navbar = () => {
             )}
           </div>
 
-          <div className="relative" ref={cartDropdownRef}>
+          <div className="relative hidden lg:block" ref={cartDropdownRef}>
             <img
-              onClick={() => setShowCartDropdown(!showCartDropdown)}
+              onClick={() => navigate("/cart")}
               src={assets.cart_icon}
               className="w-5 cursor-pointer"
               alt="Cart"
@@ -179,7 +185,7 @@ const Navbar = () => {
 
       <div
         className="fixed -bottom-2 left-0 rounded-t-2xl w-full bg-gradient-to-r from-gray-500 via-gray-700 
-      to-gray-500 text-white shadow-lg flex justify-around items-center py-3 lg:hidden"
+  to-gray-500 text-white shadow-lg flex justify-around items-center py-3 lg:hidden"
       >
         <NavLink
           to="/"
@@ -232,6 +238,23 @@ const Navbar = () => {
         >
           <FaEnvelope className="text-2xl" />
           <span className="mt-1">Contact</span>
+        </NavLink>
+        <NavLink
+          to="/cart"
+          className={({ isActive }) =>
+            `flex flex-col items-center text-sm ${
+              isActive
+                ? "text-black font-bold border-black"
+                : "hover:text-black"
+            }`
+          }
+        >
+          <FaShoppingCart className="text-2xl" />
+          <p className="absolute right-3 bottom-12 w-4 text-center leading-4 bg-black text-white aspect-square rounded-full text-[8px]">
+            {getCartCount()}
+          </p>
+          <span className="mt-1">Cart</span>
+          {showCartDropdown && <CartDropdown show={true} />}
         </NavLink>
       </div>
     </div>

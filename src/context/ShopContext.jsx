@@ -72,7 +72,7 @@ const ShopContextProvider = (props) => {
     setCartItems(cartData);
 
     setShowCartDropdown(true);
-    setTimeout(() => setShowCartDropdown(false), 6000);
+    // setTimeout(() => setShowCartDropdown(false), 6000);
     if (token) {
       try {
         const response = await axios.post(

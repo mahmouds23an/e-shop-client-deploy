@@ -1,22 +1,15 @@
-/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import { useContext, useEffect } from "react";
+/* eslint-disable react/prop-types */
+import { useContext } from "react";
 import { ShopContext } from "../context/ShopContext";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { FaTimes, FaShoppingCart } from "react-icons/fa";
 
 const CartDropdown = ({ show }) => {
   const { cartItems, products, updateQuantity, currency, closeCartDropdown } =
     useContext(ShopContext);
   const navigate = useNavigate();
-  const location = useLocation();
 
-  useEffect(() => {
-    if (location.pathname === "/cart") {
-      closeCartDropdown();
-    }
-  }, [location, closeCartDropdown]);
-
-  // Check if cartItems is a valid object (not null or undefined)
   const cartData = cartItems
     ? Object.entries(cartItems).flatMap(([id, sizes]) =>
         Object.entries(sizes)
@@ -30,72 +23,105 @@ const CartDropdown = ({ show }) => {
       )
     : [];
 
-  if (cartData.length === 0) return null;
+  const totalPrice = cartData.reduce(
+    (acc, item) => acc + item.quantity * (item.product?.price || 0),
+    0
+  );
+
+  if (cartData.length === 0 && !show) return null;
 
   const handleViewFullCart = () => {
     navigate("/cart");
+    closeCartDropdown();
   };
 
   return (
     <div
-      className={`absolute right-0 z-50 border border-black -mt-2 md:-mr-1 -mr-3 w-80 bg-white shadow-lg rounded-lg 
-        p-4 transition-transform duration-300 transform ${
-        show ? "translate-y-0 opacity-100" : "-translate-y-4 opacity-0"
+      className={`fixed top-0 right-0 z-50 h-screen bg-white shadow-lg transform transition-all duration-500 ${
+        show ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"
       }`}
-      style={{ maxHeight: "300px", overflowY: "auto" }}
+      style={{ width: "85vw", maxWidth: "400px", height: "80%" }}
     >
-      {cartData.map((item, index) => (
-        <div key={index} className="flex items-center gap-4 py-2 border-b">
-          <img
-            src={item.product?.image[0]}
-            alt={item.product?.name}
-            className="w-12 h-12 rounded-full object-cover"
-          />
-          <div className="flex-1">
-            <p
-              className="text-sm font-medium text-ellipsis
-              max-w-[150px]
-              overflow-hidden whitespace-nowrap"
+      {/* Close Button */}
+      <button
+        onClick={closeCartDropdown}
+        className="absolute top-4 right-4 bg-gray-200 p-2 rounded-full text-gray-600 hover:bg-gray-300"
+      >
+        <FaTimes className="text-lg" />
+      </button>
+
+      <div className="p-6 overflow-y-auto h-full">
+        <h3 className="text-lg font-semibold mb-4">Your Cart</h3>
+
+        {/* Empty Cart */}
+        {cartData.length === 0 ? (
+          <p className="text-center text-gray-500">Your cart is empty.</p>
+        ) : (
+          cartData.map((item, index) => (
+            <div
+              key={index}
+              className="flex items-center gap-4 py-3 border-b last:border-none"
             >
-              {item.product?.name}
-            </p>
-            <p className="text-xs text-gray-500">
-              Size: <span className="font-semibold">{item?.size}</span>
-            </p>
-            <p className="text-sm font-semibold mt-1">
-              {item.product?.price} <span className="currency">{currency}</span>
-            </p>
-          </div>
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() =>
-                updateQuantity(item._id, item.size, item.quantity - 1)
-              }
-              disabled={item.quantity <= 1}
-              className="text-blue-600"
-            >
-              -
-            </button>
-            <span>{item.quantity}</span>
-            <button
-              onClick={() =>
-                updateQuantity(item._id, item.size, item.quantity + 1)
-              }
-              className="text-blue-600"
-            >
-              +
-            </button>
-          </div>
-        </div>
-      ))}
-      <div className="mt-4 text-center">
-        <button
-          onClick={handleViewFullCart}
-          className="text-blue-500 hover:underline"
-        >
-          View Full Cart
-        </button>
+              <img
+                src={item.product?.image[0]}
+                alt={item.product?.name}
+                className="w-16 h-16 rounded-lg object-cover"
+              />
+              <div className="flex-1">
+                <p className="text-sm font-medium text-ellipsis max-w-[150px] overflow-hidden whitespace-nowrap">
+                  {item.product?.name}
+                </p>
+                <p className="text-xs text-gray-500">
+                  Size: <span className="font-semibold">{item.size}</span>
+                </p>
+                <p className="text-sm font-semibold mt-1">
+                  {item.product?.price}{" "}
+                  <span className="currency">{currency}</span>
+                </p>
+              </div>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() =>
+                    updateQuantity(item._id, item.size, item.quantity - 1)
+                  }
+                  disabled={item.quantity <= 1}
+                  className="px-2 py-1 bg-gray-200 rounded text-gray-600 hover:bg-gray-300"
+                >
+                  -
+                </button>
+                <span>{item.quantity}</span>
+                <button
+                  onClick={() =>
+                    updateQuantity(item._id, item.size, item.quantity + 1)
+                  }
+                  className="px-2 py-1 bg-gray-200 rounded text-gray-600 hover:bg-gray-300"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+          ))
+        )}
       </div>
+
+      {/* Footer with Total Price */}
+      {cartData.length > 0 && (
+        <div className="p-4 border-t bg-gray-100">
+          <div className="flex justify-between items-center mb-4">
+            <p className="text-lg font-semibold">Total:</p>
+            <p className="text-lg font-bold">
+              {totalPrice.toFixed(2)}{" "}
+              <span className="currency">{currency}</span>
+            </p>
+          </div>
+          <button
+            onClick={handleViewFullCart}
+            className="w-full py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+          >
+            View Full Cart
+          </button>
+        </div>
+      )}
     </div>
   );
 };

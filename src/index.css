@@ -22,6 +22,13 @@ a.active {
   scale: 1.2;
 }
 
+@media (max-width: 1024px) {
+  .cart-dropdown {
+    width: 85vw;
+    max-width: 350px;
+  }
+}
+
 .single-line {
   white-space: nowrap;
   overflow: hidden;
