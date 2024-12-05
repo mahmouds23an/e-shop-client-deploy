@@ -1,32 +1,36 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import { useContext } from "react";
+import { useContext, useMemo } from "react";
 import { ShopContext } from "../context/ShopContext";
 import { useNavigate } from "react-router-dom";
-import { FaTimes, FaShoppingCart } from "react-icons/fa";
+import { FaTimes } from "react-icons/fa";
 
 const CartDropdown = ({ show }) => {
   const { cartItems, products, updateQuantity, currency, closeCartDropdown } =
     useContext(ShopContext);
   const navigate = useNavigate();
 
-  const cartData = cartItems
-    ? Object.entries(cartItems).flatMap(([id, sizes]) =>
-        Object.entries(sizes)
-          .filter(([_, quantity]) => quantity > 0)
-          .map(([size, quantity]) => ({
-            _id: id,
-            size,
-            quantity,
-            product: products.find((product) => product._id === id),
-          }))
-      )
-    : [];
+  const cartData = useMemo(() => {
+    return cartItems
+      ? Object.entries(cartItems).flatMap(([id, sizes]) =>
+          Object.entries(sizes)
+            .filter(([_, quantity]) => quantity > 0)
+            .map(([size, quantity]) => ({
+              _id: id,
+              size,
+              quantity,
+              product: products.find((product) => product._id === id),
+            }))
+        )
+      : [];
+  }, [cartItems, products]);
 
-  const totalPrice = cartData.reduce(
-    (acc, item) => acc + item.quantity * (item.product?.price || 0),
-    0
-  );
+  const totalPrice = useMemo(() => {
+    return cartData.reduce(
+      (acc, item) => acc + item.quantity * (item.product?.price || 0),
+      0
+    );
+  }, [cartData]);
 
   if (cartData.length === 0 && !show) return null;
 
@@ -45,21 +49,22 @@ const CartDropdown = ({ show }) => {
       {/* Close Button */}
       <button
         onClick={closeCartDropdown}
+        aria-label="Close cart"
         className="absolute top-4 right-4 bg-gray-200 p-2 rounded-full text-gray-600 hover:bg-gray-300"
       >
         <FaTimes className="text-lg" />
       </button>
 
       <div className="p-6 overflow-y-auto h-full">
-        <h3 className="text-lg font-semibold mb-4">Your Cart</h3>
+        <h3 className="text-lg font-semibold mb-4 text-black">Your Cart</h3>
 
         {/* Empty Cart */}
         {cartData.length === 0 ? (
           <p className="text-center text-gray-500">Your cart is empty.</p>
         ) : (
-          cartData.map((item, index) => (
+          cartData.map((item) => (
             <div
-              key={index}
+              key={item._id + item.size}
               className="flex items-center gap-4 py-3 border-b last:border-none"
             >
               <img
@@ -74,8 +79,8 @@ const CartDropdown = ({ show }) => {
                 <p className="text-xs text-gray-500">
                   Size: <span className="font-semibold">{item.size}</span>
                 </p>
-                <p className="text-sm font-semibold mt-1">
-                  {item.product?.price}{" "}
+                <p className="text-sm font-semibold mt-1 text-black">
+                  {item.product?.price.toFixed(2)}{" "}
                   <span className="currency">{currency}</span>
                 </p>
               </div>
@@ -85,15 +90,19 @@ const CartDropdown = ({ show }) => {
                     updateQuantity(item._id, item.size, item.quantity - 1)
                   }
                   disabled={item.quantity <= 1}
-                  className="px-2 py-1 bg-gray-200 rounded text-gray-600 hover:bg-gray-300"
+                  aria-label={`Decrease ${item.product?.name} quantity`}
+                  className={`px-2 py-1 rounded text-gray-600 hover:bg-gray-300 ${
+                    item.quantity <= 1 ? "bg-gray-100" : "bg-gray-200"
+                  }`}
                 >
                   -
                 </button>
-                <span>{item.quantity}</span>
+                <span className="text-black">{item.quantity}</span>
                 <button
                   onClick={() =>
                     updateQuantity(item._id, item.size, item.quantity + 1)
                   }
+                  aria-label={`Increase ${item.product?.name} quantity`}
                   className="px-2 py-1 bg-gray-200 rounded text-gray-600 hover:bg-gray-300"
                 >
                   +
@@ -108,15 +117,15 @@ const CartDropdown = ({ show }) => {
       {cartData.length > 0 && (
         <div className="p-4 border-t bg-gray-100">
           <div className="flex justify-between items-center mb-4">
-            <p className="text-lg font-semibold">Total:</p>
-            <p className="text-lg font-bold">
+            <p className="text-lg font-semibold text-black">Total:</p>
+            <p className="text-lg font-bold text-black">
               {totalPrice.toFixed(2)}{" "}
               <span className="currency">{currency}</span>
             </p>
           </div>
           <button
             onClick={handleViewFullCart}
-            className="w-full py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+            className="w-full py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-200"
           >
             View Full Cart
           </button>
