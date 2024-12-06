@@ -7,7 +7,6 @@ import RelatedProducts from "../components/RelatedProducts";
 import ProductNotFound from "../components/ProductNotFound";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 
 const Product = () => {

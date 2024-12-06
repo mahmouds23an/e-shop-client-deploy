@@ -75,14 +75,14 @@ const CartDropdown = ({ show }) => {
   return (
     <AnimatePresence>
       {show && (
-        <>
+        <div className="fixed inset-0 z-40">
           {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={closeCartDropdown}
-            className="fixed inset-0 bg-black bg-opacity-50 z-40"
+            onClick={closeCartDropdown} // Close dropdown only when backdrop is clicked
+            className="fixed inset-0 bg-black bg-opacity-50"
           />
 
           {/* Cart Drawer */}
@@ -92,7 +92,7 @@ const CartDropdown = ({ show }) => {
             exit="hidden"
             variants={dropdownVariants}
             className="cart-container"
-            onClick={(e) => e.stopPropagation()}
+            onClick={(e) => e.stopPropagation()} // Prevent clicks inside the dropdown from propagating
           >
             {/* Close Button */}
             <motion.button
@@ -142,8 +142,8 @@ const CartDropdown = ({ show }) => {
                         className="w-20 h-20 rounded-lg object-cover shadow-md"
                       />
                       <div className="flex-1">
-                        <p className="text-sm font-medium text-ellipsis max-w-[150px] overflow-hidden whitespace-nowrap">
-                          {item.product?.name}
+                        <p className="text-sm text-black font-medium text-ellipsis max-w-[150px] overflow-hidden whitespace-nowrap">
+                          {item?.product?.name}
                         </p>
                         <p className="text-xs text-gray-500 mt-1">
                           Size:{" "}
@@ -158,16 +158,17 @@ const CartDropdown = ({ show }) => {
                         <motion.button
                           whileHover={{ scale: 1.1 }}
                           whileTap={{ scale: 0.9 }}
-                          onClick={() =>
+                          onClick={(e) => {
+                            e.stopPropagation();
                             updateQuantityHandler(
                               item._id,
                               item.size,
                               item.quantity - 1
-                            )
-                          }
+                            );
+                          }}
                           disabled={item.quantity <= 1}
                           aria-label={`Decrease ${item.product?.name} quantity`}
-                          className={`px-3 py-1 rounded-full text-gray-600 hover:bg-gray-300 transition-colors ${
+                          className={`px-3 py-1 hidden lg:block rounded-full text-gray-600 hover:bg-gray-300 transition-colors ${
                             item.quantity <= 1 ? "bg-gray-100" : "bg-gray-200"
                           }`}
                         >
@@ -179,15 +180,16 @@ const CartDropdown = ({ show }) => {
                         <motion.button
                           whileHover={{ scale: 1.1 }}
                           whileTap={{ scale: 0.9 }}
-                          onClick={() =>
+                          onClick={(e) => {
+                            e.stopPropagation();
                             updateQuantityHandler(
                               item._id,
                               item.size,
                               item.quantity + 1
-                            )
-                          }
+                            );
+                          }}
                           aria-label={`Increase ${item.product?.name} quantity`}
-                          className="px-3 py-1 bg-gray-200 rounded-full text-gray-600 hover:bg-gray-300 transition-colors"
+                          className="px-3 py-1 hidden lg:block bg-gray-200 rounded-full text-gray-600 hover:bg-gray-300 transition-colors"
                         >
                           +
                         </motion.button>
@@ -223,7 +225,7 @@ const CartDropdown = ({ show }) => {
               </motion.div>
             )}
           </motion.div>
-        </>
+        </div>
       )}
     </AnimatePresence>
   );
