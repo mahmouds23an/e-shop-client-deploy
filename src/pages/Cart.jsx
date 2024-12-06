@@ -76,31 +76,31 @@ const Cart = () => {
   );
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto px-4 sm:px-8">
       {/* Header */}
-      <header className="text-3xl font-bold text-center text-gray-800 mb-6">
+      <header className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-6">
         <Title text1="Your" text2="Cart" />
       </header>
 
       {/* Empty Cart State */}
       {cartData.length === 0 ? (
-        <div className="flex flex-col items-center mt-10">
+        <div className="flex flex-col items-center mt-10 text-center">
           <img
             src={assets.empty_cart_icon}
             alt="Empty Cart"
-            className="w-24 h-24 mb-4"
+            className="w-20 h-20 sm:w-24 sm:h-24 mb-4"
           />
-          <p className="text-lg text-gray-600">Your cart is empty</p>
-          <div className="mt-4">
+          <p className="text-sm sm:text-lg text-gray-600">Your cart is empty</p>
+          <div className="mt-4 flex gap-2">
             <Link
               to="/"
-              className="bg-white border border-gray-400 text-black hover:bg-black hover:text-white px-4 py-2 rounded-md transition duration-300 mr-2"
+              className="bg-white border border-gray-400 text-black hover:bg-black hover:text-white px-3 py-2 rounded-md transition duration-300 text-sm sm:text-base"
             >
               Home
             </Link>
             <Link
               to="/collection"
-              className="bg-white border border-gray-400 text-black hover:bg-black hover:text-white px-4 py-2 rounded-md transition duration-300"
+              className="bg-white border border-gray-400 text-black hover:bg-black hover:text-white px-3 py-2 rounded-md transition duration-300 text-sm sm:text-base"
             >
               Collection
             </Link>
@@ -120,27 +120,24 @@ const Cart = () => {
             return (
               <div
                 key={index}
-                className="flex items-center justify-between border-b border-gray-400"
+                className="flex flex-row sm:flex-row items-start sm:items-center justify-between border-b border-gray-400 pb-4"
               >
                 {/* Product Details */}
-                <div className="flex items-center space-x-4 w-1/3">
+                <div className="flex items-center space-x-4 w-full sm:w-2/3">
                   <img
                     src={productData?.image[0]}
                     alt={productData?.name}
-                    className="w-16 h-16 rounded-md object-cover"
+                    className="w-14 h-14 sm:w-16 sm:h-16 rounded-md object-cover"
                   />
-                  <div>
-                    <h3
-                      className="text-lg font-semibold text-ellipsis max-w-[300px] 
-                    md:max-w-[400px] overflow-hidden whitespace-nowrap"
-                    >
+                  <div className="flex-1">
+                    <h3 className="text-sm sm:text-base font-semibold text-ellipsis max-w-full overflow-hidden whitespace-nowrap">
                       {productData?.name}
                     </h3>
-                    <p className="text-gray-600 mb-1">
+                    <p className="text-gray-600 text-sm sm:text-base">
                       {displayPrice}
                       <span className="currency">{currency}</span>
                     </p>
-                    <p className="text-sm font-medium mb-4">
+                    <p className="text-xs sm:text-sm font-medium mt-2">
                       Size:{" "}
                       <span className="px-2 bg-white text-black border border-gray-400 rounded-md">
                         {item?.size}
@@ -149,48 +146,50 @@ const Cart = () => {
                   </div>
                 </div>
 
-                {/* Quantity Adjustment Section */}
-                <div className="flex items-center space-x-2">
-                  <button
-                    onClick={() =>
-                      updateQuantity(item._id, item.size, item.quantity - 1)
-                    }
-                    disabled={item.quantity <= 1}
-                    className={`bg-white text-black border border-gray-400 px-3 py-1 rounded-md transition duration-200 ease-in-out ${
-                      item.quantity <= 1
-                        ? "opacity-50 cursor-not-allowed"
-                        : "hover:bg-black hover:text-white"
-                    }`}
-                  >
-                    -
-                  </button>
+                {/* Quantity and Delete Section */}
+                <div className="flex items-center space-x-4 mt-4 sm:mt-0">
+                  {/* Quantity Adjustment */}
+                  <div className="flex items-center space-x-2">
+                    <button
+                      onClick={() =>
+                        updateQuantity(item._id, item.size, item.quantity - 1)
+                      }
+                      disabled={item.quantity <= 1}
+                      className={`bg-white text-black border border-gray-400 px-3 py-1 rounded-md transition duration-200 ease-in-out text-xs sm:text-sm ${
+                        item.quantity <= 1
+                          ? "opacity-50 cursor-not-allowed"
+                          : "hover:bg-black hover:text-white"
+                      }`}
+                    >
+                      -
+                    </button>
 
-                  <input
-                    type="number"
-                    min={1}
-                    value={item.quantity}
-                    readOnly
-                    className="border w-[60px] text-center px-2 py-1 border-gray-400 rounded-md"
+                    <input
+                      type="number"
+                      min={1}
+                      value={item.quantity}
+                      readOnly
+                      className="border w-[50px] sm:w-[60px] text-center text-sm px-2 py-1 border-gray-400 rounded-md"
+                    />
+
+                    <button
+                      onClick={() =>
+                        updateQuantity(item._id, item.size, item.quantity + 1)
+                      }
+                      className="bg-white text-black border border-gray-400 px-3 py-1 rounded-md hover:bg-black hover:text-white transition duration-200 ease-in-out text-xs sm:text-sm"
+                    >
+                      +
+                    </button>
+                  </div>
+
+                  {/* Delete Icon */}
+                  <img
+                    src={assets.bin_icon}
+                    alt="Delete Item"
+                    className="w-5 sm:w-6 cursor-pointer hover:scale-110 duration-200"
+                    onClick={() => showDeleteConfirmation(item._id, item.size)}
                   />
-
-                  <button
-                    onClick={() =>
-                      updateQuantity(item._id, item.size, item.quantity + 1)
-                    }
-                    className="bg-white text-black border border-gray-400 px-3 py-1 rounded-md hover:bg-black 
-                    hover:text-white transition duration-200 ease-in-out"
-                  >
-                    +
-                  </button>
                 </div>
-
-                {/* Delete Icon */}
-                <img
-                  src={assets.bin_icon}
-                  alt="Delete Item"
-                  className="w-5 cursor-pointer hover:scale-125 duration-200"
-                  onClick={() => showDeleteConfirmation(item._id, item.size)}
-                />
               </div>
             );
           })}
@@ -199,8 +198,8 @@ const Cart = () => {
 
       {/* Cart Summary */}
       {cartData.length > 0 && (
-        <div className="flex justify-end mt-8">
-          <div className="rounded-lg shadow-md p-4 w-full sm:w-[500px] -mb-24">
+        <div className="mt-8">
+          <div className="rounded-lg shadow-md p-4 w-full sm:w-[400px] mx-auto">
             <Suspense fallback={<div>Loading...</div>}>
               <CartTotal
                 applyPromoCode={() => {}}
@@ -209,11 +208,10 @@ const Cart = () => {
                 onSubtotalChange={() => {}}
               />
             </Suspense>
-            <div className="text-right mt-4">
+            <div className="text-center mt-4">
               <button
                 onClick={() => navigate("/place-order")}
-                className="bg-white w-full border border-gray-400 text-black text-sm px-8 py-3 hover:bg-black hover:text-white transition 
-                duration-300 ease-in-out rounded-md"
+                className="bg-white border border-gray-400 text-black text-sm sm:text-base px-6 py-2 hover:bg-black hover:text-white transition duration-300 ease-in-out rounded-md w-full"
               >
                 PROCEED TO CHECKOUT
               </button>
