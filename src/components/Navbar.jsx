@@ -184,8 +184,8 @@ const Navbar = () => {
       )}
 
       <div
-        className="fixed -bottom-2 left-0 rounded-t-2xl w-[100%] bg-gradient-to-r from-gray-500 via-gray-700 
-  to-gray-500 text-white shadow-lg flex justify-around items-center py-3 lg:hidden"
+        className="fixed -bottom-2 rounded-t-xl left-0 w-[100vw] bg-gradient-to-r from-stone-400 via-stone-400 
+                  to-stone-400 text-white shadow-lg flex justify-around items-center py-3 lg:hidden"
       >
         <NavLink
           to="/"
