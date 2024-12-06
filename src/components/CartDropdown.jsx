@@ -91,13 +91,8 @@ const CartDropdown = ({ show }) => {
             animate="visible"
             exit="hidden"
             variants={dropdownVariants}
-            className="fixed top-0 right-0 z-50 bg-white shadow-xl"
-            style={{
-              width: "90vw", // Adjust width for smaller screens
-              maxWidth: "400px", // Maximum width for larger screens
-              height: "85vh", // Adjust height for smaller screens
-              maxHeight: "100%", // Ensure it doesn't exceed the screen
-            }}
+            className="cart-container"
+            onClick={(e) => e.stopPropagation()}
           >
             {/* Close Button */}
             <motion.button

@@ -26,6 +26,8 @@ a.active {
   .cart-dropdown {
     width: 85vw;
     max-width: 350px;
+    height: 95vh;
+    max-height: 95%;
   }
 }
 
@@ -167,5 +169,39 @@ input[type="number"] {
 @media (max-width: 640px) {
   .sticky-navbar {
     width: 104%;
+  }
+}
+
+.cart-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 50;
+  background-color: white;
+  height: 78vh;
+  max-height: 95%;
+  box-shadow: var(--shadow-xl);
+  width: 100vw;
+  max-width: 100%;
+}
+
+@media (min-width: 640px) {
+  .cart-container {
+    width: 70vw;
+    height: 60vh;
+  }
+}
+
+@media (min-width: 768px) {
+  .cart-container {
+    width: 50vw;
+    height: 81vh;
+  }
+}
+
+@media (min-width: 1024px) {
+  .cart-container {
+    width: 36vw;
+    height: 82%;
   }
 }
