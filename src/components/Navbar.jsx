@@ -1,5 +1,6 @@
 import { useContext, useState, useRef, useEffect } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
+import { assets } from "../assets/frontend_assets/assets";
 import { ShopContext } from "../context/ShopContext";
 import { toast } from "react-toastify";
 import CartDropdown from "./CartDropdown";
@@ -72,7 +73,7 @@ const Navbar = () => {
   return (
     <div className="flex items-center justify-between px-4 py-2 font-medium relative">
       <Link to="/">
-        <img src="/logo.png" alt="Logo" className="w-36" />
+        <img src={assets.logo} alt="Logo" className="w-36" />
       </Link>
 
       <ul className="hidden lg:flex gap-5 text-sm text-gray-700">
@@ -125,7 +126,7 @@ const Navbar = () => {
                   >
                     My Profile
                   </p>
-                  <p
+                  {/* <p
                     onClick={() => {
                       navigate("/wishlist");
                       setProfileDropdownVisible(false);
@@ -133,7 +134,7 @@ const Navbar = () => {
                     className="cursor-pointer hover:text-black"
                   >
                     My Wishlist
-                  </p>
+                  </p> */}
                   <p
                     onClick={() => {
                       navigate("/orders");

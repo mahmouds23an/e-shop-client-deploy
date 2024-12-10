@@ -50,6 +50,7 @@ const ShopContextProvider = (props) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [currentUserReviews, setCurrentUserReviews] = useState([]);
   const navigate = useNavigate();
+  console.log(currentUser);
 
   const closeCartDropdown = () => setShowCartDropdown(false);
 
@@ -97,22 +98,22 @@ const ShopContextProvider = (props) => {
     }
   };
 
-  const addToWishlist = async (productId) => {
-    try {
-      const response = await axios.post(
-        backendUrl + "/api/user/add-to-favorites",
-        { productId },
-        { headers: { token } }
-      );
-      if (response.data.success) {
-        toast.success(response.data.message);
-      } else {
-        toast.error(response.data.message);
-      }
-    } catch (error) {
-      toast.error(error.message);
-    }
-  };
+  // const addToWishlist = async (productId) => {
+  //   try {
+  //     const response = await axios.post(
+  //       backendUrl + "/api/user/add-to-favorites",
+  //       { productId },
+  //       { headers: { token } }
+  //     );
+  //     if (response.data.success) {
+  //       toast.success(response.data.message);
+  //     } else {
+  //       toast.error(response.data.message);
+  //     }
+  //   } catch (error) {
+  //     toast.error(error.message);
+  //   }
+  // };
 
   const getCartCount = () => {
     let totalCount = 0;
@@ -247,7 +248,7 @@ const ShopContextProvider = (props) => {
     showCartDropdown,
     currentUser,
     currentUserReviews,
-    addToWishlist,
+    // addToWishlist,
     setCurrentUserReviews,
     setCurrentUser,
     closeCartDropdown,

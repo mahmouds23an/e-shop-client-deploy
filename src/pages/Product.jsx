@@ -15,7 +15,6 @@ const Product = () => {
     products,
     currency,
     addToCart,
-    addToWishlist,
     token,
     backendUrl,
     currentUser,
@@ -259,13 +258,6 @@ const Product = () => {
                 md:w-[300px] rounded-md active:bg-gray-700 transition duration-300"
               >
                 Add to Cart
-              </button>
-              <button
-                onClick={() => addToWishlist(productData._id)}
-                className="bg-white hover:bg-black hover:text-white text-black border border-gray-400 py-3 px-8 w-full 
-                md:w-[300px] rounded-md active:bg-gray-700 transition duration-300"
-              >
-                Add to Wishlist
               </button>
               {getCartCount() > 0 && (
                 <Link
