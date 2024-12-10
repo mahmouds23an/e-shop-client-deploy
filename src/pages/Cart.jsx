@@ -147,7 +147,7 @@ const Cart = () => {
                 </div>
 
                 {/* Quantity and Delete Section */}
-                <div className="flex items-center space-x-4 mt-4 sm:mt-0">
+                <div className="flex items-center space-x-4 md:mt-4 mt-8 sm:mt-0">
                   {/* Quantity Adjustment */}
                   <div className="flex items-center space-x-2">
                     <button

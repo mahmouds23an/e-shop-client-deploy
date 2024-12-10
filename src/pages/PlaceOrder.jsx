@@ -31,7 +31,6 @@ const PlaceOrder = () => {
     products,
     currentUser,
   } = useContext(ShopContext);
-  console.log(currentUser);
 
   const validatePhoneNumber = (phone) => {
     const phoneRegex = /^(010|011|012|015)\d{8}$/;

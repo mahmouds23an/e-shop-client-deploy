@@ -35,12 +35,14 @@ const CartDropdown = ({ show }) => {
 
   if (cartData.length === 0 && !show) return null;
 
-  const handleViewFullCart = () => {
+  const handleViewFullCart = (e) => {
+    e.stopPropagation();
     navigate("/cart");
     closeCartDropdown();
   };
 
-  const updateQuantityHandler = (id, size, newQuantity) => {
+  const updateQuantityHandler = (e, id, size, newQuantity) => {
+    e.stopPropagation();
     if (newQuantity > 0) {
       updateQuantity(id, size, newQuantity);
     }
@@ -75,13 +77,13 @@ const CartDropdown = ({ show }) => {
   return (
     <AnimatePresence>
       {show && (
-        <div className="fixed inset-0 z-40">
+        <div className="fixed inset-0 z-40" onClick={(e) => e.stopPropagation()}>
           {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={closeCartDropdown} // Close dropdown only when backdrop is clicked
+            onClick={closeCartDropdown}
             className="fixed inset-0 bg-black bg-opacity-50"
           />
 
@@ -91,14 +93,17 @@ const CartDropdown = ({ show }) => {
             animate="visible"
             exit="hidden"
             variants={dropdownVariants}
-            className="cart-container"
-            onClick={(e) => e.stopPropagation()} // Prevent clicks inside the dropdown from propagating
+            className="cart-container fixed right-0 top-0 h-full w-full sm:w-96 bg-white shadow-xl"
+            onClick={(e) => e.stopPropagation()}
           >
             {/* Close Button */}
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
-              onClick={closeCartDropdown}
+              onClick={(e) => {
+                e.stopPropagation();
+                closeCartDropdown();
+              }}
               aria-label="Close cart"
               className="absolute top-4 right-4 bg-gray-200 p-2 rounded-full text-gray-600 hover:bg-gray-300 transition-colors"
             >
@@ -134,6 +139,7 @@ const CartDropdown = ({ show }) => {
                       exit="hidden"
                       transition={{ delay: index * 0.1 }}
                       className="flex items-center gap-4 py-4 border-b last:border-none hover:bg-gray-50 transition-colors rounded-lg p-3"
+                      onClick={(e) => e.stopPropagation()}
                     >
                       <motion.img
                         whileHover={{ scale: 1.05 }}
@@ -159,8 +165,8 @@ const CartDropdown = ({ show }) => {
                           whileHover={{ scale: 1.1 }}
                           whileTap={{ scale: 0.9 }}
                           onClick={(e) => {
-                            e.stopPropagation();
                             updateQuantityHandler(
+                              e,
                               item._id,
                               item.size,
                               item.quantity - 1
@@ -168,7 +174,7 @@ const CartDropdown = ({ show }) => {
                           }}
                           disabled={item.quantity <= 1}
                           aria-label={`Decrease ${item.product?.name} quantity`}
-                          className={`px-3 py-1 hidden lg:block rounded-full text-gray-600 hover:bg-gray-300 transition-colors ${
+                          className={`px-3 py-1 rounded-full text-gray-600 hover:bg-gray-300 transition-colors ${
                             item.quantity <= 1 ? "bg-gray-100" : "bg-gray-200"
                           }`}
                         >
@@ -181,15 +187,15 @@ const CartDropdown = ({ show }) => {
                           whileHover={{ scale: 1.1 }}
                           whileTap={{ scale: 0.9 }}
                           onClick={(e) => {
-                            e.stopPropagation();
                             updateQuantityHandler(
+                              e,
                               item._id,
                               item.size,
                               item.quantity + 1
                             );
                           }}
                           aria-label={`Increase ${item.product?.name} quantity`}
-                          className="px-3 py-1 hidden lg:block bg-gray-200 rounded-full text-gray-600 hover:bg-gray-300 transition-colors"
+                          className="px-3 py-1 bg-gray-200 rounded-full text-gray-600 hover:bg-gray-300 transition-colors"
                         >
                           +
                         </motion.button>
@@ -206,6 +212,7 @@ const CartDropdown = ({ show }) => {
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 className="p-6 border-t bg-gray-50"
+                onClick={(e) => e.stopPropagation()}
               >
                 <div className="flex justify-between items-center mb-4">
                   <p className="text-lg font-semibold text-black">Total:</p>

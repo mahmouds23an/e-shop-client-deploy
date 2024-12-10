@@ -1,5 +1,4 @@
 import { useContext, useState, useRef, useEffect } from "react";
-import { assets } from "../assets/frontend_assets/assets";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext";
 import { toast } from "react-toastify";
@@ -10,6 +9,7 @@ import {
   FaInfoCircle,
   FaEnvelope,
   FaShoppingCart,
+  FaUser,
 } from "react-icons/fa";
 
 const Navbar = () => {
@@ -64,10 +64,15 @@ const Navbar = () => {
     setProfileDropdownVisible(!profileDropdownVisible);
   };
 
+  const toggleCartDropdown = (e) => {
+    e.stopPropagation();
+    setShowCartDropdown(!showCartDropdown);
+  };
+
   return (
     <div className="flex items-center justify-between px-4 py-2 font-medium relative">
       <Link to="/">
-        <img src={assets.logo} alt="Logo" className="w-36" />
+        <img src="/logo.png" alt="Logo" className="w-36" />
       </Link>
 
       <ul className="hidden lg:flex gap-5 text-sm text-gray-700">
@@ -97,13 +102,11 @@ const Navbar = () => {
       {token ? (
         <div className="flex items-center gap-6">
           <div className="relative" ref={profileDropdownRef}>
-            <div className="flex items-center gap-2">
-              <img
-                onClick={toggleProfileDropdown}
-                src={assets.profile_icon}
-                className="w-5 cursor-pointer"
-                alt="Profile"
-              />
+            <div
+              className="flex items-center gap-2 cursor-pointer"
+              onClick={toggleProfileDropdown}
+            >
+              <FaUser className="w-5 h-5" />
               <div className="flex gap-1 items-center text-sm">
                 <p>Hello,</p>
                 <p>{currentUser?.firstName}</p>
@@ -154,27 +157,27 @@ const Navbar = () => {
             )}
           </div>
 
-          <div className="relative hidden lg:block" ref={cartDropdownRef}>
-            <img
-              onClick={() => navigate("/cart")}
-              src={assets.cart_icon}
-              className="w-5 cursor-pointer"
-              alt="Cart"
-            />
-            <p className="absolute right-[-8px] bottom-[-8px] w-4 text-center leading-4 bg-black text-white aspect-square rounded-full text-[8px]">
-              {getCartCount()}
-            </p>
+          <div className="relative" ref={cartDropdownRef}>
+            <div
+              className="cursor-pointer relative hidden lg:block"
+              onClick={toggleCartDropdown}
+            >
+              <FaShoppingCart className="w-5 h-5" />
+              <p className="absolute right-[-8px] bottom-[-8px] w-4 text-center leading-4 bg-black text-white aspect-square rounded-full text-[8px]">
+                {getCartCount()}
+              </p>
+            </div>
             {showCartDropdown && <CartDropdown show={true} />}
           </div>
         </div>
       ) : (
         <div className="flex items-center gap-6">
-          <img
+          <button
             onClick={() => setShowSearch(true)}
-            src={assets.search_icon}
-            className="w-5 cursor-pointer"
-            alt="Search"
-          />
+            className="w-5 h-5 cursor-pointer"
+          >
+            Search
+          </button>
           <Link to="/login">
             <button className="px-7 py-2 text-sm text-white bg-black hover:opacity-70 rounded-full">
               Login
@@ -183,10 +186,7 @@ const Navbar = () => {
         </div>
       )}
 
-      <div
-        className="fixed -bottom-2 rounded-t-xl left-0 w-[100vw] bg-gradient-to-r from-stone-400 via-stone-400 
-                  to-stone-400 text-white shadow-lg flex justify-around items-center py-3 lg:hidden"
-      >
+      <div className="fixed -bottom-2 rounded-t-xl left-0 w-[100vw] bg-gradient-to-r from-stone-400 via-stone-400 to-stone-400 text-white shadow-lg flex justify-around items-center py-3 lg:hidden">
         <NavLink
           to="/"
           className={({ isActive }) =>
@@ -239,23 +239,16 @@ const Navbar = () => {
           <FaEnvelope className="text-2xl" />
           <span className="mt-1">Contact</span>
         </NavLink>
-        <NavLink
-          to="/cart"
-          className={({ isActive }) =>
-            `flex flex-col items-center text-sm ${
-              isActive
-                ? "text-black font-bold border-black"
-                : "hover:text-black"
-            }`
-          }
+        <div
+          className="relative flex flex-col items-center text-sm cursor-pointer"
+          onClick={() => navigate("/cart")}
         >
           <FaShoppingCart className="text-2xl" />
-          <p className="absolute right-3 bottom-12 w-4 text-center leading-4 bg-black text-white aspect-square rounded-full text-[8px]">
+          <p className="absolute right-[-8px] top-[-8px] w-4 text-center leading-4 bg-black text-white aspect-square rounded-full text-[8px]">
             {getCartCount()}
           </p>
           <span className="mt-1">Cart</span>
-          {showCartDropdown && <CartDropdown show={true} />}
-        </NavLink>
+        </div>
       </div>
     </div>
   );
