@@ -1,10 +1,12 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import { useContext, useMemo } from "react";
+import { useCallback, useContext, useMemo } from "react";
 import { ShopContext } from "../context/ShopContext";
 import { useNavigate } from "react-router-dom";
 import { FaTimes } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
+import { toast } from "react-toastify";
 
 const CartDropdown = ({ show }) => {
   const { cartItems, products, updateQuantity, currency, closeCartDropdown } =
@@ -74,10 +76,49 @@ const CartDropdown = ({ show }) => {
     visible: { opacity: 1, x: 0 },
   };
 
+  const successDeleteToast = () => {
+    toast.success("Item deleted", { autoClose: 1500 });
+  };
+
+  const showDeleteConfirmation = useCallback(
+    (id, size) => {
+      toast(
+        ({ closeToast }) => (
+          <div>
+            <p>Are you sure you want to delete this item?</p>
+            <div className="flex gap-3 mt-3">
+              <button
+                onClick={() => {
+                  updateQuantity(id, size, 0);
+                  closeToast();
+                  successDeleteToast();
+                }}
+                className="bg-red-500 text-white px-3 py-1 rounded"
+              >
+                Yes
+              </button>
+              <button
+                onClick={() => closeToast()}
+                className="bg-gray-300 px-3 py-1 rounded"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        ),
+        { autoClose: false, closeOnClick: false }
+      );
+    },
+    [updateQuantity]
+  );
+
   return (
     <AnimatePresence>
       {show && (
-        <div className="fixed inset-0 z-40" onClick={(e) => e.stopPropagation()}>
+        <div
+          className="fixed inset-0 z-40"
+          onClick={(e) => e.stopPropagation()}
+        >
           {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -158,6 +199,14 @@ const CartDropdown = ({ show }) => {
                         <p className="text-sm font-semibold mt-2 text-black">
                           {item.product?.price.toFixed(2)}{" "}
                           <span className="currency">{currency}</span>
+                        </p>
+                        <p
+                          onClick={() =>
+                            showDeleteConfirmation(item._id, item.size)
+                          }
+                          className="text-sm font-semibold text-red-500 hover:opacity-70 duration-300 cursor-pointer w-[20px]"
+                        >
+                          Remove
                         </p>
                       </div>
                       <div className="flex items-center gap-2">
