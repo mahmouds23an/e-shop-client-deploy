@@ -158,9 +158,9 @@ const Navbar = () => {
             )}
           </div>
 
-          <div className="relative" ref={cartDropdownRef}>
+          <div className="relative hidden lg:block" ref={cartDropdownRef}>
             <div
-              className="cursor-pointer relative hidden lg:block"
+              className="cursor-pointer relative"
               onClick={toggleCartDropdown}
             >
               <FaShoppingCart className="w-5 h-5" />
