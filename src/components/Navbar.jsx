@@ -160,7 +160,7 @@ const Navbar = () => {
 
           <div className="relative" ref={cartDropdownRef}>
             <div
-              className="cursor-pointer relative"
+              className="cursor-pointer relative hidden lg:block"
               onClick={toggleCartDropdown}
             >
               <FaShoppingCart className="w-5 h-5" />
