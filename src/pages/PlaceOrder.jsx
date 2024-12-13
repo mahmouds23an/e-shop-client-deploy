@@ -113,16 +113,22 @@ const PlaceOrder = () => {
     }
   };
 
-  const fetchPromoCodes = async () => {
-    try {
-      if (promoCodes.length === 0) {
+  useEffect(() => {
+    const fetchPromoCodes = async () => {
+      try {
         const response = await axios.get(`${backendUrl}/api/promo/get`);
         setPromoCodes(response.data);
+      } catch (error) {
+        console.error(error.message);
       }
-    } catch (error) {
-      toast.error(error.message);
-    }
-  };
+    };
+
+    fetchPromoCodes();
+
+    const interval = setInterval(fetchPromoCodes, 10000);
+
+    return () => clearInterval(interval);
+  }, [backendUrl]);
 
   useEffect(() => {
     const fetchInitialData = async () => {
@@ -133,7 +139,11 @@ const PlaceOrder = () => {
           return;
         }
         const response = await axios.all([
-          axios.post(`${backendUrl}/api/cart/get`, {}, { headers: { token: savedToken } }),
+          axios.post(
+            `${backendUrl}/api/cart/get`,
+            {},
+            { headers: { token: savedToken } }
+          ),
           axios.get(`${backendUrl}/api/promo/get`),
         ]);
 
