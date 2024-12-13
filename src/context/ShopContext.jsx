@@ -50,7 +50,6 @@ const ShopContextProvider = (props) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [currentUserReviews, setCurrentUserReviews] = useState([]);
   const navigate = useNavigate();
-  console.log(currentUser);
 
   const closeCartDropdown = () => setShowCartDropdown(false);
 
@@ -234,6 +233,14 @@ const ShopContextProvider = (props) => {
       getUserCart(localStorage.getItem("token"));
     }
   }, [token]);
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem("token");
+    if (storedToken) {
+      setToken(storedToken);
+      getCurrentUser(storedToken);
+    }
+  }, []);
 
   const value = {
     products,

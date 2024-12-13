@@ -15,7 +15,7 @@ const OrderDetails = () => {
   const fetchOrderDetails = async () => {
     try {
       const response = await axios.get(`${backendUrl}/api/order/${orderId}`, {
-        headers: { token },
+        headers: { token: localStorage.getItem("token") || token },
       });
       if (response.data.success) {
         setOrder(response.data.order);

@@ -38,9 +38,9 @@ const PlaceOrder = () => {
   };
 
   const [formData, setFormData] = useState({
-    firstName: currentUser.firstName || "", 
-    lastName: currentUser.lastName || "",
-    email: currentUser.email || "",
+    firstName: currentUser?.firstName || "",
+    lastName: currentUser?.lastName || "",
+    email: currentUser?.email || "",
     street: "",
     city: "",
     country: "Egypt",
@@ -127,8 +127,13 @@ const PlaceOrder = () => {
   useEffect(() => {
     const fetchInitialData = async () => {
       try {
+        const savedToken = token || localStorage.getItem("token");
+        if (!savedToken) {
+          toast.error("Authentication token is missing.");
+          return;
+        }
         const response = await axios.all([
-          axios.post(`${backendUrl}/api/cart/get`, {}, { headers: { token } }),
+          axios.post(`${backendUrl}/api/cart/get`, {}, { headers: { token: savedToken } }),
           axios.get(`${backendUrl}/api/promo/get`),
         ]);
 
