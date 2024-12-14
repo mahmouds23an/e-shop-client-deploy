@@ -91,6 +91,8 @@ const Profile = () => {
         "https://w7.pngwing.com/pngs/463/441/png-transparent-avatar-human-people-profile-user-web-user-interface-icon.png"
   );
 
+  console.log(orderData)
+
   // Cropper state
   const [isCropperOpen, setIsCropperOpen] = useState(false);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
@@ -317,17 +319,17 @@ const Profile = () => {
         </div>
 
         {/* Orders Section */}
-        <div className="bg-white rounded-2xl shadow-xl p-2 border border-gray-400">
+        <div className="bg-white rounded-2xl shadow-xl p-2 md:p-8 border border-gray-400">
           <div className="flex items-center mb-6">
             <Package className="w-6 h-6 text-blue-600 mr-2" />
-            <h2 className="text-2xl font-bold text-gray-900">Your Orders</h2>
+            <h2 className="text-2xl font-bold text-gray-900">Your Orders ({orderData.length})</h2>
           </div>
           <div className="space-y-4">
             {currentOrders.map((order) => (
               <div
                 key={order._id}
                 className="flex flex-row justify-between items-center sm:items-center 
-                p-2 bg-gray-50 rounded-xl hover:bg-gray-100 transition duration-300"
+                p-2 md:p-6 bg-gray-50 rounded-xl hover:bg-gray-100 transition duration-300"
               >
                 <div className="flex-grow">
                   <p className="text-lg font-semibold text-gray-900">
@@ -380,7 +382,7 @@ const Profile = () => {
         </div>
 
         {/* Reviews Section */}
-        <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-400">
+        <div className="bg-white rounded-2xl shadow-xl p-2 md:p-8 border border-gray-400">
           <div className="flex items-center mb-6">
             <Star className="w-6 h-6 text-blue-600 mr-2" />
             <h2 className="text-2xl font-bold text-gray-900">
@@ -391,7 +393,7 @@ const Profile = () => {
             {currentReviews.map((review) => (
               <div
                 key={review._id}
-                className="p-6 bg-gray-50 rounded-xl hover:bg-gray-100 transition duration-300"
+                className="p-2 md:p-6 bg-gray-50 rounded-xl hover:bg-gray-100 transition duration-300"
               >
                 <div className="flex items-center justify-between mb-3">
                   <h3 className="text-lg font-semibold text-gray-900">
