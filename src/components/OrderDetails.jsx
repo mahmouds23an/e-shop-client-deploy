@@ -97,11 +97,11 @@ const OrderDetails = () => {
       </div>
 
       <h3 className="text-xl font-semibold mb-4 text-gray-700">Items</h3>
-      <div className="bg-white shadow rounded-lg p-6 mb-8 border border-gray-400">
+      <div className="bg-white shadow rounded-lg p-6 mb-4 border border-gray-400">
         {order.items.length > 0 ? (
           <ul className="divide-y divide-gray-200">
             {order.items.map((item, index) => (
-              <li key={index} className="py-4 flex">
+              <li key={index} className="py-1 flex">
                 <div className="flex-shrink-0 w-16 h-16 bg-gray-100 rounded-md overflow-hidden">
                   <img
                     src={item?.image[0] || "https://via.placeholder.com/150"}
@@ -113,12 +113,16 @@ const OrderDetails = () => {
                   <p className="text-lg font-medium text-gray-700 truncate max-w-[180px] md:max-w-full">
                     {item.name}
                   </p>
-                  <p className="text-sm text-gray-500 truncate">
-                    Quantity: {item.quantity}
-                  </p>
-                  <p className="text-sm text-gray-500 truncate">
-                    Size: {item.size}
-                  </p>
+
+                  <div className="flex gap-5">
+                    <p className="text-sm text-gray-500 truncate">
+                      Quantity: {item.quantity}
+                    </p>
+                    <p className="text-sm text-gray-500 truncate">
+                      Size: {item.size}
+                    </p>
+                  </div>
+
                   <p className="text-sm text-gray-500 truncate">
                     Price: {item.price.toFixed(2)}
                     <span className="currency">{currency}</span>

@@ -317,7 +317,7 @@ const Profile = () => {
         </div>
 
         {/* Orders Section */}
-        <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-400">
+        <div className="bg-white rounded-2xl shadow-xl p-2 border border-gray-400">
           <div className="flex items-center mb-6">
             <Package className="w-6 h-6 text-blue-600 mr-2" />
             <h2 className="text-2xl font-bold text-gray-900">Your Orders</h2>
@@ -326,8 +326,8 @@ const Profile = () => {
             {currentOrders.map((order) => (
               <div
                 key={order._id}
-                className="flex flex-col sm:flex-row justify-between items-start 
-                sm:items-center p-6 bg-gray-50 rounded-xl hover:bg-gray-100 transition duration-300"
+                className="flex flex-row justify-between items-center sm:items-center 
+                p-2 bg-gray-50 rounded-xl hover:bg-gray-100 transition duration-300"
               >
                 <div className="flex-grow">
                   <p className="text-lg font-semibold text-gray-900">
@@ -350,10 +350,9 @@ const Profile = () => {
                 </div>
                 <Link
                   to={`/orders/${order._id}`}
-                  className="mt-4 sm:mt-0 group flex items-center px-6 py-3 bg-white rounded-lg 
-                  border border-gray-400 hover:border-blue-500 transition duration-300"
+                  className="mt-4 sm:mt-0 group flex items-center p-2 bg-white rounded-lg transition duration-300"
                 >
-                  <span className="text-gray-700 group-hover:text-blue-600">
+                  <span className="text-gray-500 hover:text-gray-950">
                     View Details
                   </span>
                   <ChevronRight className="ml-2 w-4 h-4 text-gray-400 group-hover:text-blue-600" />
