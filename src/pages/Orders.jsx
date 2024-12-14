@@ -146,7 +146,7 @@ const Orders = () => {
                       Order Id:{" "}
                       <span className="text-gray-500 font-medium text-base">
                         {" "}
-                        {order._id}{" "}
+                        {order._id.slice(-5)}{" "}
                       </span>
                     </div>
                     Order Price:{" "}

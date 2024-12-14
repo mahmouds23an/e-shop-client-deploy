@@ -326,11 +326,12 @@ const Profile = () => {
             {currentOrders.map((order) => (
               <div
                 key={order._id}
-                className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-6 bg-gray-50 rounded-xl hover:bg-gray-100 transition duration-300"
+                className="flex flex-col sm:flex-row justify-between items-start 
+                sm:items-center p-6 bg-gray-50 rounded-xl hover:bg-gray-100 transition duration-300"
               >
                 <div className="flex-grow">
                   <p className="text-lg font-semibold text-gray-900">
-                    Order #{order._id}
+                    Order ID: {order._id.slice(-5)}
                   </p>
                   <div className="mt-2 space-y-1">
                     <p className="text-sm text-gray-600">
@@ -349,7 +350,8 @@ const Profile = () => {
                 </div>
                 <Link
                   to={`/orders/${order._id}`}
-                  className="mt-4 sm:mt-0 group flex items-center px-6 py-3 bg-white rounded-lg border border-gray-400 hover:border-blue-500 transition duration-300"
+                  className="mt-4 sm:mt-0 group flex items-center px-6 py-3 bg-white rounded-lg 
+                  border border-gray-400 hover:border-blue-500 transition duration-300"
                 >
                   <span className="text-gray-700 group-hover:text-blue-600">
                     View Details

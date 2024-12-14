@@ -65,7 +65,7 @@ const OrderDetails = () => {
       <div className="bg-white shadow rounded-lg p-6 mb-8 border border-gray-400">
         <p className="mb-4">
           <span className="font-semibold">Order ID:</span>{" "}
-          <span className="text-gray-600">{order._id}</span>
+          <span className="text-gray-600">{order._id.slice(-5)}</span>
         </p>
         <p className="mb-4">
           <span className="font-semibold">Status:</span>{" "}
