@@ -104,7 +104,7 @@ const OrderDetails = () => {
               <li key={index} className="py-4 flex">
                 <div className="flex-shrink-0 w-16 h-16 bg-gray-100 rounded-md overflow-hidden">
                   <img
-                    src={item.image || "https://via.placeholder.com/150"}
+                    src={item?.image[0] || "https://via.placeholder.com/150"}
                     alt={item.name}
                     className="w-full h-full object-cover"
                   />

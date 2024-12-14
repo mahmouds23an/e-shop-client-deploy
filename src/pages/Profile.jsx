@@ -87,7 +87,8 @@ const Profile = () => {
   const [previewImage, setPreviewImage] = useState(currentUser?.image || "");
   const [showRemoveButton, setShowRemoveButton] = useState(
     currentUser?.profilePicture &&
-    currentUser.profilePicture !== "https://w7.pngwing.com/pngs/463/441/png-transparent-avatar-human-people-profile-user-web-user-interface-icon.png"
+      currentUser.profilePicture !==
+        "https://w7.pngwing.com/pngs/463/441/png-transparent-avatar-human-people-profile-user-web-user-interface-icon.png"
   );
 
   // Cropper state
@@ -180,17 +181,19 @@ const Profile = () => {
 
       if (response.data.success) {
         toast.success("Profile updated successfully!");
-        const updatedImage = response.data.updatedUser?.image || currentUser.image;
+        const updatedImage =
+          response.data.updatedUser?.image || currentUser.image;
         setCurrentUser((prevUser) => ({
           ...prevUser,
           firstName: updatedFirstName,
           lastName: updatedLastName,
           email: updatedEmail,
           image: updatedImage,
-          profilePicture: updatedImage
+          profilePicture: updatedImage,
         }));
         setShowRemoveButton(
-          updatedImage !== "https://w7.pngwing.com/pngs/463/441/png-transparent-avatar-human-people-profile-user-web-user-interface-icon.png"
+          updatedImage !==
+            "https://w7.pngwing.com/pngs/463/441/png-transparent-avatar-human-people-profile-user-web-user-interface-icon.png"
         );
         setProfilePicture(null);
         setIsEditModalOpen(false);
@@ -221,7 +224,7 @@ const Profile = () => {
         setCurrentUser((prevUser) => ({
           ...prevUser,
           image: defaultImage,
-          profilePicture: defaultImage
+          profilePicture: defaultImage,
         }));
         setPreviewImage(defaultImage);
         setShowRemoveButton(false);
@@ -285,28 +288,31 @@ const Profile = () => {
               {currentUser?.firstName} {currentUser?.lastName}
             </h1>
             <p className="text-gray-600 mt-1">{currentUser?.email}</p>
-            <button
-              onClick={handleEditProfile}
-              className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300"
-            >
-              Edit Profile
-            </button>
-            {showRemoveButton && (
+
+            <div className="flex flex-col md:flex-row md:gap-4">
               <button
-                onClick={handleRemoveProfilePicture}
-                className="mt-4 ml-4 px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition duration-300"
-                disabled={isLoading}
+                onClick={handleEditProfile}
+                className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300"
               >
-                {isLoading ? (
-                  <div className="flex items-center gap-2">
-                    <LoadingSpinner />
-                    <span>Removing...</span>
-                  </div>
-                ) : (
-                  "Remove Profile Picture"
-                )}
+                Edit Profile
               </button>
-            )}
+              {showRemoveButton && (
+                <button
+                  onClick={handleRemoveProfilePicture}
+                  className="mt-4 px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition duration-300"
+                  disabled={isLoading}
+                >
+                  {isLoading ? (
+                    <div className="flex items-center gap-2">
+                      <LoadingSpinner />
+                      <span>Removing...</span>
+                    </div>
+                  ) : (
+                    "Remove Profile Picture"
+                  )}
+                </button>
+              )}
+            </div>
           </div>
         </div>
 
@@ -343,7 +349,7 @@ const Profile = () => {
                 </div>
                 <Link
                   to={`/orders/${order._id}`}
-                  className="mt-4 sm:mt-0 group flex items-center px-6 py-3 bg-white rounded-lg border border-gray-200 hover:border-blue-500 transition duration-300"
+                  className="mt-4 sm:mt-0 group flex items-center px-6 py-3 bg-white rounded-lg border border-gray-400 hover:border-blue-500 transition duration-300"
                 >
                   <span className="text-gray-700 group-hover:text-blue-600">
                     View Details
