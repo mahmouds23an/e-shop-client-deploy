@@ -102,7 +102,7 @@ const Navbar = () => {
 
       {token ? (
         <div className="flex items-center gap-6">
-          <div className="relative" ref={profileDropdownRef}>
+          <div className="relative border border-red-700 lg:mr-0 -mr-8" ref={profileDropdownRef}>
             <div
               className="flex items-center gap-2 cursor-pointer"
               onClick={toggleProfileDropdown}
