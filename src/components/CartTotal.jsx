@@ -36,7 +36,7 @@ const CartTotal = ({
               <span className="currency">{currency}</span>
             </p>
           </div>
-          <hr />
+          <hr className="border-gray-400 border" />
           <div className="flex justify-between">
             <p>Shipping Fees</p>
             <p>
@@ -44,7 +44,7 @@ const CartTotal = ({
               <span className="currency">{currency}</span>
             </p>
           </div>
-          <hr />
+          <hr className="border-gray-400 border" />
           {discount > 0 && (
             <div className="flex justify-between text-green-500">
               <p>Discount Applied</p>
@@ -68,7 +68,7 @@ const CartTotal = ({
 
         {/* Promo Code Input (conditionally rendered) */}
         {showPromoInput && (
-          <div className="mt-6 p-4 border border-gray-300 rounded-md shadow-md bg-white">
+          <div className="mt-6 p-4 border border-gray-400 rounded-md shadow-md bg-white">
             <h3 className="text-lg font-semibold mb-2 text-gray-800">
               Have a Promo Code?
             </h3>
@@ -78,11 +78,11 @@ const CartTotal = ({
                 value={promoCodeInput}
                 onChange={(e) => setPromoCodeInput(e.target.value)}
                 placeholder="Enter promo code"
-                className="border border-gray-300 rounded-md-lg w-full p-2 transition duration-200"
+                className="border border-gray-400 rounded-md-md w-full p-2 transition duration-200 text-lg"
               />
               <button
                 onClick={handleApplyPromoCode}
-                className="bg-black text-white rounded-r-lg py-1 px-3 hover:opacity-70 transition duration-200"
+                className="bg-black text-white rounded-r-md py-1 px-3 hover:opacity-70 transition duration-200"
               >
                 Apply
               </button>

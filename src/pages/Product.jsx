@@ -251,7 +251,7 @@ const Product = () => {
           </div>
 
           {token ? (
-            <div className="flex flex-col gap-3 md:w-[300px]">
+            <div className="flex flex-col gap-3 md:w-[350px] w-full">
               <button
                 onClick={() => addToCart(productData._id, size)}
                 className="bg-white hover:bg-black hover:text-white text-black border border-gray-400 py-3 px-8 w-full 
@@ -271,7 +271,7 @@ const Product = () => {
           ) : (
             <button
               onClick={() => alert("Please login first to add to cart")}
-              className="bg-black hover:opacity-70 text-white py-3 px-8 rounded-md active:bg-gray-700"
+              className="bg-black hover:opacity-70 text-white py-3 px-8 rounded-md active:bg-gray-700 md:w-[350px] w-full"
             >
               Add to Cart
             </button>

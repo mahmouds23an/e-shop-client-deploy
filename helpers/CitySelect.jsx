@@ -13,7 +13,7 @@ const CitySelect = ({ value, onChange, setDeliveryFee }) => {
 
   return (
     <select
-      className="border border-gray-400 rounded-lg py-1.5 px-3.5 w-full"
+      className="border border-gray-400 rounded-lg py-2 px-4 w-full"
       name="city"
       value={value}
       onChange={handleCityChange}
