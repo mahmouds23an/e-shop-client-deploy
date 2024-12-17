@@ -173,12 +173,12 @@ const Navbar = () => {
         </div>
       ) : (
         <div className="flex items-center gap-6">
-          <button
+          {/* <button
             onClick={() => setShowSearch(true)}
             className="w-5 h-5 cursor-pointer"
           >
             Search
-          </button>
+          </button> */}
           <Link to="/login">
             <button className="px-7 py-2 text-sm text-white bg-black hover:opacity-70 rounded-full">
               Login
