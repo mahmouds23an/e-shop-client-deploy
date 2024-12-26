@@ -27,6 +27,35 @@ const CartTotal = ({
   return (
     <div className="w-full">
       <div className="text-2xl">
+        {/* Promo Code Input (conditionally rendered) */}
+        {showPromoInput && (
+          <div className="p-4 border border-gray-400 rounded-md shadow-md bg-white mb-5">
+            <h3 className="text-lg font-semibold mb-2 text-gray-800">
+              Have a Promo Code?
+            </h3>
+            <div className="flex">
+              <input
+                type="text"
+                value={promoCodeInput}
+                onChange={(e) => setPromoCodeInput(e.target.value)}
+                placeholder="Enter promo code"
+                className="border border-gray-400 rounded-md-md w-full p-2 transition duration-200 text-lg"
+              />
+              <button
+                onClick={handleApplyPromoCode}
+                className="bg-black text-white rounded-r-md py-1 px-3 hover:opacity-70 transition duration-200"
+              >
+                Apply
+              </button>
+            </div>
+            {promoCodeInput && (
+              <p className="text-sm text-gray-600 mt-2">
+                Enter your promo code above and click &quot;Apply&quot; to
+                receive discounts!
+              </p>
+            )}
+          </div>
+        )}
         <Title text1={"Cart"} text2={"Total"} />
         <div className="flex flex-col gap-2 mt-2 text-sm">
           <div className="flex justify-between">
@@ -66,35 +95,7 @@ const CartTotal = ({
           </div>
         </div>
 
-        {/* Promo Code Input (conditionally rendered) */}
-        {showPromoInput && (
-          <div className="mt-6 p-4 border border-gray-400 rounded-md shadow-md bg-white">
-            <h3 className="text-lg font-semibold mb-2 text-gray-800">
-              Have a Promo Code?
-            </h3>
-            <div className="flex">
-              <input
-                type="text"
-                value={promoCodeInput}
-                onChange={(e) => setPromoCodeInput(e.target.value)}
-                placeholder="Enter promo code"
-                className="border border-gray-400 rounded-md-md w-full p-2 transition duration-200 text-lg"
-              />
-              <button
-                onClick={handleApplyPromoCode}
-                className="bg-black text-white rounded-r-md py-1 px-3 hover:opacity-70 transition duration-200"
-              >
-                Apply
-              </button>
-            </div>
-            {promoCodeInput && (
-              <p className="text-sm text-gray-600 mt-2">
-                Enter your promo code above and click &quot;Apply&quot; to
-                receive discounts!
-              </p>
-            )}
-          </div>
-        )}
+        
       </div>
     </div>
   );

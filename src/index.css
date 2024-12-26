@@ -207,3 +207,9 @@ input[type="number"] {
     height: 82%;
   }
 }
+
+.required {
+  color: red;
+  font-weight: bolder;
+  font-size: 10px;
+}

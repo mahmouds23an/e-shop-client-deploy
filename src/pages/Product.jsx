@@ -103,7 +103,7 @@ const Product = () => {
   const handleSubmitReview = async (e) => {
     e.preventDefault();
     if (!token) {
-      alert("Please login first to submit a review");
+      toast.warning("Please login first");
       return;
     }
     try {
@@ -154,6 +154,10 @@ const Product = () => {
     const totalRating = reviews.reduce((acc, review) => acc + review.rating, 0);
     return (totalRating / reviews.length).toFixed(1);
   };
+
+  const loginFirst = () => {
+    toast.error("Please login first");
+  }
 
   return (
     <div className="border-t-2 pt-10 transition-opacity ease-in duration-500 opacity-100 px-4 sm:px-6 md:px-10">
@@ -270,7 +274,7 @@ const Product = () => {
             </div>
           ) : (
             <button
-              onClick={() => alert("Please login first to add to cart")}
+              onClick={loginFirst}
               className="bg-black hover:opacity-70 text-white py-3 px-8 rounded-md active:bg-gray-700 md:w-[350px] w-full"
             >
               Add to Cart

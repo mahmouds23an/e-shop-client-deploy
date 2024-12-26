@@ -192,6 +192,9 @@ const PlaceOrder = () => {
 
   if (!token) return <UnAuthorized />;
 
+  const required = "required";
+  const requiredVar = "*";
+
   return (
     <form onSubmit={onSubmitHandler} className="max-w-7xl mx-auto px-4 py-8">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 border border-gray-400 rounded-md">
@@ -208,7 +211,7 @@ const PlaceOrder = () => {
               <div className="space-y-2">
                 <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
                   <User className="w-4 h-4" />
-                  First Name
+                  First Name <span className={required}>{requiredVar}</span>
                 </label>
                 <input
                   type="text"
@@ -223,7 +226,7 @@ const PlaceOrder = () => {
               <div className="space-y-2">
                 <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
                   <User className="w-4 h-4" />
-                  Last Name
+                  Last Name <span className={required}>{requiredVar}</span>
                 </label>
                 <input
                   type="text"
@@ -240,7 +243,7 @@ const PlaceOrder = () => {
             <div className="space-y-2">
               <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
                 <Mail className="w-4 h-4" />
-                Email Address
+                Email Address <span className={required}>{requiredVar}</span>
               </label>
               <input
                 type="email"
@@ -256,7 +259,7 @@ const PlaceOrder = () => {
             <div className="space-y-2">
               <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
                 <MapPin className="w-4 h-4" />
-                Street Address
+                Street Address <span className={required}>{requiredVar}</span>
               </label>
               <input
                 type="text"
@@ -272,7 +275,7 @@ const PlaceOrder = () => {
               <div className="space-y-2 w-full md:w-[50%]">
                 <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
                   <Building2 className="w-4 h-4" />
-                  City
+                  City <span className={required}>{requiredVar}</span>
                 </label>
                 <CitySelect
                   value={formData.city}
@@ -299,7 +302,7 @@ const PlaceOrder = () => {
             <div className="space-y-2">
               <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
                 <Phone className="w-4 h-4" />
-                Phone Number
+                Phone Number <span className={required}>{requiredVar}</span>
               </label>
               <input
                 type="tel"
@@ -390,7 +393,13 @@ const PlaceOrder = () => {
                 }
               `}
             >
-              {loading ? "Processing..." : "Place Order"}
+              {loading
+                ? "Processing..."
+                : `Place Order ( Total ${
+                    Number(getCartAmount()) +
+                    (Number(delivery_fee) || 0) -
+                    (Number(discount) || 0)
+                  }.00 EGP )`}
             </button>
           </div>
         </div>
