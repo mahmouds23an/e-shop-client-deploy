@@ -16,7 +16,6 @@ import {
 const Navbar = () => {
   const [profileDropdownVisible, setProfileDropdownVisible] = useState(false);
   const {
-    // setShowSearch,
     getCartCount,
     token,
     setToken,
