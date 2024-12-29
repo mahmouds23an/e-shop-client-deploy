@@ -73,11 +73,10 @@ const TrackOrder = () => {
         <div className="bg-white rounded-md overflow-hidden">
           {/* Header */}
           <div className="border-b border-gray-400 px-4 py-4 sm:px-6 flex flex-col gap-3">
-            <h1 className="text-2xl font-bold text-gray-900">Track Order</h1>
-            <p className="text-2xl font-bold text-gray-900">
-              Order ID:{" "}
+            <h1 className="text-2xl font-bold text-gray-900">
+              Tracking Order:{" "}
               <span className="text-gray-500">{order._id.slice(-5)}</span>
-            </p>
+            </h1>
           </div>
 
           {/* Tracking Status */}
