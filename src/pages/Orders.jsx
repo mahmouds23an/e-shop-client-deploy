@@ -7,6 +7,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { assets } from "../assets/frontend_assets/assets";
 import UnAuthorized from "../components/UnAuthorized";
+import { useNavigate } from "react-router-dom";
 
 const Orders = () => {
   const { backendUrl, token, currency } = useContext(ShopContext);
@@ -20,6 +21,8 @@ const Orders = () => {
   const displayPrice = selectedOrder?.discountStatus
     ? selectedOrder?.discountedPrice
     : selectedOrder?.price;
+
+  const navigate = useNavigate();
 
   const loadOrdersData = async () => {
     if (!token) return;
@@ -184,9 +187,9 @@ const Orders = () => {
                   className={`min-w-[10px] h-[10px] rounded-lg ${
                     order.status === "Delivered"
                       ? "bg-green-500"
-                      : order.status === "Pending"
-                      ? "bg-yellow-500"
-                      : "bg-red-500"
+                      : order.status === "Order Placed"
+                      ? "bg-red-500"
+                      : "bg-yellow-500"
                   }`}
                 ></span>
                 <p className="text-sm md:text-base">{order.status}</p>
@@ -211,7 +214,7 @@ const Orders = () => {
                   )
                 ) : (
                   <button
-                    onClick={loadOrdersData}
+                    onClick={() => navigate(`/track-order/${order._id}`)}
                     className="border border-gray-400 px-4 py-2 hover:bg-black hover:text-white text-sm font-medium rounded-md transition duration-300"
                   >
                     Track order

@@ -17,6 +17,7 @@ import Wishlist from "./pages/Wishlist";
 import ScrollToTop from "./components/ScrollToTop";
 import Profile from "./pages/Profile";
 import OrderDetails from "./components/OrderDetails";
+import TrackOrder from "./components/TrackOrder";
 
 const App = () => {
   return (
@@ -49,6 +50,7 @@ const App = () => {
         <Route path="/orders" element={<Orders />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/orders/:orderId" element={<OrderDetails />} />
+        <Route path="/track-order/:orderId" element={<TrackOrder />} />
         <Route path="*" element={<NotFound404 />} />
       </Routes>
       <Footer />
