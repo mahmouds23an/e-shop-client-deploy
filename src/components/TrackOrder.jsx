@@ -167,9 +167,10 @@ const TrackOrder = () => {
           </div>
 
           {/* Items */}
-          <div className="border-t border-gray-400">
-            <div className="px-4 py-5 sm:px-6 border border-gray-400">
+          <div className="">
+            <div className="px-4 py-5 sm:px-6 border rounded-md border-gray-400">
               <h3 className="text-lg font-bold text-gray-900">Order Items</h3>
+
               <div className="mt-4 space-y-4">
                 {order.items.map((item, index) => (
                   <div
@@ -177,6 +178,15 @@ const TrackOrder = () => {
                     className="flex items-center justify-between py-4 border-b border-gray-400 last:border-0"
                   >
                     <div className="flex items-center">
+                      <Link to={`/product/${item._id}`}>
+                        <div>
+                          <img
+                            src={item.image[0]}
+                            alt={item.name}
+                            className="w-16 h-16 object-cover"
+                          />
+                        </div>
+                      </Link>
                       <div className="ml-4">
                         <p className="text-sm font-medium text-gray-900">
                           {item.name}
