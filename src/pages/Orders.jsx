@@ -55,6 +55,11 @@ const Orders = () => {
     loadOrdersData();
   }, [token]);
 
+  /*************  ✨ Codeium Command ⭐  *************/
+  /**
+   * Closes the modal and resets the selected order.
+   */
+  /******  df1a5240-8f9b-48bd-8061-01d16fed1e68  *******/
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedOrder(null);
@@ -123,13 +128,123 @@ const Orders = () => {
 
   if (!token) return <UnAuthorized />;
 
+  const nonDeliveredOrders = orderData.filter(
+    (order) => order.status !== "Delivered"
+  );
+  const deliveredOrders = orderData.filter(
+    (order) => order.status === "Delivered"
+  );
+
   return (
     <div className="border-t pt-16">
       <div className="text-3xl font-semibold text-gray-900">
         <Title text1={"My"} text2={`Orders`} />
       </div>
       <div>
-        {orderData.map((order, index) => (
+        {nonDeliveredOrders.map((order, index) => (
+          <div
+            className="py-4 border-t border-b text-gray-700 flex flex-col md:flex-row md:items-center md:justify-between gap-4"
+            key={index}
+          >
+            <div className="flex items-center text-sm gap-6">
+              <img
+                src={assets.orders}
+                className="w-16 sm:w-20 border border-gray-400 rounded-lg"
+                alt=""
+              />
+              <div>
+                <p className="sm:text-base font-medium">{order.name}</p>
+                <div className="flex items-center gap-3 mt-2 text-base text-gray-700">
+                  <div className="text-black font-semibold text-lg">
+                    <div>
+                      {" "}
+                      Order Id:{" "}
+                      <span className="text-gray-500 font-medium text-base">
+                        {" "}
+                        {order._id.slice(-5)}{" "}
+                      </span>
+                    </div>
+                    Order Price:{" "}
+                    <span className="text-gray-500 font-medium text-base">
+                      {" "}
+                      {order.amount}{" "}
+                      <span className="currency">{currency}</span>{" "}
+                    </span>
+                  </div>
+                </div>
+                <p className="text-black font-semibold text-lg">
+                  {" "}
+                  Date:{" "}
+                  <span className="text-gray-500 font-medium text-base">
+                    {" "}
+                    {new Date(order.date).toDateString()}{" "}
+                  </span>
+                </p>
+                <p className="text-black font-semibold text-lg">
+                  {" "}
+                  Payment:{" "}
+                  <span className="text-gray-500 font-medium text-base">
+                    {" "}
+                    {order.paymentMethod === "COD"
+                      ? "Cash on delivery"
+                      : order.paymentMethod}{" "}
+                  </span>
+                </p>
+              </div>
+            </div>
+            <div className="md:w-1/2 flex justify-between">
+              <div className="flex items-center gap-2">
+                {/* Colored dots for order status */}
+                <span
+                  className={`min-w-[10px] h-[10px] rounded-lg ${
+                    order.status === "Delivered"
+                      ? "bg-green-500"
+                      : order.status === "Order Placed"
+                      ? "bg-red-500"
+                      : "bg-yellow-500"
+                  }`}
+                ></span>
+                <p className="text-sm md:text-base">{order.status}</p>
+              </div>
+              <div className="flex items-center gap-2">
+                {order.status === "Delivered" ? (
+                  userReviews[order._id]?.rating === undefined ||
+                  userReviews[order._id]?.rating === 0 ? (
+                    <button
+                      onClick={() => openReviewModal(order)}
+                      className="border border-gray-400 px-4 py-2 text-sm font-medium hover:bg-black hover:text-white rounded-md transition duration-300"
+                    >
+                      Rate The Order
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => openViewRateModal(order._id)}
+                      className="border border-gray-400 px-4 py-2 text-sm font-medium hover:bg-black hover:text-white rounded-md transition duration-300"
+                    >
+                      View Your Rate
+                    </button>
+                  )
+                ) : (
+                  <button
+                    onClick={() => navigate(`/track-order/${order._id}`)}
+                    className="border border-gray-400 px-4 py-2 hover:bg-black hover:text-white text-sm font-medium rounded-md transition duration-300"
+                  >
+                    Track order
+                  </button>
+                )}
+                <button
+                  onClick={() => openModal(order)}
+                  className="border border-gray-400 px-4 py-2 text-sm font-medium rounded-md hover:bg-black 
+                  hover:text-white transition-all duration-300"
+                >
+                  Order Details
+                </button>
+              </div>
+            </div>
+          </div>
+        ))}
+
+        {deliveredOrders.map((order, index) => (
           <div
             className="py-4 border-t border-b text-gray-700 flex flex-col md:flex-row md:items-center md:justify-between gap-4"
             key={index}
