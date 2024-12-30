@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
 import { Timer, ChevronLeft, ChevronRight } from "lucide-react";
-import { HERO_CONSTANTS, getTimeRemaining } from "../constants";
+import { HERO_CONSTANTS, getTimeRemaining } from "./constants";
 
 const HeroSection = ({
   title,
