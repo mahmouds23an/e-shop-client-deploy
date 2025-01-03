@@ -6,7 +6,7 @@ import { assets } from "../assets/frontend_assets/assets";
 import CartTotal from "../components/CartTotal";
 import { ShopContext } from "../context/ShopContext";
 import axios from "axios";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import CitySelect from "../../helpers/CitySelect.jsx";
 import UnAuthorized from "../components/UnAuthorized.jsx";
 import {
@@ -20,9 +20,6 @@ import {
   Clipboard,
   CreditCardIcon,
   CoinsIcon,
-  BaggageClaim,
-  BoxSelect,
-  LassoSelect,
   LucideLassoSelect,
 } from "lucide-react";
 

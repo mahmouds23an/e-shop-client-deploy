@@ -3,7 +3,7 @@
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { ShopContext } from "../context/ShopContext";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import { Eye, EyeOff, Check, X, Mail, User, Lock } from "lucide-react";
 
 const Login = () => {

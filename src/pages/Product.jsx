@@ -6,7 +6,7 @@ import { useContext, useEffect, useState } from "react";
 import RelatedProducts from "../components/RelatedProducts";
 import ProductNotFound from "../components/ProductNotFound";
 import axios from "axios";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import { MdDelete } from "react-icons/md";
 
 const Product = () => {
@@ -157,7 +157,7 @@ const Product = () => {
 
   const loginFirst = () => {
     toast.error("Please login first");
-  }
+  };
 
   return (
     <div className="border-t-2 pt-10 transition-opacity ease-in duration-500 opacity-100 px-4 sm:px-6 md:px-10">

@@ -2,7 +2,7 @@
 import { useContext, useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import { ShopContext } from "../context/ShopContext";
 
 const OrderDetails = () => {

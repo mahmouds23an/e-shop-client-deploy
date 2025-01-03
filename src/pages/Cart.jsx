@@ -2,7 +2,8 @@ import { useContext, useMemo, useCallback, Suspense, lazy } from "react";
 import { ShopContext } from "../context/ShopContext";
 import Title from "../components/Title";
 import { assets } from "../assets/frontend_assets/assets";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
 
@@ -39,7 +40,7 @@ const Cart = () => {
   }, [cartItems, products]);
 
   const successDeleteToast = () => {
-    toast.success("Item deleted", { autoClose: 1500 });
+    toast.success("Item deleted");
   };
 
   // Memoized delete confirmation handler

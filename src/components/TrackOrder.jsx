@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import { Truck, Package, CheckCircle, Clock } from "lucide-react";
 import axios from "axios";
 

@@ -4,7 +4,7 @@ import { ShopContext } from "../context/ShopContext";
 import { Link } from "react-router-dom";
 import UnAuthorized from "../components/UnAuthorized";
 import axios from "axios";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import {
   Upload,
   X,
@@ -90,8 +90,6 @@ const Profile = () => {
       currentUser.profilePicture !==
         "https://w7.pngwing.com/pngs/463/441/png-transparent-avatar-human-people-profile-user-web-user-interface-icon.png"
   );
-
-  console.log(orderData)
 
   // Cropper state
   const [isCropperOpen, setIsCropperOpen] = useState(false);

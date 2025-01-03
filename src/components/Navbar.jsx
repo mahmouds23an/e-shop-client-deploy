@@ -2,7 +2,7 @@ import { useContext, useState, useRef, useEffect } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { assets } from "../assets/frontend_assets/assets";
 import { ShopContext } from "../context/ShopContext";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import CartDropdown from "./CartDropdown";
 import {
   FaHome,

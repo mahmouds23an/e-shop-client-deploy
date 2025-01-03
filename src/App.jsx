@@ -18,6 +18,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import Profile from "./pages/Profile";
 import OrderDetails from "./components/OrderDetails";
 import TrackOrder from "./components/TrackOrder";
+import { Toaster } from "react-hot-toast";
 
 const App = () => {
   return (
@@ -54,6 +55,7 @@ const App = () => {
         <Route path="*" element={<NotFound404 />} />
       </Routes>
       <Footer />
+      <Toaster />
     </div>
   );
 };
