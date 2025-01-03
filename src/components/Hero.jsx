@@ -39,7 +39,7 @@ const Hero = () => {
         try {
             const response = await axios.get(`${backendUrl}/api/event/get`);
             const data = await response.data;
-            console.log(data);
+            // console.log(data);
             if (data.success) {
                 const filteredEvents = data.events.filter(event => 
                     !(new Date(event.endDate) < Date.now() || event.isActive === false)
@@ -61,7 +61,7 @@ const Hero = () => {
                 if (event.endDate) {
                     const difference = new Date(event.endDate) - new Date();
                     if (difference > 0) {
-                        newTimeLeft[event._id] = {
+                        newTimeLeft[event?._id] = {
                             days: Math.floor(difference / (1000 * 60 * 60 * 24)),
                             hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
                             minutes: Math.floor((difference / (1000 * 60)) % 60),
