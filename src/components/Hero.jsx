@@ -33,6 +33,7 @@ const Hero = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [timeLeft, setTimeLeft] = useState({});
   const { backendUrl } = useContext(ShopContext);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchEvents();
@@ -56,6 +57,8 @@ const Hero = () => {
     } catch (error) {
       console.error("Error fetching events:", error);
       setEvents(fallbackEvents);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -99,12 +102,23 @@ const Hero = () => {
     setCurrentSlide(index);
   };
 
-  if (events.length === 0) {
-    return <div>Loading events...</div>;
-  }
+  // if (events.length === 0) {
+  //   return <div>Loading events...</div>;
+  // }
 
   const currentEvent = events[currentSlide];
   const currentTimeLeft = timeLeft[currentEvent?._id];
+
+  if (loading || events.length === 0) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div
+          className="animate-spin rounded-full h-16 w-16 border-t-2 
+        border-b-2 border-black"
+        ></div>
+      </div>
+    );
+  }
 
   return (
     <div className="hero-container">

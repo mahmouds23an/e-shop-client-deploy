@@ -22,6 +22,7 @@ const Product = () => {
   } = useContext(ShopContext);
   const [productData, setProductData] = useState(null);
   const [image, setImage] = useState("");
+  const [loading, setLoading] = useState(true);
   const [size, setSize] = useState("");
   const [reviews, setReviews] = useState([]);
   const [rating, setRating] = useState(1);
@@ -70,6 +71,7 @@ const Product = () => {
     if (foundProduct) {
       setProductData(foundProduct);
       setImage(foundProduct.image[0]);
+      setLoading(false);
     } else {
       setProductData(null);
     }
@@ -97,6 +99,8 @@ const Product = () => {
       setReviews(sortedReviews);
     } catch (error) {
       toast.error(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -120,6 +124,8 @@ const Product = () => {
       toast.success("Review submitted successfully");
     } catch (error) {
       toast.error(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -136,6 +142,8 @@ const Product = () => {
       fetchReviews();
     } catch (error) {
       toast.error(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -145,9 +153,10 @@ const Product = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [productId, products]);
 
-  if (productData === null) {
-    return <ProductNotFound />;
-  }
+  // if (productData === null) {
+  //   return <ProductNotFound />;
+  // }
+  
 
   const calculateAverageRating = (reviews) => {
     if (!reviews.length) return 0;
@@ -158,6 +167,17 @@ const Product = () => {
   const loginFirst = () => {
     toast.error("Please login first");
   };
+
+  if (loading || productData === null) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div
+          className="animate-spin rounded-full h-16 w-16 
+        border-t-2 border-b-2 border-black"
+        ></div>
+      </div>
+    );
+  }
 
   return (
     <div className="border-t-2 pt-10 transition-opacity ease-in duration-500 opacity-100 px-4 sm:px-6 md:px-10">

@@ -6,10 +6,27 @@ import ProductItem from "./ProductItem";
 const LatestCollection = () => {
   const { products } = useContext(ShopContext);
   const [latestProducts, setLatestProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setLatestProducts(products.slice(0, 10));
   }, [products]);
+
+  useEffect(() => {
+    setLoading(false);
+  }, []);
+
+  if (loading || latestProducts.length === 0) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div
+          className="animate-spin rounded-full h-16 w-16 
+        border-t-2 border-b-2 border-black"
+        ></div>
+      </div>
+    );
+  }
+
   return (
     <div className="my-10">
       <div className="text-center py-8 text-3xl">

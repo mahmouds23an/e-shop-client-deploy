@@ -19,6 +19,7 @@ const Orders = () => {
   const [isViewRateModalOpen, setIsViewRateModalOpen] = useState(false);
   const [review, setReview] = useState({ rating: "", comment: "" });
   const [userReviews, setUserReviews] = useState({});
+  const [loading, setLoading] = useState(true);
   const displayPrice = selectedOrder?.discountStatus
     ? selectedOrder?.discountedPrice
     : selectedOrder?.price;
@@ -49,6 +50,8 @@ const Orders = () => {
       }
     } catch (error) {
       toast.error(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -124,6 +127,8 @@ const Orders = () => {
       }
     } catch (error) {
       toast.error(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -135,6 +140,17 @@ const Orders = () => {
   const deliveredOrders = orderData.filter(
     (order) => order.status === "Delivered"
   );
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div
+          className="animate-spin rounded-full h-16 w-16 
+        border-t-2 border-b-2 border-black"
+        ></div>
+      </div>
+    );
+  }
 
   return (
     <div className="border-t pt-16">
