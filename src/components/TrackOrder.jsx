@@ -86,8 +86,10 @@ const TrackOrder = () => {
               <div className="overflow-hidden h-2 mb-4 text-xs flex rounded bg-gray-200">
                 <div
                   style={{ width: `${(currentStep / 4) * 100}%` }}
-                  className="shadow-none flex flex-col text-center whitespace-nowrap text-white 
-                  justify-center bg-green-500 transition-all duration-500"
+                  className={`shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center 
+                  ${
+                    currentStep === 4 ? "bg-green-500" : "bg-orange-500"
+                  } transition-all duration-500`}
                 ></div>
               </div>
 
@@ -95,7 +97,10 @@ const TrackOrder = () => {
               <div className="flex justify-between">
                 <div
                   className={`flex flex-col items-center ${
-                    currentStep >= 1 ? "text-green-500" : "text-gray-400"
+                    (currentStep >= 1 ? "text-orange-500" : "text-gray-400",
+                    currentStep !== 4 && currentStep >= 1
+                      ? "text-orange-500"
+                      : "text-gray-400")
                   }`}
                 >
                   <Clock className="h-8 w-8 mb-2" />
@@ -103,7 +108,10 @@ const TrackOrder = () => {
                 </div>
                 <div
                   className={`flex flex-col items-center ${
-                    currentStep >= 2 ? "text-green-500" : "text-gray-400"
+                    (currentStep >= 2 ? "text-orange-500" : "text-gray-400",
+                    currentStep !== 4 && currentStep >= 2
+                      ? "text-orange-500"
+                      : "text-gray-400")
                   }`}
                 >
                   <Package className="h-8 w-8 mb-2" />
@@ -111,7 +119,10 @@ const TrackOrder = () => {
                 </div>
                 <div
                   className={`flex flex-col items-center ${
-                    currentStep >= 3 ? "text-green-500" : "text-gray-400"
+                    (currentStep >= 3 ? "text-orange-500" : "text-gray-400",
+                    currentStep !== 4 && currentStep >= 3
+                      ? "text-orange-500"
+                      : "text-gray-400")
                   }`}
                 >
                   <Truck className="h-8 w-8 mb-2" />
