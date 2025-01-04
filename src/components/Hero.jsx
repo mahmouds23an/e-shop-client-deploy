@@ -79,7 +79,7 @@ const Hero = () => {
         }
       });
       setTimeLeft(newTimeLeft);
-    }, 10000);
+    }, 1000); // Update every second
     return () => clearInterval(timer);
   }, [events]);
 
@@ -102,10 +102,6 @@ const Hero = () => {
     setCurrentSlide(index);
   };
 
-  // if (events.length === 0) {
-  //   return <div>Loading events...</div>;
-  // }
-
   const currentEvent = events[currentSlide];
   const currentTimeLeft = timeLeft[currentEvent?._id];
 
@@ -120,6 +116,8 @@ const Hero = () => {
     );
   }
 
+  const isUrgent = currentTimeLeft?.days === 0 && currentTimeLeft?.hours < 24;
+
   return (
     <div className="hero-container">
       <div className="event-slide">
@@ -133,22 +131,38 @@ const Hero = () => {
           <h2 className="event-title">{currentEvent?.title}</h2>
           <p className="event-description">{currentEvent?.description}</p>
           {currentEvent?.endDate && currentTimeLeft && (
-            <div className="event-timer">
-              <div className="timer-item">
-                <span>{String(currentTimeLeft.days).padStart(2, "0")}</span>
-                <p>Days</p>
+            <div className="event-timer flex flex-col">
+              <div className="timer-items flex gap-2">
+                {/* Always show the timer */}
+                <div className={`timer-item ${isUrgent ? "text-red-600" : ""}`}>
+                  <span>{String(currentTimeLeft.days).padStart(2, "0")}</span>
+                  <p>Days</p>
+                </div>
+                <div className={`timer-item ${isUrgent ? "text-red-600" : ""}`}>
+                  <span>{String(currentTimeLeft.hours).padStart(2, "0")}</span>
+                  <p>Hours</p>
+                </div>
+                <div className={`timer-item ${isUrgent ? "text-red-600" : ""}`}>
+                  <span>
+                    {String(currentTimeLeft.minutes).padStart(2, "0")}
+                  </span>
+                  <p>Minutes</p>
+                </div>
+                <div className={`timer-item ${isUrgent ? "text-red-600" : ""}`}>
+                  <span>
+                    {String(currentTimeLeft.seconds).padStart(2, "0")}
+                  </span>
+                  <p>Seconds</p>
+                </div>
               </div>
-              <div className="timer-item">
-                <span>{String(currentTimeLeft.hours).padStart(2, "0")}</span>
-                <p>Hours</p>
-              </div>
-              <div className="timer-item">
-                <span>{String(currentTimeLeft.minutes).padStart(2, "0")}</span>
-                <p>Minutes</p>
-              </div>
-              <div className="timer-item">
-                <span>{String(currentTimeLeft.seconds).padStart(2, "0")}</span>
-                <p>Seconds</p>
+
+              <div>
+                {/* Show the "Hurry up!" message if the event is urgent */}
+                {isUrgent && (
+                  <div className="urgent-message text-red-600">
+                    <p>Hurry up! Offer ends soon!</p>
+                  </div>
+                )}
               </div>
             </div>
           )}
