@@ -9,7 +9,11 @@ const LatestCollection = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setLatestProducts(products.slice(0, 10));
+    const sortedProducts = products
+      .sort((a, b) => new Date(b?.date) - new Date(a?.date))
+      .slice(0, 10);
+
+    setLatestProducts(sortedProducts);
   }, [products]);
 
   useEffect(() => {
