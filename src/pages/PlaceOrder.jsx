@@ -26,6 +26,7 @@ import {
 const PlaceOrder = () => {
   const [method, setMethod] = useState("cod");
   const [promoCodes, setPromoCodes] = useState([]);
+  const [orderData, setOrderData] = useState([]);
   const [discount, setDiscount] = useState(0);
   const [subtotal, setSubtotal] = useState(0);
   const [appliedPromoCode, setAppliedPromoCode] = useState("");
@@ -125,6 +126,33 @@ const PlaceOrder = () => {
     }
   };
 
+  const loadOrdersData = async () => {
+    if (!token) return;
+    try {
+      const response = await axios.post(
+        `${backendUrl}/api/order/user-orders`,
+        {},
+        { headers: { token } }
+      );
+      if (response.data.success) {
+        setOrderData(response.data.orders.reverse());
+        console.log(response.data.orders); // this line get orders.length
+        // Apply the "first30" promo code if it's the user's first order
+        if (response.data.orders.length === 0) {
+          applyPromoCode("fIRsT30"); // Apply the 30% discount
+        }
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  useEffect(() => {
+    loadOrdersData();
+  }, [token]);
+
   useEffect(() => {
     const fetchPromoCodes = async () => {
       try {
@@ -148,7 +176,7 @@ const PlaceOrder = () => {
           toast.error("Authentication token is missing.");
           return;
         }
-        const response = await axios.all([
+        const response = await axios.all([ 
           axios.post(
             `${backendUrl}/api/cart/get`,
             {},
@@ -180,6 +208,11 @@ const PlaceOrder = () => {
       setDiscount(discountAmount);
       setAppliedPromoCode(code);
       toast.success(`Promo code ${code} applied!`);
+    } else if (code === "fIRsT30") {
+      const discountAmount = (getCartAmount() * 30) / 100;
+      setDiscount(discountAmount);
+      setAppliedPromoCode(code);
+      toast.success(`30% discount for your first order`);
     } else {
       toast.error("Invalid or expired promo code.");
       setDiscount(0);

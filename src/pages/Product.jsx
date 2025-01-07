@@ -275,11 +275,11 @@ const Product = () => {
           </div>
 
           {token ? (
-            <div className="flex flex-col gap-3 md:w-[350px] w-full">
+            <div className="flex flex-col gap-3 md:w-[400px] w-full">
               <button
                 onClick={() => addToCart(productData._id, size)}
                 className="bg-white hover:bg-black hover:text-white text-black border border-gray-400 py-3 px-8 w-full 
-                md:w-[300px] rounded-md active:bg-gray-700 transition duration-300"
+               rounded-md active:bg-gray-700 transition duration-300"
               >
                 Add to Cart
               </button>

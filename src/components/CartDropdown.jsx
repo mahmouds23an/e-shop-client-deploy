@@ -134,7 +134,7 @@ const CartDropdown = ({ show }) => {
             animate="visible"
             exit="hidden"
             variants={dropdownVariants}
-            className="cart-container fixed right-0 top-0 h-full w-full sm:w-96 bg-white shadow-xl"
+            className="cart-container fixed right-0 top-0 h-full w-[450px] bg-white shadow-xl"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close Button */}
@@ -151,7 +151,7 @@ const CartDropdown = ({ show }) => {
               <FaTimes className="text-lg" />
             </motion.button>
 
-            <div className="p-6 overflow-y-auto h-full">
+            <div className="p-3 overflow-y-auto h-full">
               <motion.h3
                 initial={{ y: -20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
@@ -179,14 +179,14 @@ const CartDropdown = ({ show }) => {
                       animate="visible"
                       exit="hidden"
                       transition={{ delay: index * 0.1 }}
-                      className="flex items-center gap-4 py-4 border-b last:border-none hover:bg-gray-50 transition-colors rounded-lg p-3"
+                      className="flex items-center gap-4 border-b last:border-none hover:bg-gray-50 transition-colors rounded-lg py-3"
                       onClick={(e) => e.stopPropagation()}
                     >
                       <motion.img
                         whileHover={{ scale: 1.05 }}
                         src={item.product?.image[0]}
                         alt={item.product?.name}
-                        className="w-20 h-20 rounded-lg object-cover shadow-md"
+                        className="w-16 h-16 rounded-lg object-cover shadow-md"
                       />
                       <div className="flex-1">
                         <p className="text-sm text-black font-medium text-ellipsis max-w-[150px] overflow-hidden whitespace-nowrap">
