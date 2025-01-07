@@ -472,6 +472,7 @@ const Product = () => {
       <RelatedProducts
         category={productData.category}
         subCategory={productData.subCategory}
+        productId={productData._id}
       />
     </div>
   );
