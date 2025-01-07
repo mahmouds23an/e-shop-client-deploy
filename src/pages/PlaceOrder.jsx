@@ -32,6 +32,7 @@ const PlaceOrder = () => {
   const [appliedPromoCode, setAppliedPromoCode] = useState("");
   const [loading, setLoading] = useState(false);
   const [orderNote, setOrderNote] = useState("");
+  const [isFirstOrder, setIsFirstOrder] = useState(false);
   const {
     navigate,
     backendUrl,
@@ -136,11 +137,12 @@ const PlaceOrder = () => {
       );
       if (response.data.success) {
         setOrderData(response.data.orders.reverse());
-        console.log(response.data.orders); // this line get orders.length
-        // Apply the "first30" promo code if it's the user's first order
         if (response.data.orders.length === 0) {
-          applyPromoCode("fIRsT30"); // Apply the 30% discount
+          setIsFirstOrder(true);
+        } else {
+          setIsFirstOrder(false); // Not the first order
         }
+        console.log(response.data.orders); // this line gets orders.length
       } else {
         toast.error(response.data.message);
       }
@@ -176,7 +178,7 @@ const PlaceOrder = () => {
           toast.error("Authentication token is missing.");
           return;
         }
-        const response = await axios.all([ 
+        const response = await axios.all([
           axios.post(
             `${backendUrl}/api/cart/get`,
             {},
@@ -199,6 +201,14 @@ const PlaceOrder = () => {
   }, [token]);
 
   const applyPromoCode = (code) => {
+    if (isFirstOrder) {
+      const discountAmount = (getCartAmount() * 30) / 100; // 30% discount
+      setDiscount(discountAmount);
+      setAppliedPromoCode("FIRSTORDER30");
+      toast.success(`First-order discount applied!`);
+      return; // Skip applying any promo code if it's the first order
+    }
+
     const promo = promoCodes.find(
       (p) => p.code === code && p.isActive && new Date(p.endDate) > new Date()
     );
@@ -208,11 +218,6 @@ const PlaceOrder = () => {
       setDiscount(discountAmount);
       setAppliedPromoCode(code);
       toast.success(`Promo code ${code} applied!`);
-    } else if (code === "fIRsT30") {
-      const discountAmount = (getCartAmount() * 30) / 100;
-      setDiscount(discountAmount);
-      setAppliedPromoCode(code);
-      toast.success(`30% discount for your first order`);
     } else {
       toast.error("Invalid or expired promo code.");
       setDiscount(0);

@@ -70,7 +70,7 @@ const Profile = () => {
     currency,
     currentUserReviews,
   } = useContext(ShopContext);
-
+  
   const [orderData, setOrderData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [currentReviewPage, setCurrentReviewPage] = useState(1);
@@ -320,7 +320,9 @@ const Profile = () => {
         <div className="bg-white rounded-2xl shadow-xl p-2 md:p-8 border border-gray-400">
           <div className="flex items-center mb-6">
             <Package className="w-6 h-6 text-blue-600 mr-2" />
-            <h2 className="text-2xl font-bold text-gray-900">Your Orders ({orderData.length})</h2>
+            <h2 className="text-2xl font-bold text-gray-900">
+              Your Orders ({orderData.length})
+            </h2>
           </div>
           <div className="space-y-4">
             {currentOrders.map((order) => (
