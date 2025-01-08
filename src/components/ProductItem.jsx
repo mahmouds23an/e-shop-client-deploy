@@ -56,7 +56,7 @@ const ProductItem = ({
             {showBuyButton && (
               <button
                 className="bg-white text-black border border-gray-400 px-2 py-1 rounded-md transition duration-300 
-              ease-in-out hover:bg-black hover:text-white focus:outline-none"
+              ease-in-out hover:bg-black hover:text-white focus:outline-none mt-2 md:mt-0"
               >
                 Buy Now
               </button>
