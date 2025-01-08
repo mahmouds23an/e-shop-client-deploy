@@ -506,14 +506,6 @@ input[type="number"] {
     opacity: 0.8;
   }
 
-  .prev {
-    left: 10px;
-  }
-
-  .next {
-    right: 10px;
-  }
-
   .dots {
     bottom: 15px;
     padding: 6px 12px;
