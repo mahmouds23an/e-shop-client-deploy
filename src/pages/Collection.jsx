@@ -124,9 +124,11 @@ const Collection = () => {
               <div className="lg:hidden mb-4">
                 <button
                   onClick={() => setShowFilter(!showFilter)}
-                  className="w-full flex items-center justify-between px-4 py-2 bg-white rounded-lg shadow-sm border border-gray-200"
+                  className="w-full flex items-center justify-between px-4 py-2
+                  bg-gradient-to-r from-stone-400 via-stone-350 to-stone-400 text-white rounded-lg shadow-sm border 
+                  border-gray-200 transition duration-300"
                 >
-                  <span className="font-medium text-gray-700">Filters</span>
+                  <span className="font-medium">Filters</span>
                   <svg
                     className={`w-5 h-5 transform transition-transform ${
                       showFilter ? "rotate-180" : ""
@@ -148,19 +150,22 @@ const Collection = () => {
               <div
                 className={`space-y-4 ${
                   showFilter ? "block" : "hidden"
-                } lg:block`}
+                } lg:block transition-all ease-in-out duration-500`}
               >
                 {/* Brands Filter */}
                 <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
                   <h3 className="font-medium text-gray-900 mb-4">Brands</h3>
-                  <div className="space-y-2 max-h-60 overflow-y-auto">
+                  <div className="grid grid-cols-2 gap-4 max-h-60 overflow-y-auto">
                     {brands.map((brand) => (
-                      <label key={brand} className="flex items-center">
+                      <label
+                        key={brand}
+                        className="flex items-center cursor-pointer"
+                      >
                         <input
                           type="checkbox"
                           value={brand}
                           onChange={toggleSubCategory}
-                          className="h-4 w-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
+                          className="h-4 w-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500 transition duration-200 ease-in-out"
                         />
                         <span className="ml-2 text-sm text-gray-600">
                           {brand}
@@ -173,14 +178,17 @@ const Collection = () => {
                 {/* Categories Filter */}
                 <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
                   <h3 className="font-medium text-gray-900 mb-4">Categories</h3>
-                  <div className="space-y-2">
+                  <div className="grid grid-cols-2 gap-4">
                     {categories.map((cat) => (
-                      <label key={cat} className="flex items-center">
+                      <label
+                        key={cat}
+                        className="flex items-center cursor-pointer"
+                      >
                         <input
                           type="checkbox"
                           value={cat}
                           onChange={toggleCategory}
-                          className="h-4 w-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
+                          className="h-4 w-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500 transition duration-200 ease-in-out"
                         />
                         <span className="ml-2 text-sm text-gray-600">
                           {cat}
