@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../context/ShopContext";
 // import { assets } from "../assets/frontend_assets/assets";
@@ -121,12 +122,21 @@ const Collection = () => {
                   stroke="currentColor"
                   viewBox="0 0 24 24"
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 9l-7 7-7-7"
+                  />
                 </svg>
               </button>
             </div>
 
-            <div className={`space-y-4 ${showFilter ? 'block' : 'hidden'} lg:block`}>
+            <div
+              className={`space-y-4 ${
+                showFilter ? "block" : "hidden"
+              } lg:block`}
+            >
               {/* Brands Filter */}
               <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
                 <h3 className="font-medium text-gray-900 mb-4">Brands</h3>
@@ -139,7 +149,9 @@ const Collection = () => {
                         onChange={toggleSubCategory}
                         className="h-4 w-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
                       />
-                      <span className="ml-2 text-sm text-gray-600">{brand}</span>
+                      <span className="ml-2 text-sm text-gray-600">
+                        {brand}
+                      </span>
                     </label>
                   ))}
                 </div>
@@ -172,7 +184,8 @@ const Collection = () => {
           <div className="mb-6">
             <select
               onChange={(e) => setSortType(e.target.value)}
-              className="block w-full lg:w-48 px-3 py-2 bg-white border border-gray-200 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+              className="block w-full lg:w-48 px-3 py-2 bg-white border border-gray-200 rounded-lg shadow-sm 
+              focus:ring-blue-500 focus:border-blue-500"
             >
               <option value="relevant">Sort by: Relevant</option>
               <option value="low-high">Price: Low to High</option>
@@ -203,11 +216,12 @@ const Collection = () => {
                 <button
                   onClick={() => setCurrentPage(currentPage - 1)}
                   disabled={currentPage === 1}
-                  className="px-3 py-2 rounded-md bg-white border border-gray-200 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+                  className="px-3 py-2 rounded-md bg-white border border-gray-200 text-sm font-medium 
+                  text-gray-700 hover:bg-gray-50 disabled:opacity-50"
                 >
                   Previous
                 </button>
-                
+
                 <div className="flex items-center space-x-2">
                   {[...Array(totalPages)].map((_, index) => (
                     <button
@@ -227,7 +241,8 @@ const Collection = () => {
                 <button
                   onClick={() => setCurrentPage(currentPage + 1)}
                   disabled={currentPage === totalPages}
-                  className="px-3 py-2 rounded-md bg-white border border-gray-200 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+                  className="px-3 py-2 rounded-md bg-white border border-gray-200 text-sm font-medium 
+                  text-gray-700 hover:bg-gray-50 disabled:opacity-50"
                 >
                   Next
                 </button>

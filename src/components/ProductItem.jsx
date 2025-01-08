@@ -30,16 +30,23 @@ const ProductItem = ({
       className="text-gray-700 cursor-pointer border border-gray-300 rounded-lg -mb-2 relative"
       to={`/product/${id}`}
     >
-      <div className="w-full max-w-xs mx-auto bg-white shadow-md rounded-lg flex flex-col items-center p-4 transition-shadow duration-200 ease-in-out hover:shadow-xl">
+      <div
+        className="w-full max-w-xs mx-auto bg-white shadow-md rounded-lg flex flex-col 
+      items-center p-4 transition-shadow duration-200 ease-in-out hover:shadow-xl"
+      >
         {/* Discount Badge */}
         {showDiscountBadge && discountPercentage > 0 && (
-          <div className="absolute top-[0.5px] left-[0.5px] z-50 bg-red-500 text-white text-sm font-bold px-2 py-1 rounded-tl-lg rounded-br-lg">
+          <div
+            className="absolute top-[0.5px] left-[0.5px] z-50 bg-red-500 text-white 
+          text-sm font-bold px-2 py-1 rounded-tl-lg rounded-br-lg"
+          >
             -{discountPercentage}%
           </div>
         )}
         <div className="w-full h-48 overflow-hidden rounded-lg">
           <img
-            className="w-full h-full object-cover transition-transform duration-300 ease-in-out transform hover:scale-105"
+            className="w-full h-full object-contain 
+            transition-transform duration-300 ease-in-out transform hover:scale-105 "
             src={image[0]}
             alt={name}
           />
