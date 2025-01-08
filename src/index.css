@@ -358,11 +358,11 @@ input[type="number"] {
 }
 
 .prev {
-  left: 20px;
+  left: 5px;
 }
 
 .next {
-  right: 20px;
+  right: 5px;
 }
 
 .dots {
