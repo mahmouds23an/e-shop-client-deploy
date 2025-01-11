@@ -180,7 +180,7 @@ const Product = () => {
   }
 
   return (
-    <div className="border-t-2 pt-10 transition-opacity ease-in duration-500 opacity-100 px-4 sm:px-6 md:px-10">
+    <div className="pt-10 transition-opacity ease-in duration-500 opacity-100 px-4 sm:px-6 md:px-10">
       {/* Product Data */}
       <div className="flex flex-col gap-12 sm:flex-row">
         {/* Product Image */}

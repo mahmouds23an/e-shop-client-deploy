@@ -105,7 +105,7 @@ const Collection = () => {
   }
 
   return (
-    <div>
+    <div className="">
       <div className="w-full flex items-center justify-center">
         {/* search bar */}
         <input
@@ -116,8 +116,8 @@ const Collection = () => {
           className="border border-gray-400 rounded-md p-2 mt-2 mb-4 w-3/4 sm:w-1/2"
         />
       </div>
-      <div className="max-w-7xl mx-auto md:p-4 ">
-        <div className="flex flex-col lg:flex-row gap-8">
+      <div className="max-w-[90%] mx-auto">
+        <div className="flex flex-col lg:flex-row gap-3">
           {/* Filters Sidebar */}
           <div className="lg:w-64 flex-shrink-0">
             <div className="sticky top-4">

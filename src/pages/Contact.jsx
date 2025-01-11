@@ -5,7 +5,7 @@ import Title from "../components/Title";
 const Contact = () => {
   return (
     <div>
-      <div className="text-center text-2xl pt-10 border-t">
+      <div className="text-center text-2xl pt-10">
         <Title text1={"Contact"} text2={"Us"} />
       </div>
       <div className="my-10 flex flex-col justify-center md:flex-row gap-10 mb-28">
