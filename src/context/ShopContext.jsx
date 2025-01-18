@@ -97,23 +97,6 @@ const ShopContextProvider = (props) => {
     }
   };
 
-  // const addToWishlist = async (productId) => {
-  //   try {
-  //     const response = await axios.post(
-  //       backendUrl + "/api/user/add-to-favorites",
-  //       { productId },
-  //       { headers: { token } }
-  //     );
-  //     if (response.data.success) {
-  //       toast.success(response.data.message);
-  //     } else {
-  //       toast.error(response.data.message);
-  //     }
-  //   } catch (error) {
-  //     toast.error(error.message);
-  //   }
-  // };
-
   const getCartCount = () => {
     let totalCount = 0;
     for (const itemId in cartItems) {
@@ -256,7 +239,6 @@ const ShopContextProvider = (props) => {
     showCartDropdown,
     currentUser,
     currentUserReviews,
-    // addToWishlist,
     setCurrentUserReviews,
     setCurrentUser,
     closeCartDropdown,
