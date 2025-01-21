@@ -27,7 +27,9 @@ const Collection = () => {
     const fetchAllProducts = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`${backendUrl}/api/product/get-products`);
+        const response = await axios.get(
+          `${backendUrl}/api/product/get-products`
+        );
         const data = response.data;
         if (data.success) {
           setAllProducts(data.products);
@@ -64,35 +66,62 @@ const Collection = () => {
 
       setTotalPages(Math.ceil(filtered.length / productsPerPage));
       const startIdx = (currentPage - 1) * productsPerPage;
-      const paginatedProducts = filtered.slice(startIdx, startIdx + productsPerPage);
+      const paginatedProducts = filtered.slice(
+        startIdx,
+        startIdx + productsPerPage
+      );
       setFilterProducts(paginatedProducts);
+
+      // If filtered results are less than 8, reset page to 1
+      if (filtered.length < productsPerPage) {
+        setSearchParams({ page: 1 });
+      }
     };
     applyFilter();
-  }, [allProducts, category, subCategory, searchQuery, currentPage, productsPerPage]);
+  }, [
+    allProducts,
+    category,
+    subCategory,
+    searchQuery,
+    currentPage,
+    productsPerPage,
+    setSearchParams,
+  ]);
 
   useEffect(() => {
     if (sortType === "low-high") {
-      setFilterProducts((prev) =>
-        [...prev].sort((a, b) => a.price - b.price)
-      );
+      setFilterProducts((prev) => [...prev].sort((a, b) => a.price - b.price));
     } else if (sortType === "high-low") {
-      setFilterProducts((prev) =>
-        [...prev].sort((a, b) => b.price - a.price)
-      );
+      setFilterProducts((prev) => [...prev].sort((a, b) => b.price - a.price));
     }
   }, [sortType]);
 
   const toggleCategory = (value) => {
-    setCategory((prev) =>
-      prev.includes(value) ? prev.filter((item) => item !== value) : [...prev, value]
-    );
+    setCategory((prev) => {
+      const updatedCategory = prev.includes(value)
+        ? prev.filter((item) => item !== value)
+        : [...prev, value];
+      // Reset to page 1 when filter is changed
+      setSearchParams({ page: 1 });
+      return updatedCategory;
+    });
   };
 
   const toggleSubCategory = (value) => {
-    setSubCategory((prev) =>
-      prev.includes(value) ? prev.filter((item) => item !== value) : [...prev, value]
-    );
+    setSubCategory((prev) => {
+      const updatedSubCategory = prev.includes(value)
+        ? prev.filter((item) => item !== value)
+        : [...prev, value];
+      // Reset to page 1 when filter is changed
+      setSearchParams({ page: 1 });
+      return updatedSubCategory;
+    });
   };
+
+  // Scroll to top when page changes
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [currentPage]);
 
   if (loading) {
     return (
@@ -112,7 +141,8 @@ const Collection = () => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search products..."
-            className="w-full md:w-2/3 lg:w-1/2 mx-auto block border border-gray-300 rounded-full px-6 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+            className="w-full md:w-2/3 lg:w-1/2 mx-auto block border border-gray-300 
+            rounded-full px-6 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
             aria-label="Search products"
           />
         </div>
@@ -122,27 +152,41 @@ const Collection = () => {
         {/* Mobile Filter Toggle */}
         <button
           onClick={() => setShowFilter(!showFilter)}
-          className="lg:hidden w-full mb-4 bg-white border border-gray-300 rounded-lg px-4 py-2 flex items-center justify-between"
+          className="lg:hidden w-full mb-4 bg-white border border-gray-300 rounded-lg 
+          px-4 py-2 flex items-center justify-between"
         >
           <span className="font-medium">Filters</span>
           <svg
-            className={`w-5 h-5 transition-transform ${showFilter ? 'rotate-180' : ''}`}
+            className={`w-5 h-5 transition-transform ${
+              showFilter ? "rotate-180" : ""
+            }`}
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
           >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M19 9l-7 7-7-7"
+            />
           </svg>
         </button>
 
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Filters Sidebar */}
-          <div className={`lg:w-1/4 ${showFilter ? "block" : "hidden lg:block"}`}>
+          <div
+            className={`lg:w-1/4 ${showFilter ? "block" : "hidden lg:block"}`}
+          >
             <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-400">
               {/* Brands Section */}
               <div className="mb-8">
-                <h3 className="text-lg font-semibold mb-4 text-gray-800">Brands</h3>
-                <div className="grid grid-cols-2 gap-3"> {/* Two items per line */}
+                <h3 className="text-lg font-semibold mb-4 text-gray-800">
+                  Brands
+                </h3>
+                <div className="grid grid-cols-2 gap-3">
+                  {" "}
+                  {/* Two items per line */}
                   {brands.map((item, index) => (
                     <label
                       key={index}
@@ -164,8 +208,12 @@ const Collection = () => {
 
               {/* Subcategories Section */}
               <div>
-                <h3 className="text-lg font-semibold mb-4 text-gray-800">Subcategories</h3>
-                <div className="grid grid-cols-2 gap-3"> {/* Two items per line */}
+                <h3 className="text-lg font-semibold mb-4 text-gray-800">
+                  Subcategories
+                </h3>
+                <div className="grid grid-cols-2 gap-3">
+                  {" "}
+                  {/* Two items per line */}
                   {categories.map((item, index) => (
                     <label
                       key={index}
@@ -194,7 +242,8 @@ const Collection = () => {
               <select
                 value={sortType}
                 onChange={(e) => setSortType(e.target.value)}
-                className="w-full md:w-auto border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full md:w-auto border border-gray-300 rounded-lg px-4 py-2 focus:outline-none 
+                focus:ring-2 focus:ring-blue-500"
               >
                 <option value="relevant">Most Relevant</option>
                 <option value="low-high">Price: Low to High</option>
@@ -229,9 +278,12 @@ const Collection = () => {
             {/* Pagination */}
             <div className="flex items-center justify-center mt-8 bg-white rounded-lg shadow-sm p-4">
               <button
-                onClick={() => setSearchParams({ page: Math.max(currentPage - 1, 1) })}
+                onClick={() =>
+                  setSearchParams({ page: Math.max(currentPage - 1, 1) })
+                }
                 disabled={currentPage === 1}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-700 transition-colors"
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg disabled:opacity-50 
+                disabled:cursor-not-allowed hover:bg-blue-700 transition-colors"
               >
                 Previous
               </button>
@@ -239,9 +291,14 @@ const Collection = () => {
                 Page {currentPage} of {totalPages}
               </span>
               <button
-                onClick={() => setSearchParams({ page: Math.min(currentPage + 1, totalPages) })}
+                onClick={() =>
+                  setSearchParams({
+                    page: Math.min(currentPage + 1, totalPages),
+                  })
+                }
                 disabled={currentPage === totalPages}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-700 transition-colors"
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg disabled:opacity-50 
+                disabled:cursor-not-allowed hover:bg-blue-700 transition-colors"
               >
                 Next
               </button>
