@@ -10,7 +10,6 @@ const Collection = () => {
   const { backendUrl } = useContext(ShopContext);
   const [showFilter, setShowFilter] = useState(false);
   const [allProducts, setAllProducts] = useState([]);
-  const [filterProducts, setFilterProducts] = useState([]);
   const [category, setCategory] = useState([]);
   const [subCategory, setSubCategory] = useState([]);
   const [sortType, setSortType] = useState("relevant");
@@ -23,79 +22,50 @@ const Collection = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = parseInt(searchParams.get("page")) || 1;
 
-  useEffect(() => {
-    const fetchAllProducts = async () => {
-      setLoading(true);
-      try {
-        const response = await axios.get(
-          `${backendUrl}/api/product/get-products`
-        );
-        const data = response.data;
-        if (data.success) {
-          setAllProducts(data.products);
-          setTotalProducts(data.products.length);
+  // Fetch paginated products from the backend
+  const fetchPaginatedProducts = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get(
+        `${backendUrl}/api/product/get-paginated-products`,
+        {
+          params: {
+            page: currentPage,
+            limit: productsPerPage,
+            category: category.join(","), // Send categories as a comma-separated string
+            subCategory: subCategory.join(","), // Send subcategories as a comma-separated string
+            search: searchQuery, // Send search query
+          },
         }
-      } catch (error) {
-        console.error("Error fetching all products:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchAllProducts();
-  }, [backendUrl]);
-
-  useEffect(() => {
-    const applyFilter = () => {
-      let filtered = [...allProducts];
-
-      if (searchQuery) {
-        filtered = filtered.filter((item) =>
-          item.name.toLowerCase().includes(searchQuery.toLowerCase())
-        );
-      }
-
-      if (category.length > 0) {
-        filtered = filtered.filter((item) => category.includes(item.category));
-      }
-
-      if (subCategory.length > 0) {
-        filtered = filtered.filter((item) =>
-          subCategory.includes(item.subCategory)
-        );
-      }
-
-      setTotalPages(Math.ceil(filtered.length / productsPerPage));
-      const startIdx = (currentPage - 1) * productsPerPage;
-      const paginatedProducts = filtered.slice(
-        startIdx,
-        startIdx + productsPerPage
       );
-      setFilterProducts(paginatedProducts);
-
-      // If filtered results are less than 8, reset page to 1
-      if (filtered.length < productsPerPage) {
-        setSearchParams({ page: 1 });
+      const data = response.data;
+      if (data.success) {
+        setAllProducts(data.products);
+        setTotalPages(data.totalPages);
+        setTotalProducts(data.totalProducts);
       }
-    };
-    applyFilter();
-  }, [
-    allProducts,
-    category,
-    subCategory,
-    searchQuery,
-    currentPage,
-    productsPerPage,
-    setSearchParams,
-  ]);
+    } catch (error) {
+      console.error("Error fetching paginated products:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  // Fetch products when page, filters, or search query changes
+  useEffect(() => {
+    fetchPaginatedProducts();
+  }, [currentPage, category, subCategory, searchQuery]);
+
+  // Handle sorting of products
   useEffect(() => {
     if (sortType === "low-high") {
-      setFilterProducts((prev) => [...prev].sort((a, b) => a.price - b.price));
+      setAllProducts((prev) => [...prev].sort((a, b) => a.price - b.price));
     } else if (sortType === "high-low") {
-      setFilterProducts((prev) => [...prev].sort((a, b) => b.price - a.price));
+      setAllProducts((prev) => [...prev].sort((a, b) => b.price - a.price));
     }
   }, [sortType]);
 
+  // Toggle category filter
   const toggleCategory = (value) => {
     setCategory((prev) => {
       const updatedCategory = prev.includes(value)
@@ -107,6 +77,7 @@ const Collection = () => {
     });
   };
 
+  // Toggle subcategory filter
   const toggleSubCategory = (value) => {
     setSubCategory((prev) => {
       const updatedSubCategory = prev.includes(value)
@@ -185,8 +156,6 @@ const Collection = () => {
                   Brands
                 </h3>
                 <div className="grid grid-cols-2 gap-3">
-                  {" "}
-                  {/* Two items per line */}
                   {brands.map((item, index) => (
                     <label
                       key={index}
@@ -212,8 +181,6 @@ const Collection = () => {
                   Subcategories
                 </h3>
                 <div className="grid grid-cols-2 gap-3">
-                  {" "}
-                  {/* Two items per line */}
                   {categories.map((item, index) => (
                     <label
                       key={index}
@@ -253,14 +220,14 @@ const Collection = () => {
 
             {/* Products Grid */}
             <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {filterProducts.length === 0 ? (
+              {allProducts.length === 0 ? (
                 <div className="col-span-full bg-white rounded-lg shadow-sm p-8 text-center">
                   <div className="text-gray-500 text-lg font-medium">
                     No products found matching your search.
                   </div>
                 </div>
               ) : (
-                filterProducts.map((item, index) => (
+                allProducts.map((item, index) => (
                   <ProductItem
                     key={index}
                     id={item._id}
