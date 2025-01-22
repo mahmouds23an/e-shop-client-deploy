@@ -147,11 +147,11 @@ const ShopContextProvider = (props) => {
 
   const getProductsData = async () => {
     try {
-      const response = await axios.get(
-        backendUrl + "/api/product/get-products"
-      );
+      const response = await axios.get(backendUrl + "/api/product/get-products");
       if (response.data.success) {
-        setProducts(response.data.products);
+        // Filter products where isActive is true
+        const activeProducts = response.data.products.filter(product => product.isActive === true);
+        setProducts(activeProducts);
       } else {
         toast.error(response.data.message);
       }
@@ -159,6 +159,7 @@ const ShopContextProvider = (props) => {
       toast.error(error.message);
     }
   };
+  
 
   const getUserCart = async (token) => {
     try {
