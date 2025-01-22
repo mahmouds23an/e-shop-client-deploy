@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
 import { ShopContext } from "../context/ShopContext";
 import ProductItem from "../components/ProductItem";
 import { brands, categories } from "../../helpers/helperFunctions";
@@ -22,6 +23,9 @@ const Collection = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = parseInt(searchParams.get("page")) || 1;
 
+  // Ref for the search input field
+  const searchInputRef = useRef(null);
+
   // Fetch paginated products from the backend
   const fetchPaginatedProducts = async () => {
     setLoading(true);
@@ -32,9 +36,9 @@ const Collection = () => {
           params: {
             page: currentPage,
             limit: productsPerPage,
-            category: category.join(","), // Send categories as a comma-separated string
-            subCategory: subCategory.join(","), // Send subcategories as a comma-separated string
-            search: searchQuery, // Send search query
+            category: category.join(","),
+            subCategory: subCategory.join(","),
+            search: searchQuery,
           },
         }
       );
@@ -55,6 +59,13 @@ const Collection = () => {
   useEffect(() => {
     fetchPaginatedProducts();
   }, [currentPage, category, subCategory, searchQuery]);
+
+  // Ensure the input stays focused when the searchQuery changes
+  useEffect(() => {
+    if (searchInputRef.current) {
+      searchInputRef.current.focus();
+    }
+  }, [searchQuery]);
 
   // Handle sorting of products
   useEffect(() => {
@@ -108,6 +119,7 @@ const Collection = () => {
       <div className="w-full bg-white shadow-sm py-4 sticky top-0 z-10">
         <div className="max-w-[90%] mx-auto">
           <input
+            ref={searchInputRef} // Focus this input field
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -146,21 +158,14 @@ const Collection = () => {
 
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Filters Sidebar */}
-          <div
-            className={`lg:w-1/4 ${showFilter ? "block" : "hidden lg:block"}`}
-          >
+          <div className={`lg:w-1/4 ${showFilter ? "block" : "hidden lg:block"}`}>
             <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-400">
               {/* Brands Section */}
               <div className="mb-8">
-                <h3 className="text-lg font-semibold mb-4 text-gray-800">
-                  Brands
-                </h3>
+                <h3 className="text-lg font-semibold mb-4 text-gray-800">Brands</h3>
                 <div className="grid grid-cols-2 gap-3">
                   {brands.map((item, index) => (
-                    <label
-                      key={index}
-                      className="flex items-center cursor-pointer group"
-                    >
+                    <label key={index} className="flex items-center cursor-pointer group">
                       <input
                         type="checkbox"
                         checked={subCategory.includes(item)}
@@ -177,15 +182,10 @@ const Collection = () => {
 
               {/* Subcategories Section */}
               <div>
-                <h3 className="text-lg font-semibold mb-4 text-gray-800">
-                  Subcategories
-                </h3>
+                <h3 className="text-lg font-semibold mb-4 text-gray-800">Subcategories</h3>
                 <div className="grid grid-cols-2 gap-3">
                   {categories.map((item, index) => (
-                    <label
-                      key={index}
-                      className="flex items-center cursor-pointer group"
-                    >
+                    <label key={index} className="flex items-center cursor-pointer group">
                       <input
                         type="checkbox"
                         checked={category.includes(item)}
