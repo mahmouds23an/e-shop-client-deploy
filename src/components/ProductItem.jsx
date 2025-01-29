@@ -37,7 +37,7 @@ const ProductItem = ({
         {/* Discount Badge */}
         {showDiscountBadge && discountPercentage > 0 && (
           <div
-            className="absolute top-[0.5px] left-[0.5px] z-50 bg-red-500 text-white 
+            className="absolute top-[0.5px] left-[0.5px] z-[1] bg-red-500 text-white 
           text-sm font-bold px-2 py-1 rounded-tl-lg rounded-br-lg"
           >
             -{discountPercentage}%
