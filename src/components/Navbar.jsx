@@ -1,6 +1,6 @@
 import { useContext, useState, useRef, useEffect } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { assets } from "../assets/frontend_assets/assets";
+import auraLogoNav from "../../public/S23an blackNav.png";
 import { ShopContext } from "../context/ShopContext";
 import { toast } from "react-hot-toast";
 import CartDropdown from "./CartDropdown";
@@ -72,7 +72,7 @@ const Navbar = () => {
   return (
     <div className="flex items-center justify-between px-4 py-2 font-medium relative">
       <Link to="/">
-        <img src={assets.logo} alt="Logo" className="w-36" />
+        <img src={auraLogoNav} alt="Logo" className="w-28" />
       </Link>
 
       <ul className="hidden lg:flex gap-5 text-sm text-gray-700">
