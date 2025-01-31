@@ -16,21 +16,41 @@ const Footer = () => {
           </div>
         </div>
         <div>
-          <p className="text-xl font-medium mb-5">COMPANY</p>
-          <ul className="flex flex-col gap-1 text-gray-600">
-            <Link to={"/"}>
-              <li className="hover:text-black">Home</li>
-            </Link>
-            <Link to={"/about"}>
-              <li className="hover:text-black">About Us</li>
-            </Link>
-            <li>Delivery</li>
-            <li>Privacy policy</li>
-          </ul>
+          <p className="text-xl font-medium mb-5 text-center md:text-left">
+            COMPANY
+          </p>
+          <div className="text-center md:text-left">
+            <ul className="flex flex-col gap-1 text-gray-600">
+              <Link to={"/"}>
+                <li className="hover:text-black">Home</li>
+              </Link>
+              <Link to={"/about"}>
+                <li className="hover:text-black">About Us</li>
+              </Link>
+              <li>Delivery</li>
+              <li>Privacy policy</li>
+            </ul>
+          </div>
         </div>
         <div>
-          <p className="text-xl font-medium mb-5">GET IN TOUCH</p>
-          <ul className="flex flex-col gap-3 text-gray-600">
+          <p className="text-xl font-medium mb-5 text-center md:text-left">
+            GET IN TOUCH
+          </p>
+          <ul className="flex justify-center md:justify-start text-gray-600 gap-5">
+            <Link to={"https://www.facebook.com/profile.php?id=61572517201936"}>
+              <li className="flex gap-2 items-center font-bold text-base">
+                <SocialIcon
+                  network="facebook"
+                  style={{ height: 50, width: 50 }}
+                />{" "}
+              </li>
+            </Link>
+            <li className="flex gap-2 items-center font-bold text-base">
+              <SocialIcon
+                network="instagram"
+                style={{ height: 50, width: 50 }}
+              />{" "}
+            </li>
             <a
               href="https://wa.me/201501884857"
               target="_blank"
@@ -39,27 +59,10 @@ const Footer = () => {
               <li className="flex gap-2 items-center font-bold text-base">
                 <SocialIcon
                   network="whatsapp"
-                  style={{ height: 25, width: 25 }}
+                  style={{ height: 50, width: 50 }}
                 />{" "}
-                WhatsApp: (+20) 150 1884 857
               </li>
             </a>
-            <li className="flex gap-2 items-center font-bold text-base">
-              <SocialIcon
-                network="instagram"
-                style={{ height: 25, width: 25 }}
-              />{" "}
-              Instagram Page
-            </li>
-            <Link to={"https://www.facebook.com/profile.php?id=61572517201936"}>
-              <li className="flex gap-2 items-center font-bold text-base">
-                <SocialIcon
-                  network="facebook"
-                  style={{ height: 25, width: 25 }}
-                />{" "}
-                Facebook Page
-              </li>
-            </Link>
           </ul>
         </div>
       </div>
