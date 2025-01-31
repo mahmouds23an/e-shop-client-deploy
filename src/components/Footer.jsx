@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import auraLogoFooter from "../../public/S23an black.png";
 import { SocialIcon } from "react-social-icons";
-import { FaPhoneAlt } from "react-icons/fa";
 
 const Footer = () => {
   return (
@@ -11,7 +10,8 @@ const Footer = () => {
           <img src={auraLogoFooter} className="mb-5 w-80" alt="" />
           <div className="flex flex-col">
             <p className="w-full text-gray-600 text-center">
-              Experience the softest, most comfortable organic cotton essentials for the whole family
+              Experience the softest, most comfortable organic cotton essentials
+              for the whole family
             </p>
           </div>
         </div>
@@ -31,27 +31,35 @@ const Footer = () => {
         <div>
           <p className="text-xl font-medium mb-5">GET IN TOUCH</p>
           <ul className="flex flex-col gap-3 text-gray-600">
+            <a
+              href="https://wa.me/201501884857"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <li className="flex gap-2 items-center font-bold text-base">
+                <SocialIcon
+                  network="whatsapp"
+                  style={{ height: 25, width: 25 }}
+                />{" "}
+                WhatsApp: (+20) 150 1884 857
+              </li>
+            </a>
             <li className="flex gap-2 items-center font-bold text-base">
               <SocialIcon
-                network="whatsapp"
+                network="instagram"
                 style={{ height: 25, width: 25 }}
               />{" "}
-              WhatsApp: (+20) 1065454551
+              Instagram Page
             </li>
-            <li className="flex gap-2 items-center font-bold text-base">
-              <FaPhoneAlt
-                network="telegram"
-                style={{ height: 25, width: 25 }}
-              />{" "}
-              Landline: (050) 2242235
-            </li>
-            <li className="flex gap-2 items-center font-bold text-base">
-              <SocialIcon
-                network="facebook"
-                style={{ height: 25, width: 25 }}
-              />{" "}
-              example@.com
-            </li>
+            <Link to={"https://www.facebook.com/profile.php?id=61572517201936"}>
+              <li className="flex gap-2 items-center font-bold text-base">
+                <SocialIcon
+                  network="facebook"
+                  style={{ height: 25, width: 25 }}
+                />{" "}
+                Facebook Page
+              </li>
+            </Link>
           </ul>
         </div>
       </div>
