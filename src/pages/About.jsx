@@ -30,7 +30,7 @@ const About = () => {
       <div className="my-10 flex flex-col md:flex-row gap-16">
         <img
           src={assets.about_img}
-          className="w-full md:max-w-[450px] rounded-xl shadow-md"
+          className="w-full md:max-w-[450px] rounded-xl shadow-md hidden md:block"
           alt="Our Products"
         />
         <div className="flex flex-col justify-center md:w-2/4 text-gray-600">

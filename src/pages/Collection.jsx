@@ -140,9 +140,12 @@ const Collection = () => {
   return (
     <div className="min-h-screen">
       <div className="sticky top-0 z-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 py-4" ref={searchContainerRef}>
+        <div
+          className="max-w-7xl mx-auto md:px-4 px-1 py-4"
+          ref={searchContainerRef}
+        >
           <div className="relative">
-            <div className="relative">
+            <div className="relative -mb-7 md:mb-1">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
               <input
                 ref={searchInputRef}
@@ -273,7 +276,7 @@ const Collection = () => {
           {/* Main Content */}
           <div className="flex-1">
             {/* Sort and Total Count */}
-            <div className="rounded-lg shadow-sm p-4 mb-6">
+            <div className="rounded-lg shadow-sm p-1 mb-3 -mt-2">
               <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
                 <div className="flex items-center gap-4">
                   <select
