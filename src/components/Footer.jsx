@@ -20,18 +20,26 @@ const Footer = () => {
             COMPANY
           </p>
           <div className="text-center md:text-left">
-            <ul className="flex flex-col gap-1 text-gray-600">
+            <ul className="flex flex-col gap-1 text-gray-400 text-lg">
               <Link to={"/"}>
-                <li className="hover:text-black">Home</li>
+                <li className="hover:text-black hover:text-xl hover:font-semibold">
+                  Home
+                </li>
               </Link>
               <Link to={"/about"}>
-                <li className="hover:text-black">About Us</li>
+                <li className="hover:text-black hover:text-xl hover:font-semibold">
+                  About Us
+                </li>
               </Link>
               <Link to={"/delivery"}>
-                <li className="hover:text-black">Delivery</li>
+                <li className="hover:text-black hover:text-xl hover:font-semibold">
+                  Delivery
+                </li>
               </Link>
               <Link to={"/privacy-policy"}>
-                <li className="hover:text-black">Privacy policy</li>
+                <li className="hover:text-black hover:text-xl hover:font-semibold">
+                  Privacy policy
+                </li>
               </Link>
             </ul>
           </div>

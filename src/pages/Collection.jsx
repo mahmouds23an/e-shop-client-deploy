@@ -296,7 +296,7 @@ const Collection = () => {
                 <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-blue-500"></div>
               </div>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {allProducts.length === 0 ? (
                   <div className="col-span-full bg-white rounded-lg shadow-sm p-8 text-center">
                     <div className="text-gray-500 text-lg font-medium">

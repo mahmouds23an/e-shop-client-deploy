@@ -33,7 +33,7 @@ const PrivacyPolicy = () => {
   ];
 
   return (
-    <div className="min-h-screen py-16 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen py-16 px-4 sm:px-6 lg:px-8 -mt-11">
       {/* Hero Section */}
       <div className="max-w-7xl mx-auto text-center mb-12">
         <div className="relative mb-6">
@@ -151,7 +151,7 @@ const PrivacyPolicy = () => {
       </div>
 
       {/* Last Updated */}
-      <div className="max-w-4xl mx-auto mt-12 text-center -mb-28">
+      <div className="max-w-4xl mx-auto mt-12 text-center -mb-44">
         <p className="text-sm text-gray-500">
           Last updated: {new Date().toDateString()}
         </p>

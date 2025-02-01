@@ -14,7 +14,7 @@ const Delivery = () => {
   ];
 
   return (
-    <div className="min-h-screen py-16 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen py-16 px-4 sm:px-6 lg:px-8 -mt-11 -mb-44">
       {/* Hero Section */}
       <div className="max-w-7xl mx-auto text-center mb-12">
         <div className="relative mb-6">
@@ -55,12 +55,18 @@ const Delivery = () => {
                       className="flex items-center justify-between p-2 rounded-lg hover:bg-gray-50 transition-colors duration-200"
                     >
                       <div className="flex items-center gap-2">
-                        <span className="w-6 h-6 flex items-center justify-center rounded-full bg-[#25D366]/10 text-[#128C7E] text-sm font-medium">
+                        <span
+                          className="w-6 h-6 flex items-center justify-center 
+                        rounded-full bg-[#25D366]/10 text-[#128C7E] text-sm font-medium"
+                        >
                           {city.charAt(0)}
                         </span>
                         <span className="text-sm text-gray-800">{city}</span>
                       </div>
-                      <span className="inline-flex items-center px-3 py-0.5 text-sm rounded-full bg-[#25D366]/10 text-[#128C7E] font-medium">
+                      <span
+                        className="inline-flex items-center px-3 py-0.5 text-sm 
+                      rounded-full bg-[#25D366]/10 text-[#128C7E] font-medium"
+                      >
                         {fee} EGP
                       </span>
                     </div>
@@ -118,7 +124,7 @@ const Delivery = () => {
       </div>
 
       {/* Contact Section */}
-      <div className="max-w-2xl mx-auto mt-12 text-center -mb-28">
+      <div className="max-w-2xl mx-auto mt-12 text-center">
         <div className="bg-white p-6 rounded-xl shadow-lg">
           <h2 className="text-xl font-bold mb-3">Need Help?</h2>
           <p className="text-gray-600 text-sm mb-5">

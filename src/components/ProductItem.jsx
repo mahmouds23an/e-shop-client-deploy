@@ -30,7 +30,7 @@ const ProductItem = ({
       bg-white shadow-sm transition-all duration-300 hover:shadow-lg"
       to={`/product/${id}`}
     >
-      <div className="relative p-4">
+      <div className="relative p-4 flex flex-col h-full">
         {showDiscountBadge && discountPercentage > 0 && (
           <div className="absolute top-[0.5px] left-[0.5px] z-10">
             <div className="flex items-center justify-center rounded-tl-lg rounded-br-lg bg-red-500 px-2 py-1">
@@ -41,10 +41,6 @@ const ProductItem = ({
           </div>
         )}
 
-        {/* <button className="absolute right-4 top-4 z-10 rounded-full bg-white p-1.5 text-gray-900 transition hover:text-rose-500">
-          <Heart className="h-4 w-4" />
-        </button> */}
-
         <div className="relative h-48 overflow-hidden rounded-lg">
           <img
             className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-110"
@@ -53,32 +49,34 @@ const ProductItem = ({
           />
         </div>
 
-        <div className="relative mt-4">
-          <h3 className="text-sm font-medium text-gray-700 group-hover:text-black line-clamp-1">
-            {name}
+        <div className="relative mt-4 flex-grow">
+          {/* Product Name with RTL Direction */}
+          <h3
+            className="text-sm font-medium text-gray-700 group-hover:text-black line-clamp-2 overflow-hidden"
+            style={{ maxHeight: "3rem" }}
+          >
+            <span dir="rtl" style={{ display: "block", textAlign: "right" }}>
+              {name}
+            </span>
           </h3>
+        </div>
 
-          <div className="mt-2 flex items-center justify-between">
-            <div>
-              <p className="text-lg font-bold text-black">
-                {discountedPrice || price} <span className="currency">{currency}</span>
-              </p>
-              {/* {discountedPrice && (
-                <p className="mt-0.5 text-sm text-gray-500 line-through">
-                  {price} {currency}
-                </p>
-              )} */}
-            </div>
-
-            {showBuyButton && (
-              <button
-                className="group-hover:bg-black group-hover:text-white 
-              rounded-full  p-2 text-gray-600 transition"
-              >
-                <ShoppingBag className="h-5 w-5" />
-              </button>
-            )}
+        {/* Price and Shopping Bag Button */}
+        <div className="mt-2 flex items-center justify-between">
+          <div>
+            <p className="text-lg font-bold text-black">
+              {discountedPrice || price} <span className="currency">{currency}</span>
+            </p>
           </div>
+
+          {showBuyButton && (
+            <button
+              className="group-hover:bg-black group-hover:text-white 
+              rounded-full p-2 text-gray-600 transition"
+            >
+              <ShoppingBag className="h-5 w-5" />
+            </button>
+          )}
         </div>
       </div>
     </Link>

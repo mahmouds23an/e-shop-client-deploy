@@ -383,7 +383,7 @@ const PlaceOrder = () => {
             <div className="mt-8 space-y-4">
               <div className="flex items-center gap-3">
                 <LucideLassoSelect className="w-6 h-6 text-primary" />
-                <h2 className="text-2xl font-semibold">Payment Method</h2>
+                <h2 className="text-2xl font-semibold">Payment Methods</h2>
               </div>
 
               <div className="space-y-3">
