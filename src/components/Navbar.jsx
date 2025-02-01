@@ -1,6 +1,6 @@
 import { useContext, useState, useRef, useEffect } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import auraLogoNav from "../../public/S23an blackNav.png";
+import auraLogoNav from "/S23an blackNav.png";
 import { ShopContext } from "../context/ShopContext";
 import { toast } from "react-hot-toast";
 import CartDropdown from "./CartDropdown";
@@ -72,7 +72,7 @@ const Navbar = () => {
   return (
     <div className="flex items-center justify-between px-4 py-2 font-medium relative">
       <Link to="/">
-        <img src={auraLogoNav} alt="Logo" className="w-28" />
+        <img src={auraLogoNav} alt="Logo" className="w-32" />
       </Link>
 
       <ul className="hidden lg:flex gap-5 text-sm text-gray-700">
@@ -172,12 +172,6 @@ const Navbar = () => {
         </div>
       ) : (
         <div className="flex items-center gap-6">
-          {/* <button
-            onClick={() => setShowSearch(true)}
-            className="w-5 h-5 cursor-pointer"
-          >
-            Search
-          </button> */}
           <Link to="/login">
             <button className="px-7 py-2 text-sm text-white bg-black hover:opacity-70 rounded-full">
               Login

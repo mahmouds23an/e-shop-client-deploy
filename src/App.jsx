@@ -19,6 +19,10 @@ import Profile from "./pages/Profile";
 import OrderDetails from "./components/OrderDetails";
 import TrackOrder from "./components/TrackOrder";
 import { Toaster } from "react-hot-toast";
+import NewArrival from "./pages/NewArrival";
+import BestProducts from "./pages/BestProducts";
+import Delivery from "./components/Delivery";
+import PrivacyPolicy from "./components/PrivacyPolicy";
 
 const App = () => {
   return (
@@ -52,6 +56,10 @@ const App = () => {
         <Route path="/profile" element={<Profile />} />
         <Route path="/orders/:orderId" element={<OrderDetails />} />
         <Route path="/track-order/:orderId" element={<TrackOrder />} />
+        <Route path="/new-arrivals" element={<NewArrival />} />
+        <Route path="/best-products" element={<BestProducts />} />
+        <Route path="/delivery" element={<Delivery />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="*" element={<NotFound404 />} />
       </Routes>
       <Footer />

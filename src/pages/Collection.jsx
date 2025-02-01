@@ -273,7 +273,7 @@ const Collection = () => {
           {/* Main Content */}
           <div className="flex-1">
             {/* Sort and Total Count */}
-            <div className="bg-white rounded-lg shadow-sm p-4 mb-6">
+            <div className="rounded-lg shadow-sm p-4 mb-6">
               <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
                 <div className="flex items-center gap-4">
                   <select
@@ -287,9 +287,6 @@ const Collection = () => {
                     <option value="high-low">Price: High to Low</option>
                   </select>
                 </div>
-                <p className="text-gray-600">
-                  Showing {allProducts.length} of {totalProducts} products
-                </p>
               </div>
             </div>
 

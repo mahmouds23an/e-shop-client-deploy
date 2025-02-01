@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../context/ShopContext";
 import Title from "./Title";
 import ProductItem from "./ProductItem";
+import { Link } from "react-router-dom";
 
 const LatestCollection = () => {
   const { products } = useContext(ShopContext);
@@ -34,12 +35,14 @@ const LatestCollection = () => {
   return (
     <div className="my-10">
       <div className="text-center py-8 text-3xl">
-        <Title text1={"LATEST"} text2={"COLLECTIONS"} />
+        <Title text1={"NEW"} text2={"ARRIVALS"} />
         <p className="w-3/4 m-auto text-xs sm:text-sm md:text-base text-gray-800">
           Shop the latest collection and discover your next favorite items
-          <span className="text-gray-400 hover:underline hover:cursor-pointer hover:text-black ml-2 duration-200">
-            show more
-          </span>
+          <Link to="/new-arrivals">
+            <span className="text-gray-400 hover:underline hover:cursor-pointer hover:text-black ml-2 duration-200">
+              show more
+            </span>
+          </Link>
         </p>
       </div>
       {/* Rendering Products */}

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import auraLogoFooter from "../../public/S23an black.png";
+import auraLogoFooter from "/S23an black.png";
 import { SocialIcon } from "react-social-icons";
 
 const Footer = () => {
@@ -27,8 +27,12 @@ const Footer = () => {
               <Link to={"/about"}>
                 <li className="hover:text-black">About Us</li>
               </Link>
-              <li>Delivery</li>
-              <li>Privacy policy</li>
+              <Link to={"/delivery"}>
+                <li className="hover:text-black">Delivery</li>
+              </Link>
+              <Link to={"/privacy-policy"}>
+                <li className="hover:text-black">Privacy policy</li>
+              </Link>
             </ul>
           </div>
         </div>

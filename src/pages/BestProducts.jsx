@@ -1,30 +1,28 @@
 import { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../context/ShopContext";
-import Title from "./Title";
-import ProductItem from "./ProductItem";
-import { Link } from "react-router-dom";
+import Title from "../components/Title";
+import ProductItem from "../components/ProductItem";
+import { useNavigate } from "react-router-dom";
 
 const BestSeller = () => {
   const { products } = useContext(ShopContext);
-  const [bestSeller, setBestSeller] = useState([]);
+  const [bestSellers, setBestSellers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const bestProduct = products.filter((item) => item.bestSeller);
-    setBestSeller(bestProduct.slice(0, 5));
+    setBestSellers(bestProduct.slice(0, 20));
   }, [products]);
 
   useEffect(() => {
     setLoading(false);
   }, []);
 
-  if (loading || bestSeller.length === 0) {
+  if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div
-          className="animate-spin rounded-full h-16 w-16 
-        border-t-2 border-b-2 border-black"
-        ></div>
+        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-black"></div>
       </div>
     );
   }
@@ -33,19 +31,15 @@ const BestSeller = () => {
     <div className="my-10">
       <div className="text-center py-8 text-3xl">
         <Title text1={"BEST"} text2={"SELLERS"} />
-        <p className="w-3/4 m-auto text-xs sm:text-sm md:text-base text-gray-800">
+        <p className="w-3/4 m-auto text-xs sm:text-sm md:text-base text-gray-500">
           Explore our most popular items, chosen by customers like you
-          <Link to="/best-products">
-            <span className="text-gray-400 hover:underline hover:cursor-pointer hover:text-black ml-2 duration-200">
-              show more
-            </span>
-          </Link>
         </p>
       </div>
+      {/* Rendering Products */}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 gap-y-6">
-        {bestSeller.map((item, index) => (
+        {bestSellers.slice(0, 20).map((item) => (
           <ProductItem
-            key={index}
+            key={item._id}
             id={item._id}
             image={item.image}
             name={item.name}
@@ -54,6 +48,14 @@ const BestSeller = () => {
             showDiscountBadge={true}
           />
         ))}
+      </div>
+      <div className="text-center mt-8">
+        <button
+          onClick={() => navigate("/")}
+          className="px-4 py-2 bg-black text-white rounded hover:opacity-80 transition duration-200"
+        >
+          Go Back to Home
+        </button>
       </div>
     </div>
   );
