@@ -16,8 +16,8 @@ const Contact = () => {
           alt="Contact Us"
         />
         <div className="flex flex-col justify-center items-start gap-6">
-          <p className="font-semibold text-xl text-gray-600">
-            Get in Touch with Aura
+          <p className="font-semibold text-xl flex items-center text-black">
+            Get in Touch with <img src="/S23an blackNav.png" className="w-20 h-7 ml-1" alt="" />
           </p>
           <p className="text-gray-500">
             We are an online store dedicated to providing premium-quality cotton

@@ -60,7 +60,7 @@ const FeedBackBox = () => {
         />
         <input
           type="number"
-          placeholder="Enter your phone number (optional)"
+          placeholder="Enter your phone number"
           className="w-full outline-none border-b border-gray-500 py-2"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
