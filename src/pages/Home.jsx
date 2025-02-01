@@ -11,7 +11,9 @@ const Home = () => {
       <LatestCollection />
       <BestSeller />
       <OurPolicy />
-      <FeedBackBox />
+      <div className="-mb-28">
+        <FeedBackBox />
+      </div>
     </div>
   );
 };

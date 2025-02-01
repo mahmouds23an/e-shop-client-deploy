@@ -231,7 +231,7 @@ const PlaceOrder = () => {
   const requiredVar = "*";
 
   return (
-    <form onSubmit={onSubmitHandler} className="max-w-7xl mx-auto px-4 py-8">
+    <form onSubmit={onSubmitHandler} className="max-w-7xl mx-auto md:px-4 md:py-8 py-2 -mb-28">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 border border-gray-400 rounded-md">
         {/* Delivery Information Section */}
         <div className="bg-white rounded-xl shadow-sm p-6">
