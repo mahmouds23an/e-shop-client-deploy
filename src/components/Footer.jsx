@@ -57,12 +57,18 @@ const Footer = () => {
                 />{" "}
               </li>
             </Link>
-            <li className="flex gap-2 items-center font-bold text-base">
-              <SocialIcon
-                network="instagram"
-                style={{ height: 50, width: 50 }}
-              />{" "}
-            </li>
+            <Link
+              to={
+                "https://www.instagram.com/aurastore5673/?igsh=MW1sZnNtb2Iza2txeA%3D%3D#"
+              }
+            >
+              <li className="flex gap-2 items-center font-bold text-base">
+                <SocialIcon
+                  network="instagram"
+                  style={{ height: 50, width: 50 }}
+                />{" "}
+              </li>
+            </Link>
             <a
               href="https://wa.me/201501884857"
               target="_blank"

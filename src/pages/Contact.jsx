@@ -42,7 +42,7 @@ const Contact = () => {
               </li>
             </a>
             <a
-              href="https://www.instagram.com/"
+              href="https://www.instagram.com/aurastore5673/?igsh=MW1sZnNtb2Iza2txeA%3D%3D#"
               target="_blank"
               rel="noopener noreferrer"
             >
