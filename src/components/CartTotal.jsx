@@ -29,7 +29,7 @@ const CartTotal = ({
       <div className="text-2xl">
         {/* Promo Code Input (conditionally rendered) */}
         {showPromoInput && (
-          <div className="p-4 border border-gray-400 rounded-md shadow-md bg-white mb-5">
+          <div className="px-2 py-4 border border-gray-400 rounded-md shadow-md bg-white mb-5">
             <h3 className="text-lg font-semibold mb-2 text-gray-800">
               Have a Promo Code?
             </h3>

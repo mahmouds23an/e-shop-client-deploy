@@ -231,7 +231,10 @@ const PlaceOrder = () => {
   const requiredVar = "*";
 
   return (
-    <form onSubmit={onSubmitHandler} className="max-w-7xl mx-auto md:px-4 md:py-8 py-2 -mb-28">
+    <form
+      onSubmit={onSubmitHandler}
+      className="max-w-7xl mx-auto md:px-4 md:py-8 py-2 -mb-28"
+    >
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 border border-gray-400 rounded-md">
         {/* Delivery Information Section */}
         <div className="bg-white rounded-xl shadow-sm p-6">
@@ -254,7 +257,8 @@ const PlaceOrder = () => {
                   value={formData.firstName}
                   onChange={onChangeHandler}
                   required
-                  className="w-full px-4 py-2 border border-gray-400 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
+                  className="w-full px-4 py-2 border border-gray-400 rounded-lg 
+                  focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
                 />
               </div>
 
@@ -269,7 +273,8 @@ const PlaceOrder = () => {
                   value={formData.lastName}
                   onChange={onChangeHandler}
                   required
-                  className="w-full px-4 py-2 border border-gray-400 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
+                  className="w-full px-4 py-2 border border-gray-400 rounded-lg 
+                  focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
                 />
               </div>
             </div>
@@ -286,7 +291,8 @@ const PlaceOrder = () => {
                 value={formData.email}
                 onChange={onChangeHandler}
                 required
-                className="w-full px-4 py-2 border border-gray-400 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
+                className="w-full px-4 py-2 border border-gray-400 rounded-lg focus:ring-2 
+                focus:ring-primary/20 focus:border-primary transition-colors"
               />
             </div>
 
@@ -302,7 +308,8 @@ const PlaceOrder = () => {
                 value={formData.street}
                 onChange={onChangeHandler}
                 required
-                className="w-full px-4 py-2 border border-gray-400 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
+                className="w-full px-4 py-2 border border-gray-400 rounded-lg focus:ring-2 
+                focus:ring-primary/20 focus:border-primary transition-colors"
               />
             </div>
 
