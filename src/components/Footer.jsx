@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import auraLogoFooter from "/S23an black.png";
+import auraLogoFooter from "/Aura.png";
 import { SocialIcon } from "react-social-icons";
 
 const Footer = () => {
@@ -7,7 +7,7 @@ const Footer = () => {
     <div className="">
       <div className="flex flex-col sm:grid grid-cols-[2fr_1fr_1fr] gap-14 my-10 mt-40 text-sm">
         <div className="flex flex-col items-center">
-          <img src={auraLogoFooter} className="mb-5 w-80" alt="" />
+          <img src={auraLogoFooter} className="mb-5 w-64" alt="" />
           <div className="flex flex-col">
             <p className="w-full text-gray-600 text-center">
               Experience the softest, most comfortable organic cotton essentials
