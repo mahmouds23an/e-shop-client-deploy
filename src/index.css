@@ -363,7 +363,7 @@ input[type="number"] {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(11, 11, 11, 0.905);
+  background: rgba(248, 247, 247, 0.905);
   border: none;
   width: 35px;
   height: 35px;
@@ -376,10 +376,6 @@ input[type="number"] {
   transition: all 0.3s ease;
 }
 
-.nav-button:hover {
-  background: rgba(157, 155, 155, 0.3);
-}
-
 .nav-button.prev {
   left: 15px;
 }
@@ -389,7 +385,7 @@ input[type="number"] {
 }
 
 .nav-button svg {
-  color: white;
+  color: rgb(6, 6, 6);
   font-size: 1rem;
 }
 
@@ -410,14 +406,14 @@ input[type="number"] {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #9fcae0eb;
+  background: #f7f9f7eb;
   border: none;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .dot.active {
-  background: white;
+  background: rgb(9, 222, 73);
   transform: scale(1.4);
 }
 
@@ -474,6 +470,14 @@ input[type="number"] {
 
   .timer-item span {
     font-size: 1rem;
+  }
+
+  .nav-button.prev {
+    left: 10px;
+  }
+
+  .nav-button.next {
+    right: 10px;
   }
 }
 
