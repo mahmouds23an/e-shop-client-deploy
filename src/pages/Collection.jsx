@@ -137,6 +137,81 @@ const Collection = () => {
     };
   }, []);
 
+  const renderPaginationNumbers = () => {
+    const pages = [];
+    const maxVisiblePages = window.innerWidth < 640 ? 3 : 5; // Show fewer pages on mobile
+
+    let start = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+    let end = Math.min(totalPages, start + maxVisiblePages - 1);
+
+    // Adjust start if we're near the end
+    if (end === totalPages) {
+      start = Math.max(1, end - maxVisiblePages + 1);
+    }
+
+    // First page
+    if (start > 1) {
+      pages.push(
+        <button
+          key={1}
+          onClick={() => setSearchParams({ page: 1 })}
+          className="w-8 h-8 flex items-center justify-center rounded text-sm font-medium 
+          text-gray-700 hover:bg-gray-100 transition-all duration-200"
+        >
+          1
+        </button>
+      );
+      if (start > 2) {
+        pages.push(
+          <span key="dots-1" className="px-1 text-gray-400">
+            ...
+          </span>
+        );
+      }
+    }
+
+    // Visible pages
+    for (let i = start; i <= end; i++) {
+      pages.push(
+        <button
+          key={i}
+          onClick={() => setSearchParams({ page: i })}
+          className={`w-8 h-8 flex items-center justify-center rounded text-sm font-medium 
+          transition-all duration-200 ${
+            currentPage === i
+              ? "bg-blue-600 text-white"
+              : "text-gray-700 hover:bg-gray-100"
+          }`}
+        >
+          {i}
+        </button>
+      );
+    }
+
+    // Last page
+    if (end < totalPages) {
+      if (end < totalPages - 1) {
+        pages.push(
+          <span key="dots-2" className="px-1 text-gray-400">
+            ...
+          </span>
+        );
+      }
+      pages.push(
+        <button
+          key={totalPages}
+          onClick={() => setSearchParams({ page: totalPages })}
+          className="w-8 h-8 flex items-center justify-center rounded text-sm font-medium 
+          text-gray-700 hover:bg-gray-100 transition-all duration-200"
+        >
+          {totalPages}
+        </button>
+      );
+    }
+
+    return pages;
+  };
+
   return (
     <div className="min-h-screen">
       <div className="sticky top-0 z-20 bg-white">
@@ -170,7 +245,7 @@ const Collection = () => {
             {isSearchInputFocused && (
               <div
                 className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-xl 
-              border border-gray-200 max-h-[70vh] overflow-y-auto"
+                border border-gray-200 max-h-[70vh] overflow-y-auto"
               >
                 {!searchQuery && (
                   <div className="p-4 text-center text-gray-500">
@@ -323,64 +398,23 @@ const Collection = () => {
               </div>
             )}
 
-            {/* Pagination */}
+            {/* Mobile-friendly Pagination */}
             {!loading && allProducts.length > 0 && (
-              <div className="mt-8 flex flex-col items-center gap-4">
-                <div className="flex items-center gap-2">
+              <div className="mt-8 flex justify-center">
+                <div className="inline-flex items-center gap-1 bg-white rounded-lg shadow-sm p-1">
                   <button
                     onClick={() =>
                       setSearchParams({ page: Math.max(currentPage - 1, 1) })
                     }
                     disabled={currentPage === 1}
-                    className="flex items-center gap-1 px-4 py-2 text-sm font-medium text-gray-700 bg-white border 
-                    border-gray-300 rounded-lg hover:bg-gray-50 hover:text-gray-900 disabled:opacity-50 
-                    disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-gray-700 transition-all 
-                    duration-200 group"
+                    className="p-1.5 rounded text-gray-700 hover:bg-gray-100 disabled:opacity-50 
+                    disabled:cursor-not-allowed disabled:hover:bg-transparent transition-colors"
                   >
-                    <ChevronLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
-                    Previous
+                    <ChevronLeft className="w-6 h-6 border border-gray-300 rounded-full" />
                   </button>
 
                   <div className="flex items-center">
-                    {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-                      (pageNum) => {
-                        // Show first page, last page, current page, and pages around current
-                        const showPage =
-                          pageNum === 1 ||
-                          pageNum === totalPages ||
-                          Math.abs(pageNum - currentPage) <= 1;
-
-                        // Show dots only between gaps
-                        if (!showPage) {
-                          if (pageNum === 2 || pageNum === totalPages - 1) {
-                            return (
-                              <span
-                                key={`dots-${pageNum}`}
-                                className="px-2 text-gray-400"
-                              >
-                                ...
-                              </span>
-                            );
-                          }
-                          return null;
-                        }
-
-                        return (
-                          <button
-                            key={pageNum}
-                            onClick={() => setSearchParams({ page: pageNum })}
-                            className={`w-10 h-10 flex items-center justify-center rounded-lg text-sm font-medium 
-                          transition-all duration-200 ${
-                            currentPage === pageNum
-                              ? "bg-blue-600 text-white shadow-md hover:bg-blue-700"
-                              : "text-gray-700 hover:bg-gray-100"
-                          }`}
-                          >
-                            {pageNum}
-                          </button>
-                        );
-                      }
-                    )}
+                    {renderPaginationNumbers()}
                   </div>
 
                   <button
@@ -390,13 +424,10 @@ const Collection = () => {
                       })
                     }
                     disabled={currentPage === totalPages}
-                    className="flex items-center gap-1 px-4 py-2 text-sm font-medium text-gray-700 bg-white border 
-                    border-gray-300 rounded-lg hover:bg-gray-50 hover:text-gray-900 disabled:opacity-50 
-                    disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-gray-700 transition-all 
-                    duration-200 group"
+                    className="p-1.5 rounded text-gray-700 hover:bg-gray-100 disabled:opacity-50 
+                    disabled:cursor-not-allowed disabled:hover:bg-transparent transition-colors"
                   >
-                    Next
-                    <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                    <ChevronRight className="w-6 h-6 border border-gray-300 rounded-full" />
                   </button>
                 </div>
               </div>
