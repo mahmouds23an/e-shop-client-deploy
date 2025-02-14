@@ -1,6 +1,5 @@
 import { SocialIcon } from "react-social-icons";
 import FeedBackBox from "../components/FeedBackBox";
-import Title from "../components/Title";
 import { assets } from "../assets/frontend_assets/assets";
 import { Mail, Clock, MapPin } from "lucide-react";
 
@@ -24,11 +23,10 @@ const Contact = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 py-16 px-4 sm:px-6 lg:px-8 -mb-28">
+    <div className="min-h-screen py-16 px-4 sm:px-6 lg:px-8 -mb-28">
       {/* Hero Section */}
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-8 -mt-10">
-          <Title text1="Contact" text2="Us" />
           <p className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
             We&apos;re here to help! Reach out to us through any of our
             communication channels.

@@ -6,7 +6,7 @@ import { ArrowRight, CheckCircle2, Leaf, HeartHandshake } from "lucide-react";
 
 const About = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 py-20 px-4 sm:px-6 lg:px-8 -mb-44 -mt-11">
+    <div className="min-h-screen py-20 px-4 sm:px-6 lg:px-8 -mb-44 -mt-11">
       {/* Hero Section */}
       <div className="max-w-7xl mx-auto text-center mb-16">
         <div className="relative mb-8 group">

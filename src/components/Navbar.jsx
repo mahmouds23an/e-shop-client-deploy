@@ -23,7 +23,20 @@ const Navbar = () => {
     showCartDropdown,
     setShowCartDropdown,
     currentUser,
+    products,
   } = useContext(ShopContext);
+  
+  console.log(products);
+
+  const navCategories = [
+    ...new Set(products.map((product) => product.category)),
+  ];
+  console.log("navCategories: ", navCategories);
+
+  const navSubCategories = [
+    ...new Set(products.map((product) => product.subCategory)),
+  ];
+  console.log("navSubCategories: ", navSubCategories);
 
   const profileDropdownRef = useRef(null);
   const cartDropdownRef = useRef(null);
