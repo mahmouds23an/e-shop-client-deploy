@@ -453,7 +453,7 @@ const Orders = () => {
                       key={index}
                       className="hover:bg-gray-100 transition duration-200"
                     >
-                      <td className="px-[12px] py-[10px] border text-ellipsis overflow-hidden whitespace-nowrap max-w-[150px]">
+                      <td className="px-[12px] py-[10px] border line-clamp-2 overflow-hidden max-w-[150px]">
                         {item.name}
                       </td>
                       <td className="px-[12px] py-[10px] border">

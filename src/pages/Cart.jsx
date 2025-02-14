@@ -125,15 +125,19 @@ const Cart = () => {
               >
                 {/* Product Details */}
                 <div className="flex items-center space-x-4 w-full sm:w-2/3">
-                  <img
-                    src={productData?.image[0]}
-                    alt={productData?.name}
-                    className="w-14 h-14 sm:w-16 sm:h-16 rounded-md object-cover"
-                  />
+                  <Link to={`/product/${item._id}`}>
+                    <img
+                      src={productData?.image[0]}
+                      alt={productData?.name}
+                      className="w-14 h-14 sm:w-16 sm:h-16 rounded-md object-cover"
+                    />
+                  </Link>
                   <div className="flex-1">
-                    <h3 className="text-sm sm:text-base font-semibold text-ellipsis max-w-full overflow-hidden whitespace-nowrap">
-                      {productData?.name}
-                    </h3>
+                    <Link to={`/product/${item._id}`}>
+                      <h3 className="text-sm sm:text-base font-semibold max-w-full overflow-hidden line-clamp-2">
+                        {productData?.name}
+                      </h3>
+                    </Link>
                     <p className="text-gray-600 text-sm sm:text-base">
                       {displayPrice}
                       <span className="currency">{currency}</span>

@@ -26,8 +26,6 @@ const Navbar = () => {
     products,
   } = useContext(ShopContext);
   
-  console.log(products);
-
   const navCategories = [
     ...new Set(products.map((product) => product.category)),
   ];

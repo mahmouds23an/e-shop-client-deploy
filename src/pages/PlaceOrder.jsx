@@ -97,6 +97,7 @@ const PlaceOrder = () => {
         delivery_fee: delivery_fee ? delivery_fee : 0,
         amount: getCartAmount() - discount + delivery_fee,
         note: orderNote,
+        promoCode: appliedPromoCode || null,
       };
 
       switch (method) {
@@ -140,9 +141,8 @@ const PlaceOrder = () => {
         if (response.data.orders.length === 0) {
           setIsFirstOrder(true);
         } else {
-          setIsFirstOrder(false); // Not the first order
+          setIsFirstOrder(false);
         }
-        console.log(response.data.orders); // this line gets orders.length
       } else {
         toast.error(response.data.message);
       }

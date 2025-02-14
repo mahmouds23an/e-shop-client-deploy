@@ -52,7 +52,8 @@ const ProductItem = ({
         <div className="relative mt-4 flex-grow">
           {/* Product Name with RTL Direction */}
           <h3
-            className="text-sm font-medium text-gray-700 group-hover:text-black line-clamp-2 overflow-hidden"
+            className="text-sm font-medium text-gray-700 group-hover:text-black 
+            line-clamp-2 overflow-hidden"
             style={{ maxHeight: "3rem" }}
           >
             <span dir="rtl" style={{ display: "block", textAlign: "right" }}>
