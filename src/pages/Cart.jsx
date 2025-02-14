@@ -134,7 +134,7 @@ const Cart = () => {
                   </Link>
                   <div className="flex-1">
                     <Link to={`/product/${item._id}`}>
-                      <h3 className="text-sm sm:text-base font-semibold max-w-full overflow-hidden line-clamp-2">
+                      <h3 className="text-sm sm:text-base font-semibold max-w-full overflow-hidden line-clamp">
                         {productData?.name}
                       </h3>
                     </Link>

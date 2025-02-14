@@ -189,7 +189,7 @@ const CartDropdown = ({ show }) => {
                         className="w-16 h-16 rounded-lg object-cover shadow-md"
                       />
                       <div className="flex-1">
-                        <p className="text-sm text-black font-medium text-ellipsis max-w-[150px] overflow-hidden whitespace-nowrap">
+                        <p className="text-sm text-black font-medium line-clamp max-w-[150px] overflow-hidden">
                           {item?.product?.name}
                         </p>
                         <p className="text-xs text-gray-500 mt-1">
