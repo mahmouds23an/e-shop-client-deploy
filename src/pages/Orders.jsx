@@ -8,7 +8,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { assets } from "../assets/frontend_assets/assets";
 import UnAuthorized from "../components/UnAuthorized";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Orders = () => {
   const { backendUrl, token, currency } = useContext(ShopContext);
@@ -453,9 +453,11 @@ const Orders = () => {
                       key={index}
                       className="hover:bg-gray-100 transition duration-200"
                     >
-                      <td className="px-[12px] py-[10px] border line-clamp-2 overflow-hidden max-w-[150px]">
-                        {item.name}
-                      </td>
+                      <Link to={`/product/${item._id}`}>
+                        <td className="px-[12px] py-[10px] border line-clamp overflow-hidden max-w-[150px]">
+                          {item.name}
+                        </td>
+                      </Link>
                       <td className="px-[12px] py-[10px] border">
                         {item.size}
                       </td>
