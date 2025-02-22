@@ -202,11 +202,11 @@ const PlaceOrder = () => {
 
   const applyPromoCode = (code) => {
     if (isFirstOrder) {
-      const discountAmount = (getCartAmount() * 30) / 100; // 30% discount
+      const discountAmount = (getCartAmount() * 25) / 100;
       setDiscount(discountAmount);
-      setAppliedPromoCode("FIRSTORDER30");
+      setAppliedPromoCode("FIRSTORDER25");
       toast.success(`First-order discount applied!`);
-      return; // Skip applying any promo code if it's the first order
+      return;
     }
 
     const promo = promoCodes.find(
