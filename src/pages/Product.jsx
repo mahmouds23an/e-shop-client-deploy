@@ -74,6 +74,7 @@ const Product = () => {
       setLoading(false);
     } else {
       setProductData(null);
+      setLoading(false);
     }
   };
 
@@ -151,7 +152,7 @@ const Product = () => {
     fetchProductData();
     fetchReviews();
     window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [productId, products]); 
+  }, [productId, products]);
 
   const calculateAverageRating = (reviews) => {
     if (!reviews.length) return 0;
@@ -163,15 +164,16 @@ const Product = () => {
     toast.error("Please login first");
   };
 
-  if (loading || productData === null) {
+  if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div
-          className="animate-spin rounded-full h-16 w-16 
-        border-t-2 border-b-2 border-black"
-        ></div>
+        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-black"></div>
       </div>
     );
+  }
+
+  if (!productData) {
+    return <ProductNotFound />;
   }
 
   return (

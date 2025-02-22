@@ -10,31 +10,33 @@ import axios from "axios";
 export const ShopContext = createContext();
 
 const deliveryFees = {
-  Cairo: 10,
-  Alexandria: 15,
-  Giza: 12,
-  "Shubra El Kheima": 10,
-  "Port Said": 20,
-  Suez: 18,
-  Mansoura: 15,
-  Tanta: 16,
-  Asyut: 25,
-  Ismailia: 20,
-  Zagazig: 17,
-  Faiyum: 22,
-  Damanhur: 19,
-  Minya: 23,
-  "Beni Suef": 21,
-  Luxor: 30,
-  Aswan: 32,
-  Hurghada: 35,
-  "Sharm El Sheikh": 40,
-  "6th of October City": 15,
-  "New Cairo": 12,
-  "Nasr City": 10,
-  Maadi: 14,
-  Helwan: 16,
-  "Obour City": 18,
+  أسوان: 98,
+  أسيوط: 91,
+  الأقصر: 98,
+  الاسكندرية: 56,
+  الاسماعيلية: 56,
+  "البحر الأحمر": 91,
+  البحيرة: 56,
+  الجيزة: 56,
+  الدقهلية: 48,
+  السويس: 58,
+  الشرقية: 48,
+  الغربية: 48,
+  الفيوم: 58,
+  القاهرة: 56,
+  القليوبية: 56,
+  المنوفية: 48,
+  المنيا: 72,
+  "الوادي الجديد": 98,
+  "بني سويف": 58,
+  بورسعيد: 56,
+  "جنوب سيناء": 48,
+  دمياط: 48,
+  سوهاج: 98,
+  "شمال سيناء": 58,
+  قنا: 98,
+  "كفر الشيخ": 48,
+  مطروح: 84,
 };
 
 const ShopContextProvider = (props) => {
@@ -147,10 +149,14 @@ const ShopContextProvider = (props) => {
 
   const getProductsData = async () => {
     try {
-      const response = await axios.get(backendUrl + "/api/product/get-products");
+      const response = await axios.get(
+        backendUrl + "/api/product/get-products"
+      );
       if (response.data.success) {
         // Filter products where isActive is true
-        const activeProducts = response.data.products.filter(product => product.isActive === true);
+        const activeProducts = response.data.products.filter(
+          (product) => product.isActive === true
+        );
         setProducts(activeProducts);
       } else {
         toast.error(response.data.message);
@@ -159,7 +165,7 @@ const ShopContextProvider = (props) => {
       toast.error(error.message);
     }
   };
-  
+
   const getUserCart = async (token) => {
     try {
       const response = await axios.post(
