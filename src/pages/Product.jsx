@@ -151,12 +151,7 @@ const Product = () => {
     fetchProductData();
     fetchReviews();
     window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [productId, products]);
-
-  // if (productData === null) {
-  //   return <ProductNotFound />;
-  // }
-  
+  }, [productId, products]); 
 
   const calculateAverageRating = (reviews) => {
     if (!reviews.length) return 0;
@@ -200,7 +195,7 @@ const Product = () => {
               <img
                 src={image}
                 alt="product"
-                className="w-full object-contain h-[400px] border border-gray-300"
+                className="w-full object-contain h-[400px]"
               />
             </div>
           </div>

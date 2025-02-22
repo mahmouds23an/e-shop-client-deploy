@@ -378,7 +378,7 @@ const Collection = () => {
                 {allProducts.length === 0 ? (
                   <div className="col-span-full bg-white rounded-lg shadow-sm p-8 text-center">
                     <div className="text-gray-500 text-lg font-medium">
-                      No products found matching your criteria.
+                      We work on this section, it will be here soon
                     </div>
                   </div>
                 ) : (
