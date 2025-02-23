@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useContext, useState, useRef, useEffect } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import auraLogoNavNew from "/AuraNav.png";
@@ -29,12 +30,10 @@ const Navbar = () => {
   const navCategories = [
     ...new Set(products.map((product) => product.category)),
   ];
-  console.log("navCategories: ", navCategories);
 
   const navSubCategories = [
     ...new Set(products.map((product) => product.subCategory)),
   ];
-  console.log("navSubCategories: ", navSubCategories);
 
   const profileDropdownRef = useRef(null);
   const cartDropdownRef = useRef(null);

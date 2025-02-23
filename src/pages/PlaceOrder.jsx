@@ -99,7 +99,7 @@ const PlaceOrder = () => {
         note: orderNote,
         promoCode: appliedPromoCode || null,
       };
-
+  
       switch (method) {
         case "cod":
           const response = await axios.post(
@@ -110,6 +110,20 @@ const PlaceOrder = () => {
             }
           );
           if (response.data.success) {
+            // Check if the applied promo code is a one-time use promo code
+            if (appliedPromoCode) {
+              const promo = promoCodes.find((p) => p.code === appliedPromoCode);
+              if (promo && !promo.useManyTimes) {
+                // Mark the promo code as used
+                await axios.post(
+                  `${backendUrl}/api/promo/mark-as-used`,
+                  { id: promo._id },
+                  { headers: { token } }
+                );
+                toast.success("Promo code marked as used.");
+              }
+            }
+  
             setCartItems({});
             toast.success(response.data.message);
             navigate("/orders");
@@ -117,7 +131,7 @@ const PlaceOrder = () => {
             toast.error(response.data.message);
           }
           break;
-
+  
         default:
           break;
       }
@@ -208,18 +222,22 @@ const PlaceOrder = () => {
       toast.success(`First-order discount applied!`);
       return;
     }
-
+  
     const promo = promoCodes.find(
-      (p) => p.code === code && p.isActive && new Date(p.endDate) > new Date()
+      (p) =>
+        p.code === code &&
+        p.isActive &&
+        !p.used &&
+        new Date(p.endDate) > new Date()
     );
-
+  
     if (promo) {
       const discountAmount = (getCartAmount() * promo.discountPercentage) / 100;
       setDiscount(discountAmount);
       setAppliedPromoCode(code);
       toast.success(`Promo code ${code} applied!`);
     } else {
-      toast.error("Invalid or expired promo code.");
+      toast.error("Invalid promo code.");
       setDiscount(0);
       setAppliedPromoCode("");
     }
