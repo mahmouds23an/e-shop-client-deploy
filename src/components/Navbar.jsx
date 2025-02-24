@@ -135,15 +135,6 @@ const Navbar = () => {
                   >
                     My Profile
                   </p>
-                  {/* <p
-                    onClick={() => {
-                      navigate("/wishlist");
-                      setProfileDropdownVisible(false);
-                    }}
-                    className="cursor-pointer hover:text-black"
-                  >
-                    My Wishlist
-                  </p> */}
                   <p
                     onClick={() => {
                       navigate("/orders");
