@@ -249,7 +249,7 @@ const Collection = () => {
               >
                 {!searchQuery && (
                   <div className="p-4 text-center text-gray-500">
-                    Start typing to search products...
+                    Start typing to search about products...
                   </div>
                 )}
                 {searchQuery && !searchResultItems.length && (

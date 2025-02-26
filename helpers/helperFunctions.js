@@ -73,6 +73,8 @@ export const sizesOptions = {
   Socks: ["FREE-SIZE"],
   Textiles: ["FREE-SIZE"],
   Towels: ["50 * 100", "60 * 120", "70 * 140", "Toilet size"],
+  SummerCollection: ["S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL", "6XL"],
+  WinterCollection: ["S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL", "6XL"],
 };
 
 export const categories = [
@@ -101,4 +103,5 @@ export const brands = [
   "Konouz",
   "Pantone",
   "ُElshafeay",
+  "Others",
 ];

@@ -23,6 +23,7 @@ import NewArrival from "./pages/NewArrival";
 import BestProducts from "./pages/BestProducts";
 import Delivery from "./components/Delivery";
 import PrivacyPolicy from "./components/PrivacyPolicy";
+import CollectionPage from "./pages/CollectionPage";
 
 const App = () => {
   return (
@@ -60,6 +61,14 @@ const App = () => {
         <Route path="/best-products" element={<BestProducts />} />
         <Route path="/delivery" element={<Delivery />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route
+          path="/collection/summer"
+          element={<CollectionPage type={"summer"} />}
+        />
+        <Route
+          path="/collection/winter"
+          element={<CollectionPage type={"winter"} />}
+        />
         <Route path="*" element={<NotFound404 />} />
       </Routes>
       <Footer />
