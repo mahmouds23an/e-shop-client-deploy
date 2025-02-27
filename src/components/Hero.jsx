@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react'
-import { FaChevronLeft, FaChevronRight } from 'react-icons/fa'
+import { useState, useEffect } from "react";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const events = [
   {
@@ -7,7 +8,9 @@ const events = [
     title: "Summer Collection",
     description: "Get up to 50% off on summer essentials",
     linkText: "Shop Now",
-    imageUrl: "https://images.unsplash.com/photo-1607083206869-4c7672e72a8a?auto=format&fit=crop&w=1920&q=80",
+    linkUrl: "/collection/summer",
+    imageUrl:
+      "https://images.unsplash.com/photo-1607083206869-4c7672e72a8a?auto=format&fit=crop&w=1920&q=80",
     endDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString(),
   },
   {
@@ -15,7 +18,9 @@ const events = [
     title: "Autumn Arrivals",
     description: "Discover our latest autumn collection",
     linkText: "Explore",
-    imageUrl: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1920&q=80",
+    linkUrl: "/autumn-arrivals",
+    imageUrl:
+      "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1920&q=80",
     endDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString(),
   },
   {
@@ -23,7 +28,9 @@ const events = [
     title: "Winter Special",
     description: "Cozy winter wear at amazing prices",
     linkText: "View Collection",
-    imageUrl: "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1920&q=80",
+    linkUrl: "/winter-special",
+    imageUrl:
+      "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1920&q=80",
     endDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
   },
   {
@@ -31,9 +38,11 @@ const events = [
     title: "Spring Preview",
     description: "Be the first to shop our spring collection",
     linkText: "Preview Now",
-    imageUrl: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1920&q=80",
+    linkUrl: "/spring-preview",
+    imageUrl:
+      "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1920&q=80",
     endDate: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000).toISOString(),
-  }
+  },
 ];
 
 const Hero = function () {
@@ -89,7 +98,7 @@ const Hero = function () {
       <button onClick={prevSlide} className="nav-button prev">
         <FaChevronLeft />
       </button>
-      
+
       <div className="slides-wrapper">
         {[-1, 0, 1].map((offset) => {
           const index = getSlideIndex(currentSlide + offset);
@@ -97,7 +106,9 @@ const Hero = function () {
           return (
             <div
               key={event.id}
-              className={`slide ${offset === 0 ? 'active' : offset === -1 ? 'prev' : 'next'}`}
+              className={`slide ${
+                offset === 0 ? "active" : offset === -1 ? "prev" : "next"
+              }`}
             >
               <img src={event.imageUrl} alt={event.title} />
               {offset === 0 && (
@@ -106,28 +117,44 @@ const Hero = function () {
                   <p>{event.description}</p>
                   {currentTimeLeft && (
                     <div className="timer">
-                      <div className={`timer-items ${isUrgent ? 'urgent' : ''}`}>
+                      <div
+                        className={`timer-items ${isUrgent ? "urgent" : ""}`}
+                      >
                         <div className="timer-item">
-                          <span>{String(currentTimeLeft.days).padStart(2, '0')}</span>
+                          <span>
+                            {String(currentTimeLeft.days).padStart(2, "0")}
+                          </span>
                           <p>Days</p>
                         </div>
                         <div className="timer-item">
-                          <span>{String(currentTimeLeft.hours).padStart(2, '0')}</span>
+                          <span>
+                            {String(currentTimeLeft.hours).padStart(2, "0")}
+                          </span>
                           <p>Hours</p>
                         </div>
                         <div className="timer-item">
-                          <span>{String(currentTimeLeft.minutes).padStart(2, '0')}</span>
+                          <span>
+                            {String(currentTimeLeft.minutes).padStart(2, "0")}
+                          </span>
                           <p>Minutes</p>
                         </div>
                         <div className="timer-item">
-                          <span>{String(currentTimeLeft.seconds).padStart(2, '0')}</span>
+                          <span>
+                            {String(currentTimeLeft.seconds).padStart(2, "0")}
+                          </span>
                           <p>Seconds</p>
                         </div>
                       </div>
-                      {isUrgent && <p className="urgent-message">Hurry up! Offer ends soon!</p>}
+                      {isUrgent && (
+                        <p className="urgent-message">
+                          Hurry up! Offer ends soon!
+                        </p>
+                      )}
                     </div>
                   )}
-                  <button className="cta-button">{event.linkText}</button>
+                  <Link to={currentEvent.linkUrl} className="cta-button">
+                    {currentEvent.linkText}
+                  </Link>
                 </div>
               )}
             </div>
@@ -143,13 +170,13 @@ const Hero = function () {
         {events.map((_, index) => (
           <button
             key={index}
-            className={`dot ${index === currentSlide ? 'active' : ''}`}
+            className={`dot ${index === currentSlide ? "active" : ""}`}
             onClick={() => setCurrentSlide(index)}
           />
         ))}
       </div>
     </div>
   );
-}
+};
 
 export default Hero;
