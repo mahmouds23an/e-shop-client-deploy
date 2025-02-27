@@ -249,7 +249,7 @@ const Profile = () => {
   if (!token) return <UnAuthorized />;
 
   return (
-    <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen py-1 lg:px-8">
       <div className="max-w-6xl mx-auto space-y-8">
         {/* Profile Header */}
         <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-400">
@@ -310,7 +310,7 @@ const Profile = () => {
         </div>
 
         {/* Orders Section */}
-        <div className="bg-white rounded-2xl shadow-xl p-2 md:p-8 border border-gray-400">
+        <div className="bg-white rounded-2xl shadow-xl px-4 py-2 md:p-8 border border-gray-400">
           <div className="flex items-center mb-6">
             <Package className="w-6 h-6 text-blue-600 mr-2" />
             <h2 className="text-2xl font-bold text-gray-900">
@@ -365,7 +365,7 @@ const Profile = () => {
         </div>
 
         {/* Reviews Section */}
-        <div className="bg-white rounded-2xl shadow-xl p-2 md:p-8 border border-gray-400">
+        <div className="bg-white rounded-2xl shadow-xl px-4 py-2 md:p-8 border border-gray-400">
           <div className="flex items-center mb-6">
             <Star className="w-6 h-6 text-blue-600 mr-2" />
             <h2 className="text-2xl font-bold text-gray-900">
