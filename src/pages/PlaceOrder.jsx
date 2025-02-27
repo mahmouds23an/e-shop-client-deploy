@@ -99,7 +99,7 @@ const PlaceOrder = () => {
         note: orderNote,
         promoCode: appliedPromoCode || null,
       };
-  
+
       switch (method) {
         case "cod":
           const response = await axios.post(
@@ -123,7 +123,7 @@ const PlaceOrder = () => {
                 toast.success("Promo code marked as used.");
               }
             }
-  
+
             setCartItems({});
             toast.success(response.data.message);
             navigate("/orders");
@@ -131,7 +131,7 @@ const PlaceOrder = () => {
             toast.error(response.data.message);
           }
           break;
-  
+
         default:
           break;
       }
@@ -215,14 +215,21 @@ const PlaceOrder = () => {
   }, [token]);
 
   const applyPromoCode = (code) => {
-    if (isFirstOrder) {
-      const discountAmount = (getCartAmount() * 25) / 100;
-      setDiscount(discountAmount);
-      setAppliedPromoCode("FIRSTORDER25");
-      toast.success(`First-order discount applied!`);
+    if (!code.trim()) {
+      toast.error("Please enter a promo code.");
       return;
     }
-  
+
+    if (isFirstOrder && code === "firstorder25") {
+      const discountPercentage = 25;
+      const discountAmount = (getCartAmount() * discountPercentage) / 100;
+
+      setDiscount(discountAmount);
+      setAppliedPromoCode(code);
+      toast.success(`First Order Promo applied! You saved 25%.`);
+      return;
+    }
+
     const promo = promoCodes.find(
       (p) =>
         p.code === code &&
@@ -230,17 +237,18 @@ const PlaceOrder = () => {
         !p.used &&
         new Date(p.endDate) > new Date()
     );
-  
-    if (promo) {
-      const discountAmount = (getCartAmount() * promo.discountPercentage) / 100;
-      setDiscount(discountAmount);
-      setAppliedPromoCode(code);
-      toast.success(`Promo code ${code} applied!`);
-    } else {
+
+    if (!promo) {
       toast.error("Invalid promo code.");
       setDiscount(0);
       setAppliedPromoCode("");
+      return;
     }
+
+    const discountAmount = (getCartAmount() * promo.discountPercentage) / 100;
+    setDiscount(discountAmount);
+    setAppliedPromoCode(code);
+    toast.success(`Promo code ${code} applied!`);
   };
 
   if (!token) return <UnAuthorized />;
