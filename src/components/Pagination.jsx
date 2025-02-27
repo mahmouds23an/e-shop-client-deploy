@@ -24,7 +24,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
       <button
         onClick={() => onPageChange(Math.max(1, currentPage - 1))}
         disabled={currentPage === 1}
-        className="rounded-lg bg-white text-gray-700 border 
+        className="px-2 py-1 rounded-lg bg-white text-gray-700 border 
         border-gray-200 hover:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
       >
         <ChevronLeft />
@@ -34,7 +34,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
         <>
           <button
             onClick={() => onPageChange(1)}
-            className={`rounded-lg ${
+            className={`px-2 py-1 rounded-lg ${
               1 === currentPage
                 ? "bg-blue-600 text-white"
                 : "bg-white text-gray-700 border border-gray-200 hover:border-blue-500"
@@ -42,7 +42,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
           >
             1
           </button>
-          {startPage > 2 && <span className="">...</span>}
+          {startPage > 2 && <span className="px-2 py-1">...</span>}
         </>
       )}
 
@@ -79,7 +79,8 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
       <button
         onClick={() => onPageChange(Math.min(totalPages, currentPage + 1))}
         disabled={currentPage === totalPages}
-        className="rounded-lg bg-white text-gray-700 border border-gray-200 hover:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="px-2 py-1 rounded-lg bg-white text-gray-700 border 
+        border-gray-200 hover:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
       >
         <ChevronRight />
       </button>
