@@ -5,16 +5,9 @@ import { Link } from "react-router-dom";
 import UnAuthorized from "../components/UnAuthorized";
 import axios from "axios";
 import toast from "react-hot-toast";
-import {
-  Upload,
-  X,
-  Star,
-  Package,
-  ChevronRight,
-  ZoomIn,
-  ZoomOut,
-} from "lucide-react";
+import { Upload, X, Star, Package, ChevronRight, ZoomIn, ZoomOut } from "lucide-react";
 import Cropper from "react-easy-crop";
+import Pagination from '../components/Pagination'; 
 
 const LoadingSpinner = () => (
   <div className="flex justify-center items-center">
@@ -70,7 +63,7 @@ const Profile = () => {
     currency,
     currentUserReviews,
   } = useContext(ShopContext);
-  
+
   const [orderData, setOrderData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [currentReviewPage, setCurrentReviewPage] = useState(1);
@@ -364,21 +357,11 @@ const Profile = () => {
           </div>
 
           {/* Orders Pagination */}
-          <div className="flex justify-center mt-8 space-x-2">
-            {Array.from({ length: totalPages }, (_, index) => (
-              <button
-                key={index + 1}
-                onClick={() => handlePageChange(index + 1)}
-                className={`px-4 py-2 rounded-lg transition duration-300 ${
-                  currentPage === index + 1
-                    ? "bg-blue-600 text-white"
-                    : "bg-white text-gray-700 border border-gray-200 hover:border-blue-500"
-                }`}
-              >
-                {index + 1}
-              </button>
-            ))}
-          </div>
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
         </div>
 
         {/* Reviews Section */}
@@ -414,21 +397,11 @@ const Profile = () => {
           </div>
 
           {/* Reviews Pagination */}
-          <div className="flex justify-center mt-8 space-x-2">
-            {Array.from({ length: totalReviewPages }, (_, index) => (
-              <button
-                key={index + 1}
-                onClick={() => handleReviewPageChange(index + 1)}
-                className={`px-4 py-2 rounded-lg transition duration-300 ${
-                  currentReviewPage === index + 1
-                    ? "bg-blue-600 text-white"
-                    : "bg-white text-gray-700 border border-gray-200 hover:border-blue-500"
-                }`}
-              >
-                {index + 1}
-              </button>
-            ))}
-          </div>
+          <Pagination
+            currentPage={currentReviewPage}
+            totalPages={totalReviewPages}
+            onPageChange={handleReviewPageChange}
+          />
         </div>
       </div>
 
