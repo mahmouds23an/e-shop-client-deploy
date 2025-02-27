@@ -226,7 +226,9 @@ const PlaceOrder = () => {
 
       setDiscount(discountAmount);
       setAppliedPromoCode(code);
-      toast.success(`First Order Promo applied! You saved 25%.`);
+      toast.success(`First Order Promo applied! You saved 25%.`, {
+        duration: 4000,
+      });
       return;
     }
 
@@ -239,7 +241,7 @@ const PlaceOrder = () => {
     );
 
     if (!promo) {
-      toast.error("Invalid promo code.");
+      toast.error("Invalid promo code.", { duration: 4000 });
       setDiscount(0);
       setAppliedPromoCode("");
       return;
@@ -248,7 +250,7 @@ const PlaceOrder = () => {
     const discountAmount = (getCartAmount() * promo.discountPercentage) / 100;
     setDiscount(discountAmount);
     setAppliedPromoCode(code);
-    toast.success(`Promo code ${code} applied!`);
+    toast.success(`Promo code ${code} applied!`, { duration: 4000 });
   };
 
   if (!token) return <UnAuthorized />;
