@@ -139,7 +139,7 @@ const Collection = () => {
 
   const renderPaginationNumbers = () => {
     const pages = [];
-    const maxVisiblePages = window.innerWidth < 640 ? 3 : 5; // Show fewer pages on mobile
+    const maxVisiblePages = window.innerWidth < 640 ? 3 : 5;
 
     let start = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
     let end = Math.min(totalPages, start + maxVisiblePages - 1);
