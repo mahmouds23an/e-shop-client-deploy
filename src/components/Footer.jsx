@@ -49,7 +49,7 @@ const Footer = () => {
             GET IN TOUCH
           </p>
           <ul className="flex justify-center md:justify-start text-gray-600 gap-5">
-            <Link to={"https://www.facebook.com/profile.php?id=61572517201936"}>
+            <Link to={"https://www.facebook.com/textilefinefabrics"}>
               <li className="flex gap-2 items-center font-bold text-base">
                 <SocialIcon
                   network="facebook"
