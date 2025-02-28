@@ -1,7 +1,7 @@
 import { assets } from "../assets/frontend_assets/assets";
 import FeedBackBox from "../components/FeedBackBox";
 import Title from "../components/Title";
-import auraLogoAbout from "/AuraNav.png";
+import auraLogoAbout from "../assets/frontend_assets/s23anNavWhite.png";
 import { ArrowRight, CheckCircle2, Leaf, HeartHandshake } from "lucide-react";
 
 const About = () => {
@@ -42,7 +42,7 @@ const About = () => {
         <div className="flex flex-col justify-center md:w-1/2 space-y-8">
           <div className="prose prose-lg">
             <p className="text-gray-700 leading-relaxed mb-6">
-              At Aura, we believe that comfort and quality go hand in hand. Our
+              At Elsakaan Store, we believe that comfort and quality go hand in hand. Our
               carefully crafted collection of underwear, socks, towels, and
               textiles is designed to meet the needs of men, women, and children
               alike.

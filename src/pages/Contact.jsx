@@ -2,6 +2,7 @@ import { SocialIcon } from "react-social-icons";
 import FeedBackBox from "../components/FeedBackBox";
 import { assets } from "../assets/frontend_assets/assets";
 import { Mail, Clock, MapPin } from "lucide-react";
+import auraLogoFooter from "../assets/frontend_assets/s23anNavBlack.png";
 
 const Contact = () => {
   const contactInfo = [
@@ -59,7 +60,11 @@ const Contact = () => {
                 <h2 className="text-2xl font-bold text-gray-900">
                   Get in Touch with
                 </h2>
-                <img src="/AuraNav.png" className="w-24 h-8 ml-2" alt="Logo" />
+                <img
+                  src={auraLogoFooter}
+                  className="w-40 h-16 ml-2"
+                  alt="Logo"
+                />
               </div>
               <p className="text-gray-600 leading-relaxed mb-4">
                 We are an online store dedicated to providing premium-quality
@@ -96,7 +101,7 @@ const Contact = () => {
               </h3>
               <div className="flex flex-wrap justify-between md:justify-start gap-6">
                 <a
-                  href="https://www.facebook.com/profile.php?id=61572517201936"
+                  href="https://www.facebook.com/textilefinefabrics"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="transform transition-transform duration-300 hover:scale-110"

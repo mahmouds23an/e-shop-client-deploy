@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { useContext, useState, useRef, useEffect } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import auraLogoNavNew from "/AuraNav.png";
+import auraLogoNavNew from "../assets/frontend_assets/s23anNavBlack.png";
 import { ShopContext } from "../context/ShopContext";
 import { toast } from "react-hot-toast";
 import CartDropdown from "./CartDropdown";
@@ -26,7 +26,7 @@ const Navbar = () => {
     currentUser,
     products,
   } = useContext(ShopContext);
-  
+
   const navCategories = [
     ...new Set(products.map((product) => product.category)),
   ];
@@ -82,7 +82,7 @@ const Navbar = () => {
   return (
     <div className="flex items-center justify-between px-4 py-2 font-medium relative">
       <Link to="/">
-        <img src={auraLogoNavNew} alt="Logo" className="w-28" />
+        <img src={auraLogoNavNew} alt="Logo" className="w-32 h-14" />
       </Link>
 
       <ul className="hidden lg:flex gap-5 text-sm text-gray-700">
