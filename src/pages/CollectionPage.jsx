@@ -38,11 +38,16 @@ const CollectionPage = ({ type }) => {
   }
 
   return (
-    <div className="my-10">
+    <div className="my-10" dir="rtl">
       <div className="text-center py-8 text-3xl">
-        <Title text1={type.toUpperCase()} text2={"COLLECTION"} />
+        {/* Translated Title to Arabic */}
+        <Title
+          text2={type.toUpperCase() === "SUMMER" ? "الصيفية" : "الشتوية"}
+          text1={"المجموعة"}
+        />
         <p className="w-3/4 m-auto text-xs sm:text-sm md:text-base text-gray-500">
-          Explore our latest {type} collection and find your perfect style.
+          اكتشف أحدث مجموعة {type === "summer" ? "صيفية" : "شتوية"} وابحث عن
+          أسلوبك المثالي.
         </p>
       </div>
       {/* Rendering Products */}
@@ -59,7 +64,7 @@ const CollectionPage = ({ type }) => {
             />
           ))
         ) : (
-          <p className="text-center w-full">No products available.</p>
+          <p className="text-center w-full">لا توجد منتجات متاحة.</p>
         )}
       </div>
       <div className="text-center mt-8">
@@ -67,7 +72,7 @@ const CollectionPage = ({ type }) => {
           onClick={() => navigate("/")}
           className="px-4 py-2 bg-black text-white rounded hover:opacity-80 transition duration-200"
         >
-          Go Back to Home
+          العودة إلى الصفحة الرئيسية
         </button>
       </div>
     </div>

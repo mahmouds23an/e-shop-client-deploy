@@ -5,9 +5,17 @@ import { Link } from "react-router-dom";
 import UnAuthorized from "../components/UnAuthorized";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { Upload, X, Star, Package, ChevronRight, ZoomIn, ZoomOut } from "lucide-react";
+import {
+  Upload,
+  X,
+  Star,
+  Package,
+  ZoomIn,
+  ZoomOut,
+  ChevronLeft,
+} from "lucide-react";
 import Cropper from "react-easy-crop";
-import Pagination from '../components/Pagination'; 
+import Pagination from "../components/Pagination";
 
 const LoadingSpinner = () => (
   <div className="flex justify-center items-center">
@@ -150,7 +158,7 @@ const Profile = () => {
       setIsCropperOpen(false);
       URL.revokeObjectURL(tempImageUrl);
     } catch (error) {
-      toast.error("Error cropping image");
+      toast.error("حدث خطأ أثناء اقتصاص الصورة");
       console.error(error);
     }
   };
@@ -173,7 +181,7 @@ const Profile = () => {
       );
 
       if (response.data.success) {
-        toast.success("Profile updated successfully!");
+        toast.success("تم تحديث الملف الشخصي بنجاح!");
         const updatedImage =
           response.data.updatedUser?.image || currentUser.image;
         setCurrentUser((prevUser) => ({
@@ -211,7 +219,7 @@ const Profile = () => {
       );
 
       if (response.data.success) {
-        toast.success("Profile picture removed successfully!");
+        toast.success("تم إزالة صورة الملف الشخصي بنجاح!");
         const defaultImage =
           "https://w7.pngwing.com/pngs/463/441/png-transparent-avatar-human-people-profile-user-web-user-interface-icon.png";
         setCurrentUser((prevUser) => ({
@@ -249,12 +257,12 @@ const Profile = () => {
   if (!token) return <UnAuthorized />;
 
   return (
-    <div className="min-h-screen py-1 lg:px-8">
+    <div className="min-h-screen py-1 lg:px-8" dir="rtl">
       <div className="max-w-6xl mx-auto space-y-8">
         {/* Profile Header */}
         <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-400">
           <div className="relative h-20 bg-gradient-to-r from-gray-300 to-gray-500">
-            <div className="absolute -bottom-16 left-8">
+            <div className="absolute -bottom-16 right-8">
               <div className="relative group">
                 <img
                   src={
@@ -287,7 +295,7 @@ const Profile = () => {
                 onClick={handleEditProfile}
                 className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300"
               >
-                Edit Profile
+                تعديل الملف الشخصي
               </button>
               {showRemoveButton && (
                 <button
@@ -298,10 +306,10 @@ const Profile = () => {
                   {isLoading ? (
                     <div className="flex items-center gap-2">
                       <LoadingSpinner />
-                      <span>Removing...</span>
+                      <span>جاري الإزالة...</span>
                     </div>
                   ) : (
-                    "Remove Profile Picture"
+                    "إزالة صورة الملف الشخصي"
                   )}
                 </button>
               )}
@@ -312,9 +320,9 @@ const Profile = () => {
         {/* Orders Section */}
         <div className="bg-white rounded-2xl shadow-xl px-4 py-2 md:p-8 border border-gray-400">
           <div className="flex items-center mb-6">
-            <Package className="w-6 h-6 text-blue-600 mr-2" />
+            <Package className="w-6 h-6 text-blue-600 ml-2" />
             <h2 className="text-2xl font-bold text-gray-900">
-              Your Orders ({orderData.length})
+              طلباتك ({orderData.length})
             </h2>
           </div>
           <div className="space-y-4">
@@ -326,17 +334,17 @@ const Profile = () => {
               >
                 <div className="flex-grow">
                   <p className="text-lg font-semibold text-gray-900">
-                    Order ID: {order._id.slice(-5)}
+                    رقم الطلب: {order._id.slice(-5)}
                   </p>
                   <div className="mt-2 space-y-1">
                     <p className="text-sm text-gray-600">
-                      Status:{" "}
+                      الحالة:{" "}
                       <span className="font-medium">
-                        {order?.status || "Pending"}
+                        {order?.status || "قيد الانتظار"}
                       </span>
                     </p>
                     <p className="text-sm text-gray-600">
-                      Total:{" "}
+                      الإجمالي:{" "}
                       <span className="font-medium">
                         {order.amount.toFixed(2)} {currency}
                       </span>
@@ -348,9 +356,9 @@ const Profile = () => {
                   className="mt-4 sm:mt-0 group flex items-center p-2 bg-white rounded-lg transition duration-300"
                 >
                   <span className="text-gray-500 hover:text-gray-950">
-                    View Details
+                    عرض التفاصيل
                   </span>
-                  <ChevronRight className="ml-2 w-4 h-4 text-gray-400 group-hover:text-blue-600" />
+                  <ChevronLeft className="mr-2 w-4 h-4 text-gray-400 group-hover:text-blue-600" />
                 </Link>
               </div>
             ))}
@@ -367,9 +375,9 @@ const Profile = () => {
         {/* Reviews Section */}
         <div className="bg-white rounded-2xl shadow-xl px-4 py-2 md:p-8 border border-gray-400">
           <div className="flex items-center mb-6">
-            <Star className="w-6 h-6 text-blue-600 mr-2" />
+            <Star className="w-6 h-6 text-blue-600 ml-2" />
             <h2 className="text-2xl font-bold text-gray-900">
-              Your Reviews ({currentUserReviews.length})
+              تقييماتك ({currentUserReviews.length})
             </h2>
           </div>
           <div className="space-y-4">
@@ -380,7 +388,7 @@ const Profile = () => {
               >
                 <div className="flex items-center justify-between mb-3">
                   <h3 className="text-lg font-semibold text-gray-900">
-                    {review.productId?.name || "Unknown Product"}
+                    {review.productId?.name || "منتج غير معروف"}
                   </h3>
                   <div className="flex items-center">
                     {Array.from({ length: review.rating }).map((_, index) => (
@@ -410,7 +418,9 @@ const Profile = () => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[1100] px-4">
           <div className="bg-white rounded-2xl w-full max-w-md p-8 transform transition-all duration-300">
             <div className="flex justify-between items-center mb-6">
-              <h3 className="text-2xl font-bold text-gray-900">Edit Profile</h3>
+              <h3 className="text-2xl font-bold text-gray-900">
+                تعديل الملف الشخصي
+              </h3>
               <button
                 onClick={() => {
                   setIsEditModalOpen(false);
@@ -469,13 +479,13 @@ const Profile = () => {
                     }}
                     className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg"
                   >
-                    Cancel
+                    إلغاء
                   </button>
                   <button
                     onClick={handleCropConfirm}
                     className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
                   >
-                    Crop & Save
+                    اقتصاص وحفظ
                   </button>
                 </div>
               </div>
@@ -500,7 +510,7 @@ const Profile = () => {
                       </label>
                     </div>
                     <span className="text-sm text-gray-500 mt-2">
-                      Click to upload new image
+                      انقر لتحميل صورة جديدة
                     </span>
                   </div>
                 </div>
@@ -508,7 +518,7 @@ const Profile = () => {
                 <div className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      First Name
+                      الاسم الأول
                     </label>
                     <input
                       type="text"
@@ -519,7 +529,7 @@ const Profile = () => {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Last Name
+                      الاسم الأخير
                     </label>
                     <input
                       type="text"
@@ -530,7 +540,7 @@ const Profile = () => {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Email
+                      البريد الإلكتروني
                     </label>
                     <input
                       type="email"
@@ -546,7 +556,7 @@ const Profile = () => {
                     onClick={() => setIsEditModalOpen(false)}
                     className="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition duration-200"
                   >
-                    Cancel
+                    إلغاء
                   </button>
                   <button
                     onClick={handleUpdateProfile}
@@ -556,10 +566,10 @@ const Profile = () => {
                     {isLoading ? (
                       <>
                         <LoadingSpinner />
-                        <span className="ml-2">Saving...</span>
+                        <span className="ml-2">جاري الحفظ...</span>
                       </>
                     ) : (
-                      "Save Changes"
+                      "حفظ التغييرات"
                     )}
                   </button>
                 </div>

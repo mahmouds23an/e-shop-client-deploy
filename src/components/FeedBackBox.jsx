@@ -17,7 +17,7 @@ const FeedBackBox = () => {
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     if (!validatePhoneNumber(phone)) {
-      toast.error("Invalid phone number.");
+      toast.error("رقم الهاتف غير صحيح.");
       return;
     }
     try {
@@ -40,33 +40,29 @@ const FeedBackBox = () => {
     }
   };
   return (
-    <div className="text-center">
-      <p className="text-2xl font-medium text-gray-800">
-        We value your feedback!
-      </p>
-      <p className="text-gray-400 mt-3">
-        Please let us know your thoughts and suggestions.
-      </p>
+    <div className="text-center" dir="rtl">
+      <p className="text-2xl font-medium text-gray-800">نقدر ملاحظاتك!</p>
+      <p className="text-gray-400 mt-3">يرجى إخبارنا بآرائك واقتراحاتك.</p>
       <form
         onSubmit={onSubmitHandler}
         className="w-full sm:w-1/2 flex flex-col items-center gap-3 rounded-2xl mx-auto my-6 border border-gray-400 p-4"
       >
         <input
           type="text"
-          placeholder="Enter your name (optional)"
+          placeholder="أدخل اسمك (اختياري)"
           className="w-full outline-none border-b border-gray-500 py-2"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
         <input
           type="number"
-          placeholder="Enter your phone number"
+          placeholder="أدخل رقم هاتفك"
           className="w-full outline-none border-b border-gray-500 py-2"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
         />
         <textarea
-          placeholder="Your feedback"
+          placeholder="ملاحظاتك"
           className="w-full outline-none border-b border-gray-500 py-2 resize-none"
           rows={4}
           value={feedBack}
@@ -79,7 +75,7 @@ const FeedBackBox = () => {
               ease-in-out hover:bg-black hover:text-white focus:outline-none"
           onClick={onSubmitHandler}
         >
-          SUBMIT FEEDBACK
+          إرسال الملاحظات
         </button>
       </form>
     </div>

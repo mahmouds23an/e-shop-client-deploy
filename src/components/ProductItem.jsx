@@ -29,13 +29,14 @@ const ProductItem = ({
       className="group relative block overflow-hidden rounded-lg border border-gray-200 
       bg-white shadow-sm transition-all duration-300 hover:shadow-lg"
       to={`/product/${id}`}
+      dir="rtl" // Added RTL direction
     >
       <div className="relative p-4 flex flex-col h-full">
         {showDiscountBadge && discountPercentage > 0 && (
-          <div className="absolute top-[0.5px] left-[0.5px] z-10">
-            <div className="flex items-center justify-center rounded-tl-lg rounded-br-lg bg-red-500 px-2 py-1">
+          <div className="absolute top-[0.5px] right-[0.5px] z-10"> {/* Adjusted to right */}
+            <div className="flex items-center justify-center rounded-tr-lg rounded-bl-lg bg-red-500 px-2 py-1"> {/* Adjusted corners */}
               <span className="text-sm font-bold text-white">
-                -{discountPercentage}%
+                خصم {discountPercentage}%
               </span>
             </div>
           </div>

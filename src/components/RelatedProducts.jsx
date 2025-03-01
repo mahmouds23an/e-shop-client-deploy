@@ -21,9 +21,10 @@ const RelatedProducts = ({ category, subCategory, productId }) => {
   }, [products, category, subCategory, productId]);
 
   return (
-    <div className="my-24">
+    <div className="my-24" dir="rtl">
       <div className="text-center text-3xl py-2">
-        <Title text1={"RELATED"} text2={"PRODUCTS"} />
+        {/* Translated Title to Arabic */}
+        <Title text1={"منتجات"} text2={"ذات صلة"} />
       </div>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 gap-y-6">
         {related.map((item) => (

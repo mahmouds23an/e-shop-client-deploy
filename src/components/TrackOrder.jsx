@@ -23,7 +23,7 @@ const TrackOrder = () => {
           toast.error(response.data.message);
         }
       } catch {
-        toast.error("Failed to fetch order details");
+        toast.error("فشل في جلب تفاصيل الطلب");
       } finally {
         setLoading(false);
       }
@@ -42,9 +42,9 @@ const TrackOrder = () => {
   if (!order) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center gap-4">
-        <h2 className="text-2xl font-semibold">Order not found</h2>
+        <h2 className="text-2xl font-semibold">الطلب غير موجود</h2>
         <Link to="/orders" className="text-blue-600 hover:underline">
-          Return to Orders
+          العودة إلى الطلبات
         </Link>
       </div>
     );
@@ -52,7 +52,7 @@ const TrackOrder = () => {
 
   const getStatusStep = (status) => {
     switch (status) {
-      case "Order Placed":
+      case "Order placed":
         return 1;
       case "Packing":
         return 2;
@@ -68,13 +68,13 @@ const TrackOrder = () => {
   const currentStep = getStatusStep(order.status);
 
   return (
-    <div className="min-h-screen">
-      <div className=" w-full">
+    <div className="min-h-screen" dir="rtl">
+      <div className="w-full">
         <div className="bg-white rounded-md overflow-hidden">
           {/* Header */}
           <div className="border-b border-gray-400 px-4 py-4 sm:px-6 flex flex-col gap-3">
             <h1 className="text-2xl font-bold text-gray-900">
-              Tracking Order:{" "}
+              تتبع الطلب:{" "}
               <span className="text-gray-500">{order._id.slice(-5)}</span>
             </h1>
           </div>
@@ -104,7 +104,7 @@ const TrackOrder = () => {
                   }`}
                 >
                   <Clock className="h-8 w-8 mb-2" />
-                  <span className="text-xs font-medium">Order placed</span>
+                  <span className="text-xs font-medium">تم الطلب</span>
                 </div>
                 <div
                   className={`flex flex-col items-center ${
@@ -115,7 +115,7 @@ const TrackOrder = () => {
                   }`}
                 >
                   <Package className="h-8 w-8 mb-2" />
-                  <span className="text-xs font-medium">Packing</span>
+                  <span className="text-xs font-medium">التغليف</span>
                 </div>
                 <div
                   className={`flex flex-col items-center ${
@@ -126,7 +126,7 @@ const TrackOrder = () => {
                   }`}
                 >
                   <Truck className="h-8 w-8 mb-2" />
-                  <span className="text-xs font-medium">Out for delivery</span>
+                  <span className="text-xs font-medium">في الطريق</span>
                 </div>
                 <div
                   className={`flex flex-col items-center ${
@@ -134,7 +134,7 @@ const TrackOrder = () => {
                   }`}
                 >
                   <CheckCircle className="h-8 w-8 mb-2" />
-                  <span className="text-xs font-medium">Delivered</span>
+                  <span className="text-xs font-medium">تم التوصيل</span>
                 </div>
               </div>
             </div>
@@ -145,31 +145,31 @@ const TrackOrder = () => {
             <dl className="grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-2">
               <div>
                 <dt className="text-sm font-medium text-black">
-                  Delivery Address
+                  عنوان التوصيل
                 </dt>
                 <dd className="mt-1 text-sm text-gray-600">
                   {order.address.street}, {order.address.city}
                 </dd>
               </div>
               <div>
-                <dt className="text-sm font-medium text-black">Order Date</dt>
+                <dt className="text-sm font-medium text-black">تاريخ الطلب</dt>
                 <dd className="mt-1 text-sm text-gray-600">
                   {new Date(order.date).toDateString()}
                 </dd>
               </div>
               <div>
-                <dt className="text-sm font-medium text-black">Total Amount</dt>
+                <dt className="text-sm font-medium text-black">
+                  المبلغ الإجمالي
+                </dt>
                 <dd className="mt-1 text-sm text-gray-600">
                   {order.amount} {currency}
                 </dd>
               </div>
               <div>
-                <dt className="text-sm font-medium text-black">
-                  Payment Method
-                </dt>
+                <dt className="text-sm font-medium text-black">طريقة الدفع</dt>
                 <dd className="mt-1 text-sm text-gray-600">
                   {order.paymentMethod === "COD"
-                    ? "Cash on Delivery"
+                    ? "الدفع عند الاستلام"
                     : order.paymentMethod}
                 </dd>
               </div>
@@ -179,7 +179,7 @@ const TrackOrder = () => {
           {/* Items */}
           <div className="">
             <div className="px-4 py-5 sm:px-6 border rounded-md border-gray-400">
-              <h3 className="text-lg font-bold text-gray-900">Order Items</h3>
+              <h3 className="text-lg font-bold text-gray-900">عناصر الطلب</h3>
 
               <div className="mt-4 space-y-4">
                 {order.items.map((item, index) => (
@@ -202,11 +202,11 @@ const TrackOrder = () => {
                           {item.name}
                         </p>
                         <p className="text-sm text-gray-500">
-                          Size: {item.size}
+                          الحجم: {item.size}
                         </p>
                       </div>
                     </div>
-                    <div className="text-right">
+                    <div className="text-left">
                       <p className="text-sm font-medium text-gray-900">
                         {item.quantity} ×{" "}
                         {item.discountStatus
@@ -230,7 +230,7 @@ const TrackOrder = () => {
             text-sm font-medium rounded-md shadow-sm text-white bg-black 
             hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
           >
-            Back to Orders
+            العودة إلى الطلبات
           </Link>
         </div>
       </div>

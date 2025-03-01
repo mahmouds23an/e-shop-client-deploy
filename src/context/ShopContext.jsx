@@ -42,7 +42,7 @@ const deliveryFees = {
 };
 
 const ShopContextProvider = (props) => {
-  const currency = "EGP";
+  const currency = "جنيه";
   const [delivery_fee, setDeliveryFee] = useState(deliveryFees.initial);
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const [search, setSearch] = useState("");
@@ -59,11 +59,11 @@ const ShopContextProvider = (props) => {
 
   const addToCart = async (itemId, size) => {
     if (!size) {
-      toast.error("Please select a size first.");
+      toast.error("يجب اختيار المقاس أولا");
       return;
     }
     if (cartItems[itemId] && cartItems[itemId][size]) {
-      toast.error("Already added");
+      toast.error("المنتج موجود في السلة");
       return;
     }
     let cartData = structuredClone(cartItems || {});

@@ -64,7 +64,7 @@ const Navbar = () => {
 
   const logout = () => {
     navigate("/login");
-    toast.success("Logged Out Successfully");
+    toast.success("تم تسجيل الخروج بنجاح");
     localStorage.removeItem("token");
     setToken("");
     setCartItems({});
@@ -80,32 +80,35 @@ const Navbar = () => {
   };
 
   return (
-    <div className="flex items-center justify-between px-4 py-2 font-medium relative">
+    <div
+      className="flex items-center justify-between px-4 py-2 font-medium relative"
+      dir="rtl"
+    >
       <Link to="/">
         <img src={auraLogoNavNew} alt="Logo" className="w-32 h-14" />
       </Link>
 
       <ul className="hidden lg:flex gap-5 text-sm text-gray-700">
         <NavLink to="/" className="uppercase text-gray-400 hover:text-black">
-          Home
+          الرئيسية
         </NavLink>
         <NavLink
           to="/collection"
           className="uppercase text-gray-400 hover:text-black"
         >
-          Collection
+          المجموعات
         </NavLink>
         <NavLink
           to="/about"
           className="uppercase text-gray-400 hover:text-black"
         >
-          About
+          من نحن
         </NavLink>
         <NavLink
           to="/contact"
           className="uppercase text-gray-400 hover:text-black"
         >
-          Contact-Us
+          اتصل بنا
         </NavLink>
       </ul>
 
@@ -118,13 +121,13 @@ const Navbar = () => {
             >
               <FaUser className="w-5 h-5" />
               <div className="flex gap-1 items-center text-sm">
-                <p>Hello,</p>
+                <p>مرحباً،</p>
                 <p>{currentUser?.firstName}</p>
               </div>
             </div>
 
             {profileDropdownVisible && (
-              <div className="absolute z-50 right-0 mt-2 w-64 bg-white shadow-lg p-4 border border-black rounded-lg">
+              <div className="absolute z-50 left-0 mt-2 w-64 bg-white shadow-lg p-4 border border-black rounded-lg">
                 <div className="flex flex-col gap-2 text-gray-500">
                   <p
                     onClick={() => {
@@ -133,7 +136,7 @@ const Navbar = () => {
                     }}
                     className="cursor-pointer hover:text-black"
                   >
-                    My Profile
+                    الملف الشخصي
                   </p>
                   <p
                     onClick={() => {
@@ -142,7 +145,7 @@ const Navbar = () => {
                     }}
                     className="cursor-pointer hover:text-black"
                   >
-                    My Orders
+                    طلباتي
                   </p>
                   <p
                     onClick={() => {
@@ -151,7 +154,7 @@ const Navbar = () => {
                     }}
                     className="cursor-pointer hover:text-black"
                   >
-                    Logout
+                    تسجيل الخروج
                   </p>
                 </div>
               </div>
@@ -164,7 +167,7 @@ const Navbar = () => {
               onClick={toggleCartDropdown}
             >
               <FaShoppingCart className="w-5 h-5" />
-              <p className="absolute right-[-8px] bottom-[-8px] w-4 text-center leading-4 bg-black text-white aspect-square rounded-full text-[8px]">
+              <p className="absolute left-[12px] bottom-[12px] w-4 text-center leading-4 bg-black text-white aspect-square rounded-full text-[8px]">
                 {getCartCount()}
               </p>
             </div>
@@ -175,14 +178,14 @@ const Navbar = () => {
         <div className="flex items-center gap-6">
           <Link to="/login">
             <button className="px-7 py-2 text-sm text-white bg-black hover:opacity-70 rounded-full">
-              Login
+              تسجيل الدخول
             </button>
           </Link>
         </div>
       )}
 
       <div
-        className="fixed -bottom-2 rounded-t-xl left-0 w-[100vw] bg-gradient-to-r 
+        className="fixed -bottom-2 rounded-t-xl right-0 w-[100vw] bg-gradient-to-r 
       from-stone-400 via-stone-400 to-stone-400 text-white 
       shadow-lg flex justify-around items-center py-3 lg:hidden"
       >
@@ -197,7 +200,7 @@ const Navbar = () => {
           }
         >
           <FaHome className="text-2xl" />
-          <span className="mt-1">Home</span>
+          <span className="mt-1">الرئيسية</span>
         </NavLink>
         <NavLink
           to="/collection"
@@ -210,7 +213,7 @@ const Navbar = () => {
           }
         >
           <FaThLarge className="text-2xl" />
-          <span className="mt-1">Collection</span>
+          <span className="mt-1">المجموعات</span>
         </NavLink>
         <NavLink
           to="/about"
@@ -223,7 +226,7 @@ const Navbar = () => {
           }
         >
           <FaInfoCircle className="text-2xl" />
-          <span className="mt-1">About</span>
+          <span className="mt-1">من نحن</span>
         </NavLink>
         <NavLink
           to="/contact"
@@ -236,17 +239,17 @@ const Navbar = () => {
           }
         >
           <FaEnvelope className="text-2xl" />
-          <span className="mt-1">Contact</span>
+          <span className="mt-1">اتصل بنا</span>
         </NavLink>
         <div
           className="relative flex flex-col items-center text-sm cursor-pointer"
           onClick={() => navigate("/cart")}
         >
           <FaShoppingCart className="text-2xl" />
-          <p className="absolute right-[-8px] top-[-8px] w-4 text-center leading-4 bg-black text-white aspect-square rounded-full text-[8px]">
+          <p className="absolute left-[15px] top-[-8px] w-4 text-center leading-4 bg-black text-white aspect-square rounded-full text-[8px]">
             {getCartCount()}
           </p>
-          <span className="mt-1">Cart</span>
+          <span className="mt-1">السلة</span>
         </div>
       </div>
     </div>

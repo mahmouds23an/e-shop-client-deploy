@@ -36,7 +36,7 @@ const OrderDetails = () => {
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <div className="text-gray-600 text-lg">Loading...</div>
+        <div className="text-gray-600 text-lg">جاري التحميل...</div>
       </div>
     );
   }
@@ -44,31 +44,34 @@ const OrderDetails = () => {
   if (!order) {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <div className="text-red-500 text-lg">Order not found.</div>
+        <div className="text-red-500 text-lg">الطلب غير موجود.</div>
       </div>
     );
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-gray-50 shadow-md rounded-md my-10 border border-gray-400">
+    <div
+      className="max-w-4xl mx-auto p-6 bg-gray-50 shadow-md rounded-md my-10 border border-gray-400"
+      dir="rtl"
+    >
       <div className="mb-6">
         <Link
           to="/profile"
           className="text-blue-500 hover:underline text-sm font-semibold"
         >
-          &larr; Back to Profile
+          &rarr; العودة إلى الملف الشخصي
         </Link>
       </div>
 
-      <h2 className="text-2xl font-bold mb-4 text-gray-700">Order Details</h2>
+      <h2 className="text-2xl font-bold mb-4 text-gray-700">تفاصيل الطلب</h2>
 
       <div className="bg-white shadow rounded-lg p-6 mb-8 border border-gray-400">
         <p className="mb-4">
-          <span className="font-semibold">Order ID:</span>{" "}
+          <span className="font-semibold">رقم الطلب:</span>{" "}
           <span className="text-gray-600">{order._id.slice(-5)}</span>
         </p>
         <p className="mb-4">
-          <span className="font-semibold">Status:</span>{" "}
+          <span className="font-semibold">الحالة:</span>{" "}
           <span
             className={`${
               order.status === "Completed"
@@ -78,25 +81,25 @@ const OrderDetails = () => {
                 : "text-gray-500"
             } font-semibold`}
           >
-            {order.status || "Pending"}
+            {order.status || "قيد الانتظار"}
           </span>
         </p>
         <p className="mb-4">
-          <span className="font-semibold">Total Amount:</span>{" "}
+          <span className="font-semibold">المبلغ الإجمالي:</span>{" "}
           <span className="text-gray-600">
             {order.amount.toFixed(2)}
             <span className="currency">{currency}</span>
           </span>
         </p>
         <p className="mb-4">
-          <span className="font-semibold">Order Date:</span>{" "}
+          <span className="font-semibold">تاريخ الطلب:</span>{" "}
           <span className="text-gray-600">
-            {new Date(order.date).toDateString()}
+            {new Date(order.date).toLocaleDateString("ar-EG")}
           </span>
         </p>
       </div>
 
-      <h3 className="text-xl font-semibold mb-4 text-gray-700">Items</h3>
+      <h3 className="text-xl font-semibold mb-4 text-gray-700">العناصر</h3>
       <div className="bg-white shadow rounded-lg p-6 mb-4 border border-gray-400">
         {order.items.length > 0 ? (
           <ul className="divide-y divide-gray-200">
@@ -116,15 +119,15 @@ const OrderDetails = () => {
 
                   <div className="flex gap-5">
                     <p className="text-sm text-gray-500 truncate">
-                      Quantity: {item.quantity}
+                      الكمية: {item.quantity}
                     </p>
                     <p className="text-sm text-gray-500 truncate">
-                      Size: {item.size}
+                      المقاس: {item.size}
                     </p>
                   </div>
 
                   <p className="text-sm text-gray-500 truncate">
-                    Price: {item.price.toFixed(2)}
+                    السعر: {item.price.toFixed(2)}
                     <span className="currency">{currency}</span>
                   </p>
                 </div>
@@ -132,7 +135,7 @@ const OrderDetails = () => {
             ))}
           </ul>
         ) : (
-          <p className="text-gray-500">No items in this order.</p>
+          <p className="text-gray-500">لا توجد عناصر في هذا الطلب.</p>
         )}
       </div>
     </div>

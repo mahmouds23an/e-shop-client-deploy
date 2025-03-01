@@ -213,7 +213,7 @@ const Collection = () => {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen" dir="rtl">
       <div className="sticky top-0 z-20 bg-white">
         <div
           className="max-w-7xl mx-auto md:px-4 px-1 py-4"
@@ -221,21 +221,21 @@ const Collection = () => {
         >
           <div className="relative">
             <div className="relative -mb-7 md:mb-1">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+              <Search className="absolute right-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
               <input
                 ref={searchInputRef}
                 type="text"
                 value={searchQuery}
                 onChange={handleChangeSearch}
                 onFocus={() => setIsSearchInputFocused(true)}
-                placeholder="Search for products..."
-                className="w-full h-12 pl-12 pr-12 rounded-md border-2 border-gray-200 focus:border-gray-300 
+                placeholder="ابحث عن منتجات..."
+                className="w-full h-12 pr-12 pl-12 rounded-md border-2 border-gray-200 focus:border-gray-300 
                 focus:outline-none focus:ring-2 transition-all duration-300"
               />
               {searchQuery && (
                 <button
                   onClick={clearSearch}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
                 >
                   <X className="h-5 w-5" />
                 </button>
@@ -249,12 +249,12 @@ const Collection = () => {
               >
                 {!searchQuery && (
                   <div className="p-4 text-center text-gray-500">
-                    Start typing to search about products...
+                    ابدأ بالكتابة للبحث عن المنتجات...
                   </div>
                 )}
                 {searchQuery && !searchResultItems.length && (
                   <div className="p-4 text-center text-gray-500">
-                    No products found
+                    لم يتم العثور على منتجات
                   </div>
                 )}
                 {searchResultItems.map((product) => (
@@ -262,7 +262,7 @@ const Collection = () => {
                 ))}
                 {searchQuery && searchResultItems.length > 0 && (
                   <div className="p-4 text-center bg-gray-50 text-gray-600 font-medium">
-                    Found {searchResultItems.length} items
+                    تم العثور على {searchResultItems.length} منتجات
                   </div>
                 )}
               </div>
@@ -279,7 +279,7 @@ const Collection = () => {
         >
           <span className="font-medium flex items-center gap-2">
             <SlidersHorizontal className="h-5 w-5" />
-            Filters
+            الفلاتر
           </span>
           <div
             className={`transform transition-transform duration-300 ${
@@ -299,7 +299,7 @@ const Collection = () => {
               {/* Brands Section */}
               <div className="mb-8">
                 <h3 className="text-lg font-semibold mb-4 text-gray-800">
-                  Brands
+                  العلامات التجارية
                 </h3>
                 <div className="grid grid-cols-2 gap-3">
                   {brands.map((item, index) => (
@@ -311,7 +311,7 @@ const Collection = () => {
                         type="checkbox"
                         checked={subCategory.includes(item)}
                         onChange={() => toggleSubCategory(item)}
-                        className="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                        className="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 ml-2"
                       />
                       <span className="ml-3 text-gray-700 group-hover:text-blue-600 transition-colors">
                         {item}
@@ -324,7 +324,7 @@ const Collection = () => {
               {/* Categories Section */}
               <div>
                 <h3 className="text-lg font-semibold mb-4 text-gray-800">
-                  Categories
+                  الفئات
                 </h3>
                 <div className="grid grid-cols-2 gap-3">
                   {categories.map((item, index) => (
@@ -336,7 +336,7 @@ const Collection = () => {
                         type="checkbox"
                         checked={category.includes(item)}
                         onChange={() => toggleCategory(item)}
-                        className="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                        className="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 ml-2"
                       />
                       <span className="ml-3 text-gray-700 group-hover:text-blue-600 transition-colors">
                         {item}
@@ -360,9 +360,9 @@ const Collection = () => {
                     className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none 
                     focus:ring-2 focus:ring-blue-500"
                   >
-                    <option value="relevant">Most Relevant</option>
-                    <option value="low-high">Price: Low to High</option>
-                    <option value="high-low">Price: High to Low</option>
+                    <option value="relevant">الأكثر صلة</option>
+                    <option value="low-high">السعر: من الأقل إلى الأعلى</option>
+                    <option value="high-low">السعر: من الأعلى إلى الأقل</option>
                   </select>
                 </div>
               </div>
@@ -378,7 +378,7 @@ const Collection = () => {
                 {allProducts.length === 0 ? (
                   <div className="col-span-full bg-white rounded-lg shadow-sm p-8 text-center">
                     <div className="text-gray-500 text-lg font-medium">
-                      We work on this section, it will be here soon
+                      نعمل على هذا القسم، سيكون هنا قريبًا
                     </div>
                   </div>
                 ) : (
@@ -410,7 +410,7 @@ const Collection = () => {
                     className="p-1.5 rounded text-gray-700 hover:bg-gray-100 disabled:opacity-50 
                     disabled:cursor-not-allowed disabled:hover:bg-transparent transition-colors"
                   >
-                    <ChevronLeft className="w-6 h-6 border border-gray-300 rounded-full" />
+                    <ChevronRight className="w-6 h-6 border border-gray-300 rounded-full" />
                   </button>
 
                   <div className="flex items-center">
@@ -427,7 +427,7 @@ const Collection = () => {
                     className="p-1.5 rounded text-gray-700 hover:bg-gray-100 disabled:opacity-50 
                     disabled:cursor-not-allowed disabled:hover:bg-transparent transition-colors"
                   >
-                    <ChevronRight className="w-6 h-6 border border-gray-300 rounded-full" />
+                    <ChevronLeft className="w-6 h-6 border border-gray-300 rounded-full" />
                   </button>
                 </div>
               </div>

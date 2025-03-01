@@ -4,49 +4,49 @@ import { SocialIcon } from "react-social-icons";
 
 const Footer = () => {
   return (
-    <div className="">
+    <div className="" dir="rtl">
       <div className="flex flex-col sm:grid grid-cols-[2fr_1fr_1fr] gap-14 my-10 mt-40 text-sm">
         <div className="flex flex-col items-center">
           <img src={auraLogoFooter} className="mb-5 w-36" alt="" />
           <div className="flex flex-col">
             <p className="w-full text-gray-600 text-center">
-              Experience the softest, most comfortable organic cotton essentials
-              for the whole family
+              جربوا أفضل الملابس القطنية العضوية الناعمة والمريحة للعائلة
+              بأكملها
             </p>
           </div>
         </div>
         <div>
-          <p className="text-xl font-medium mb-5 text-center md:text-left">
-            COMPANY
+          <p className="text-xl font-medium mb-5 text-center md:text-right">
+            الشركة
           </p>
-          <div className="text-center md:text-left">
+          <div className="text-center md:text-right">
             <ul className="flex flex-col gap-1 text-gray-400 text-lg">
               <Link to={"/"}>
                 <li className="hover:text-black hover:text-xl hover:font-semibold">
-                  Home
+                  الرئيسية
                 </li>
               </Link>
               <Link to={"/about"}>
                 <li className="hover:text-black hover:text-xl hover:font-semibold">
-                  About Us
+                  من نحن
                 </li>
               </Link>
               <Link to={"/delivery"}>
                 <li className="hover:text-black hover:text-xl hover:font-semibold">
-                  Delivery
+                  التوصيل
                 </li>
               </Link>
               <Link to={"/privacy-policy"}>
                 <li className="hover:text-black hover:text-xl hover:font-semibold">
-                  Privacy policy
+                  سياسة الخصوصية
                 </li>
               </Link>
             </ul>
           </div>
         </div>
         <div>
-          <p className="text-xl font-medium mb-5 text-center md:text-left">
-            GET IN TOUCH
+          <p className="text-xl font-medium mb-5 text-center md:text-right">
+            تواصل معنا
           </p>
           <ul className="flex justify-center md:justify-start text-gray-600 gap-5">
             <Link to={"https://www.facebook.com/textilefinefabrics"}>
@@ -86,9 +86,9 @@ const Footer = () => {
       </div>
       <div>
         <hr />
-        <p className="py-5 text-sm text-center">
-          Copyright 2024© example.com - All Rights Reserved.
-        </p>
+        {/* <p className="py-5 text-sm text-center">
+          حقوق النشر 2024© example.com - جميع الحقوق محفوظة.
+        </p> */}
       </div>
     </div>
   );

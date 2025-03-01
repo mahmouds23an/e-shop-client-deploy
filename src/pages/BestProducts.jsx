@@ -28,12 +28,15 @@ const BestSeller = () => {
   }
 
   return (
-    <div className="my-10">
+    <div className="my-10" dir="rtl">
+      {" "}
+      {/* Added RTL direction */}
       <div className="text-center py-8 text-3xl">
-        <Title text1={"BEST"} text2={"SELLERS"} />
+        <Title text1={"الأكثر"} text2={"مبيعاً"} /> {/* Translated title */}
         <p className="w-3/4 m-auto text-xs sm:text-sm md:text-base text-gray-500">
-          Explore our most popular items, chosen by customers like you
-        </p>
+          اكتشف العناصر الأكثر شعبية، المختارة من قبل عملاء مثلك
+        </p>{" "}
+        {/* Translated description */}
       </div>
       {/* Rendering Products */}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 gap-y-6">
@@ -54,8 +57,9 @@ const BestSeller = () => {
           onClick={() => navigate("/")}
           className="px-4 py-2 bg-black text-white rounded hover:opacity-80 transition duration-200"
         >
-          Go Back to Home
-        </button>
+          العودة إلى الرئيسية
+        </button>{" "}
+        {/* Translated button text */}
       </div>
     </div>
   );

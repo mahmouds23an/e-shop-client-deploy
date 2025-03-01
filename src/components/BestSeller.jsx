@@ -30,14 +30,14 @@ const BestSeller = () => {
   }
 
   return (
-    <div className="my-10">
+    <div className="my-10" dir="rtl">
       <div className="text-center py-8 text-3xl">
-        <Title text1={"BEST"} text2={"SELLERS"} />
+        <Title text1={"الأكثر"} text2={"مبيعاً"} />
         <p className="w-3/4 m-auto text-xs sm:text-sm md:text-base text-gray-800">
-          Explore our most popular items, chosen by customers like you
+          اكتشف العناصر الأكثر شعبية، المختارة من قبل عملائنا
           <Link to="/best-products">
-            <span className="text-gray-400 hover:underline hover:cursor-pointer hover:text-black ml-2 duration-200">
-              show more
+            <span className="text-gray-400 hover:underline hover:cursor-pointer hover:text-black mr-2 duration-200">
+              عرض المزيد
             </span>
           </Link>
         </p>

@@ -1,39 +1,39 @@
 const PrivacyPolicy = () => {
   const policies = [
     {
-      title: "Information We Collect",
+      title: "المعلومات التي نجمعها",
       icon: "https://img.icons8.com/ios/50/000000/data-protection.png",
       items: [
-        "Personal identification information (Name, email address, phone number)",
-        "Delivery address and location data",
-        "Payment information",
-        "Device and browser information",
+        "معلومات التعريف الشخصية (الاسم، عنوان البريد الإلكتروني، رقم الهاتف)",
+        "عنوان التوصيل وبيانات الموقع",
+        "معلومات الدفع",
+        "معلومات الجهاز والمتصفح",
       ],
     },
     {
-      title: "How We Use Your Data",
+      title: "كيف نستخدم بياناتك",
       icon: "https://img.icons8.com/ios/50/000000/database.png",
       items: [
-        "Process and deliver your orders",
-        "Send order updates and notifications",
-        "Improve our services and user experience",
-        "Communicate about promotions and updates",
+        "معالجة وتوصيل طلباتك",
+        "إرسال تحديثات الطلبات والإشعارات",
+        "تحسين خدماتنا وتجربة المستخدم",
+        "التواصل حول العروض والتحديثات",
       ],
     },
     {
-      title: "Data Protection",
+      title: "حماية البيانات",
       icon: "https://img.icons8.com/ios/50/000000/shield.png",
       items: [
-        "Secure SSL encryption for all transactions",
-        "Regular security audits and updates",
-        "Limited access to personal information",
-        "Compliance with data protection regulations",
+        "تشفير SSL آمن لجميع المعاملات",
+        "مراجعات وتحديثات أمنية منتظمة",
+        "وصول محدود إلى المعلومات الشخصية",
+        "الامتثال لقوانين حماية البيانات",
       ],
     },
   ];
 
   return (
-    <div className="min-h-screen py-16 px-4 sm:px-6 lg:px-8 -mt-11">
+    <div className="min-h-screen py-16 px-4 sm:px-6 lg:px-8 -mt-11" dir="rtl">
       {/* Hero Section */}
       <div className="max-w-7xl mx-auto text-center mb-12">
         <div className="relative mb-6">
@@ -45,13 +45,13 @@ const PrivacyPolicy = () => {
           <div className="absolute inset-0 bg-black opacity-40 rounded-2xl" />
           <div className="absolute inset-0 flex items-center justify-center">
             <h1 className="text-4xl md:text-5xl font-bold text-white">
-              Privacy Policy
+              سياسة الخصوصية
             </h1>
           </div>
         </div>
         <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-          Your privacy is important to us. This policy outlines how we collect,
-          use, and protect your personal information.
+          خصوصيتك مهمة بالنسبة لنا. توضح هذه السياسة كيفية جمعنا واستخدامنا
+          وحماية معلوماتك الشخصية.
         </p>
       </div>
 
@@ -59,9 +59,9 @@ const PrivacyPolicy = () => {
       <div className="max-w-6xl mx-auto">
         <div className="bg-white rounded-xl shadow-lg overflow-hidden">
           <div className="bg-gradient-to-r from-blue-600 to-purple-600 py-4 px-5">
-            <h2 className="text-xl font-bold text-white">Our Commitment</h2>
+            <h2 className="text-xl font-bold text-white">التزامنا</h2>
             <p className="text-white/80 text-sm mt-1">
-              We are committed to protecting your privacy and personal data
+              نحن ملتزمون بحماية خصوصيتك وبياناتك الشخصية
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-gray-200">
@@ -101,32 +101,29 @@ const PrivacyPolicy = () => {
       {/* Additional Information */}
       <div className="max-w-4xl mx-auto mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="bg-white p-6 rounded-xl shadow-md">
-          <h3 className="text-lg font-semibold mb-4 text-gray-800">
-            Your Rights
-          </h3>
+          <h3 className="text-lg font-semibold mb-4 text-gray-800">حقوقك</h3>
           <ul className="space-y-3">
             <li className="flex items-center gap-2 text-sm text-gray-600">
-              <span className="text-blue-600">•</span> Access your personal data
+              <span className="text-blue-600">•</span> الوصول إلى بياناتك
+              الشخصية
             </li>
             <li className="flex items-center gap-2 text-sm text-gray-600">
-              <span className="text-blue-600">•</span> Request data correction
+              <span className="text-blue-600">•</span> طلب تصحيح البيانات
             </li>
             <li className="flex items-center gap-2 text-sm text-gray-600">
-              <span className="text-blue-600">•</span> Delete your account
+              <span className="text-blue-600">•</span> حذف حسابك
             </li>
             <li className="flex items-center gap-2 text-sm text-gray-600">
-              <span className="text-blue-600">•</span> Opt-out of communications
+              <span className="text-blue-600">•</span> إلغاء الاشتراك في الرسائل
             </li>
           </ul>
         </div>
 
         <div className="bg-white p-6 rounded-xl shadow-md">
-          <h3 className="text-lg font-semibold mb-4 text-gray-800">
-            Contact Us
-          </h3>
+          <h3 className="text-lg font-semibold mb-4 text-gray-800">اتصل بنا</h3>
           <p className="text-sm text-gray-600 mb-4">
-            If you have any questions about our Privacy Policy, please
-            don&apos;t hesitate to contact us.
+            إذا كان لديك أي أسئلة حول سياسة الخصوصية الخاصة بنا، فلا تتردد في
+            الاتصال بنا.
           </p>
           <a
             href="https://wa.me/201501884857"
@@ -144,7 +141,7 @@ const PrivacyPolicy = () => {
                 alt="WhatsApp"
                 className="w-5 h-5"
               />
-              Contact Support
+              اتصل بالدعم
             </button>
           </a>
         </div>
@@ -153,7 +150,7 @@ const PrivacyPolicy = () => {
       {/* Last Updated */}
       <div className="max-w-4xl mx-auto mt-12 text-center -mb-44">
         <p className="text-sm text-gray-500">
-          Last updated: {new Date().toDateString()}
+          آخر تحديث: {new Date().toDateString()}
         </p>
       </div>
     </div>

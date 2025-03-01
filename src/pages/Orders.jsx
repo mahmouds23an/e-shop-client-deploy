@@ -4,7 +4,6 @@ import { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../context/ShopContext";
 import Title from "../components/Title";
 import axios from "axios";
-// import { toast } from "react-toastify";
 import toast from "react-hot-toast";
 import { assets } from "../assets/frontend_assets/assets";
 import UnAuthorized from "../components/UnAuthorized";
@@ -59,11 +58,6 @@ const Orders = () => {
     loadOrdersData();
   }, [token]);
 
-  /*************  ✨ Codeium Command ⭐  *************/
-  /**
-   * Closes the modal and resets the selected order.
-   */
-  /******  df1a5240-8f9b-48bd-8061-01d16fed1e68  *******/
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedOrder(null);
@@ -96,12 +90,12 @@ const Orders = () => {
 
   const handleReviewSubmit = async () => {
     if (review.rating < 1 || review.rating > 5) {
-      toast.error("Rating must be between 1 and 5");
+      toast.error("يجب أن يكون التقييم بين 1 و 5");
       return;
     }
 
     if (!review.rating || !review.comment) {
-      toast.error("All fields are required.");
+      toast.error("جميع الحقول مطلوبة.");
       return;
     }
 
@@ -119,7 +113,7 @@ const Orders = () => {
       );
 
       if (response.data.success) {
-        toast.success("Review submitted successfully");
+        toast.success("تم إرسال التقييم بنجاح");
         closeReviewModal();
         loadOrdersData();
       } else {
@@ -135,10 +129,10 @@ const Orders = () => {
   if (!token) return <UnAuthorized />;
 
   const nonDeliveredOrders = orderData.filter(
-    (order) => order.status !== "Delivered"
+    (order) => order.status !== "تم التوصيل"
   );
   const deliveredOrders = orderData.filter(
-    (order) => order.status === "Delivered"
+    (order) => order.status === "تم التوصيل"
   );
 
   if (loading) {
@@ -153,9 +147,9 @@ const Orders = () => {
   }
 
   return (
-    <div className="border-t pt-16">
+    <div className="border-t pt-16" dir="rtl">
       <div className="text-3xl font-semibold text-gray-900">
-        <Title text1={"My"} text2={`Orders`} />
+        <Title text1={"طلباتي"} text2={""} />
       </div>
       <div>
         {nonDeliveredOrders.map((order, index) => (
@@ -175,13 +169,13 @@ const Orders = () => {
                   <div className="text-black font-semibold text-lg">
                     <div>
                       {" "}
-                      Order Id:{" "}
+                      رقم الطلب:{" "}
                       <span className="text-gray-500 font-medium text-base">
                         {" "}
                         {order._id.slice(-5)}{" "}
                       </span>
                     </div>
-                    Order Price:{" "}
+                    سعر الطلب:{" "}
                     <span className="text-gray-500 font-medium text-base">
                       {" "}
                       {order.amount}{" "}
@@ -191,7 +185,7 @@ const Orders = () => {
                 </div>
                 <p className="text-black font-semibold text-lg">
                   {" "}
-                  Date:{" "}
+                  التاريخ:{" "}
                   <span className="text-gray-500 font-medium text-base">
                     {" "}
                     {new Date(order.date).toDateString()}{" "}
@@ -199,11 +193,11 @@ const Orders = () => {
                 </p>
                 <p className="text-black font-semibold text-lg">
                   {" "}
-                  Payment:{" "}
+                  طريقة الدفع:{" "}
                   <span className="text-gray-500 font-medium text-base">
                     {" "}
                     {order.paymentMethod === "COD"
-                      ? "Cash on delivery"
+                      ? "الدفع عند الاستلام"
                       : order.paymentMethod}{" "}
                   </span>
                 </p>
@@ -214,9 +208,9 @@ const Orders = () => {
                 {/* Colored dots for order status */}
                 <span
                   className={`min-w-[10px] h-[10px] rounded-lg ${
-                    order.status === "Delivered"
+                    order.status === "تم التوصيل"
                       ? "bg-green-500"
-                      : order.status === "Order Placed"
+                      : order.status === "تم الطلب"
                       ? "bg-red-500"
                       : "bg-yellow-500"
                   }`}
@@ -224,21 +218,21 @@ const Orders = () => {
                 <p className="text-sm md:text-base">{order.status}</p>
               </div>
               <div className="flex items-center gap-2">
-                {order.status === "Delivered" ? (
+                {order.status === "تم التوصيل" ? (
                   userReviews[order._id]?.rating === undefined ||
                   userReviews[order._id]?.rating === 0 ? (
                     <button
                       onClick={() => openReviewModal(order)}
                       className="border border-gray-400 px-4 py-2 text-sm font-medium hover:bg-black hover:text-white rounded-md transition duration-300"
                     >
-                      Rate The Order
+                      قيم الطلب
                     </button>
                   ) : (
                     <button
                       onClick={() => openViewRateModal(order._id)}
                       className="border border-gray-400 px-4 py-2 text-sm font-medium hover:bg-black hover:text-white rounded-md transition duration-300"
                     >
-                      View Your Rate
+                      عرض تقييمك
                     </button>
                   )
                 ) : (
@@ -246,7 +240,7 @@ const Orders = () => {
                     onClick={() => navigate(`/track-order/${order._id}`)}
                     className="border border-gray-400 px-4 py-2 hover:bg-black hover:text-white text-sm font-medium rounded-md transition duration-300"
                   >
-                    Track order
+                    تتبع الطلب
                   </button>
                 )}
                 <button
@@ -254,7 +248,7 @@ const Orders = () => {
                   className="border border-gray-400 px-4 py-2 text-sm font-medium rounded-md hover:bg-black 
                   hover:text-white transition-all duration-300"
                 >
-                  Order Details
+                  تفاصيل الطلب
                 </button>
               </div>
             </div>
@@ -278,13 +272,13 @@ const Orders = () => {
                   <div className="text-black font-semibold text-lg">
                     <div>
                       {" "}
-                      Order Id:{" "}
+                      رقم الطلب:{" "}
                       <span className="text-gray-500 font-medium text-base">
                         {" "}
                         {order._id.slice(-5)}{" "}
                       </span>
                     </div>
-                    Order Price:{" "}
+                    سعر الطلب:{" "}
                     <span className="text-gray-500 font-medium text-base">
                       {" "}
                       {order.amount}{" "}
@@ -294,7 +288,7 @@ const Orders = () => {
                 </div>
                 <p className="text-black font-semibold text-lg">
                   {" "}
-                  Date:{" "}
+                  التاريخ:{" "}
                   <span className="text-gray-500 font-medium text-base">
                     {" "}
                     {new Date(order.date).toDateString()}{" "}
@@ -302,11 +296,11 @@ const Orders = () => {
                 </p>
                 <p className="text-black font-semibold text-lg">
                   {" "}
-                  Payment:{" "}
+                  طريقة الدفع:{" "}
                   <span className="text-gray-500 font-medium text-base">
                     {" "}
                     {order.paymentMethod === "COD"
-                      ? "Cash on delivery"
+                      ? "الدفع عند الاستلام"
                       : order.paymentMethod}{" "}
                   </span>
                 </p>
@@ -317,9 +311,9 @@ const Orders = () => {
                 {/* Colored dots for order status */}
                 <span
                   className={`min-w-[10px] h-[10px] rounded-lg ${
-                    order.status === "Delivered"
+                    order.status === "تم التوصيل"
                       ? "bg-green-500"
-                      : order.status === "Order Placed"
+                      : order.status === "تم الطلب"
                       ? "bg-red-500"
                       : "bg-yellow-500"
                   }`}
@@ -327,21 +321,21 @@ const Orders = () => {
                 <p className="text-sm md:text-base">{order.status}</p>
               </div>
               <div className="flex items-center gap-2">
-                {order.status === "Delivered" ? (
+                {order.status === "تم التوصيل" ? (
                   userReviews[order._id]?.rating === undefined ||
                   userReviews[order._id]?.rating === 0 ? (
                     <button
                       onClick={() => openReviewModal(order)}
                       className="border border-gray-400 px-4 py-2 text-sm font-medium hover:bg-black hover:text-white rounded-md transition duration-300"
                     >
-                      Rate The Order
+                      قيم الطلب
                     </button>
                   ) : (
                     <button
                       onClick={() => openViewRateModal(order._id)}
                       className="border border-gray-400 px-4 py-2 text-sm font-medium hover:bg-black hover:text-white rounded-md transition duration-300"
                     >
-                      View Your Rate
+                      عرض تقييمك
                     </button>
                   )
                 ) : (
@@ -349,7 +343,7 @@ const Orders = () => {
                     onClick={() => navigate(`/track-order/${order._id}`)}
                     className="border border-gray-400 px-4 py-2 hover:bg-black hover:text-white text-sm font-medium rounded-md transition duration-300"
                   >
-                    Track order
+                    تتبع الطلب
                   </button>
                 )}
                 <button
@@ -357,7 +351,7 @@ const Orders = () => {
                   className="border border-gray-400 px-4 py-2 text-sm font-medium rounded-md hover:bg-black 
                   hover:text-white transition-all duration-300"
                 >
-                  Order Details
+                  تفاصيل الطلب
                 </button>
               </div>
             </div>
@@ -374,7 +368,7 @@ const Orders = () => {
           <div className="bg-white p-6 rounded-lg w-full max-w-lg h-full overflow-y-auto shadow-lg">
             <div className="flex justify-between items-center mb-6">
               <h4 className="text-xl font-semibold text-gray-800">
-                Order Details
+                تفاصيل الطلب
               </h4>
               <button
                 onClick={closeModal}
@@ -387,20 +381,21 @@ const Orders = () => {
             {/* Customer Information */}
             <div className="mb-6">
               <h5 className="font-semibold text-gray-700 mb-[8px]">
-                Customer Information
+                معلومات العميل
               </h5>
               <p>
-                <strong>Name:</strong> {selectedOrder.address.firstName}{" "}
+                <strong>الاسم:</strong> {selectedOrder.address.firstName}{" "}
                 {selectedOrder.address.lastName}
               </p>
               <p>
-                <strong>Email:</strong> {selectedOrder.address.email}
+                <strong>البريد الإلكتروني:</strong>{" "}
+                {selectedOrder.address.email}
               </p>
               <p>
-                <strong>Phone:</strong> {selectedOrder.address.phone}
+                <strong>الهاتف:</strong> {selectedOrder.address.phone}
               </p>
               <p>
-                <strong>Address:</strong> {selectedOrder.address.street},{" "}
+                <strong>العنوان:</strong> {selectedOrder.address.street},{" "}
                 {selectedOrder.address.city}
               </p>
             </div>
@@ -408,38 +403,39 @@ const Orders = () => {
             {/* Order Summary */}
             <div className="mb-6">
               <h5 className="font-semibold text-gray-700 mb-[8px]">
-                Order Summary
+                ملخص الطلب
               </h5>
               <p>
-                <strong>Order Date:</strong>{" "}
+                <strong>تاريخ الطلب:</strong>{" "}
                 {new Date(selectedOrder.date).toDateString()}
               </p>
               <p>
-                <strong>Delivery Fee:</strong>{" "}
+                <strong>رسوم التوصيل:</strong>{" "}
                 {selectedOrder.delivery_fee.toFixed(2)}
                 <span className="currency">{currency}</span>
               </p>
               <p>
-                <strong>Discount:</strong> {selectedOrder.discount.toFixed(2)}
+                <strong>الخصم:</strong> {selectedOrder.discount.toFixed(2)}
                 <span className="currency">{currency}</span>
               </p>
               <p>
-                <strong>Total Amount:</strong> {selectedOrder.amount.toFixed(2)}
+                <strong>المبلغ الإجمالي:</strong>{" "}
+                {selectedOrder.amount.toFixed(2)}
                 <span className="currency">{currency}</span>
               </p>
             </div>
 
             {/* Items Table */}
             <div className="mb-[24px]">
-              <h5 className="font-semibold text-gray-700 mb-[8px]">Items</h5>
+              <h5 className="font-semibold text-gray-700 mb-[8px]">المنتجات</h5>
               <table className="min-w-full border border-gray-300 mt-[8px] rounded-lg">
                 <thead className="bg-gray-200">
                   <tr>
-                    {["Item Name", "Size", "Quantity", "Price"].map(
+                    {["اسم المنتج", "الحجم", "الكمية", "السعر"].map(
                       (header) => (
                         <th
                           key={header}
-                          className="px-[12px] py-[10px] border text-left"
+                          className="px-[12px] py-[10px] border text-right"
                         >
                           {header}
                         </th>
@@ -482,7 +478,7 @@ const Orders = () => {
                 onClick={closeModal}
                 className="bg-black text-white px-[12px] py-[8px] rounded-lg hover:opacity-70 transition duration=200"
               >
-                Close
+                إغلاق
               </button>
             </div>
           </div>
@@ -493,10 +489,10 @@ const Orders = () => {
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-[1100]">
           <div className="bg-white p-[24px] rounded-lg w-full max-w-md shadow-lg">
             <h4 className="text-xl font-semibold text-gray-800 mb-[16px]">
-              Write a Review
+              اكتب تقييمك
             </h4>
             <label className="block mb-2">
-              <span className="text-gray-700">Rating</span>
+              <span className="text-gray-700">التقييم</span>
               <input
                 type="number"
                 value={review.rating}
@@ -506,11 +502,11 @@ const Orders = () => {
                 min="1"
                 max="5"
                 className="block w-full mt-1 border-gray-400 border rounded-md shadow-sm focus:border-gray-500 p-2"
-                placeholder="Rating (1-5)"
+                placeholder="التقييم (1-5)"
               />
             </label>
             <label className="block mb-2">
-              <span className="text-gray-700">Comment</span>
+              <span className="text-gray-700">التعليق</span>
               <textarea
                 value={review.comment}
                 onChange={(e) =>
@@ -518,7 +514,7 @@ const Orders = () => {
                 }
                 rows="4"
                 className="block w-full mt-1 border-gray-400 border rounded-md shadow-sm focus:border-gray-500 p-2"
-                placeholder="Write your review"
+                placeholder="اكتب تعليقك"
               ></textarea>
             </label>
             <div className="flex justify-end mt-[16px]">
@@ -528,13 +524,13 @@ const Orders = () => {
                 className="bg-white text-black border px-[12px] py-[8px] rounded-lg mr-[8px] 
                 border-black hover:bg-black hover:text-white transition duration=200"
               >
-                Submit Review
+                إرسال التقييم
               </button>
               <button
                 onClick={closeReviewModal}
                 className="bg-black text-white px-[12px] py-[8px] rounded-lg hover:opacity-70 transition duration=200"
               >
-                Cancel
+                إلغاء
               </button>
             </div>
           </div>
@@ -546,13 +542,13 @@ const Orders = () => {
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-[1100]">
           <div className="bg-white p-[24px] rounded-lg w-full max-w-md shadow-lg">
             <h4 className="text-xl font-semibold text-gray-800 mb-[16px]">
-              Your Rating
+              تقييمك
             </h4>
             <p>
-              <strong>Rating:</strong> {userReviews[selectedOrder].rating}
+              <strong>التقييم:</strong> {userReviews[selectedOrder].rating}
             </p>
             <p>
-              <strong>Comment:</strong> {userReviews[selectedOrder].comment}
+              <strong>التعليق:</strong> {userReviews[selectedOrder].comment}
             </p>
 
             {/* Close Button */}
@@ -562,7 +558,7 @@ const Orders = () => {
                 className="bg-black text-white px-[12px] py-[8px] rounded-lg hover:opacity-70 transition duration=200"
               >
                 {" "}
-                Close
+                إغلاق
               </button>
             </div>
           </div>

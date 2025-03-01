@@ -3,7 +3,6 @@ import { ShopContext } from "../context/ShopContext";
 import Title from "../components/Title";
 import { assets } from "../assets/frontend_assets/assets";
 import { toast } from "react-toastify";
-// import toast from "react-hot-toast";
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
 
@@ -26,7 +25,7 @@ const Cart = () => {
     for (const itemId in cartItems) {
       for (const size in cartItems[itemId]) {
         if (cartItems[itemId][size] > 0) {
-          const color = cartItems[itemId][size].color || "White";
+          const color = cartItems[itemId][size].color || "أبيض";
           tempData.push({
             _id: itemId,
             size: size,
@@ -40,7 +39,7 @@ const Cart = () => {
   }, [cartItems, products]);
 
   const successDeleteToast = () => {
-    toast.success("Item deleted");
+    toast.success("تم حذف العنصر");
   };
 
   // Memoized delete confirmation handler
@@ -49,7 +48,7 @@ const Cart = () => {
       toast(
         ({ closeToast }) => (
           <div>
-            <p>Are you sure you want to delete this item?</p>
+            <p>هل أنت متأكد أنك تريد حذف هذا العنصر؟</p>
             <div className="flex gap-3 mt-3">
               <button
                 onClick={() => {
@@ -59,13 +58,13 @@ const Cart = () => {
                 }}
                 className="bg-red-500 text-white px-3 py-1 rounded"
               >
-                Yes
+                نعم
               </button>
               <button
                 onClick={() => closeToast()}
                 className="bg-gray-300 px-3 py-1 rounded"
               >
-                Cancel
+                إلغاء
               </button>
             </div>
           </div>
@@ -77,34 +76,40 @@ const Cart = () => {
   );
 
   return (
-    <div className="container mx-auto px-4 sm:px-8">
+    <div className="container mx-auto px-4 sm:px-8" dir="rtl">
+      {" "}
+      {/* Added RTL direction */}
       {/* Header */}
       <header className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-6">
-        <Title text1="Your" text2="Cart" />
+        <Title text1="عربة" text2="التسوق" /> {/* Translated title */}
       </header>
-
       {/* Empty Cart State */}
       {cartData.length === 0 ? (
         <div className="flex flex-col items-center mt-10 text-center">
           <img
             src={assets.empty_cart_icon}
-            alt="Empty Cart"
+            alt="عربة فارغة"
             className="w-20 h-20 sm:w-24 sm:h-24 mb-4"
           />
-          <p className="text-sm sm:text-lg text-gray-600">Your cart is empty</p>
+          <p className="text-sm sm:text-lg text-gray-600">
+            عربة التسوق الخاصة بك فارغة
+          </p>{" "}
+          {/* Translated empty cart message */}
           <div className="mt-4 flex gap-2">
             <Link
               to="/"
               className="bg-white border border-gray-400 text-black hover:bg-black hover:text-white px-3 py-2 rounded-md transition duration-300 text-sm sm:text-base"
             >
-              Home
-            </Link>
+              الرئيسية
+            </Link>{" "}
+            {/* Translated home button */}
             <Link
               to="/collection"
               className="bg-white border border-gray-400 text-black hover:bg-black hover:text-white px-3 py-2 rounded-md transition duration-300 text-sm sm:text-base"
             >
-              Collection
-            </Link>
+              المجموعات
+            </Link>{" "}
+            {/* Translated collection button */}
           </div>
         </div>
       ) : (
@@ -140,10 +145,10 @@ const Cart = () => {
                     </Link>
                     <p className="text-gray-600 text-sm sm:text-base">
                       {displayPrice}
-                      <span className="currency">{currency}</span>
+                      <span className="currency mr-1">{currency}</span>
                     </p>
                     <p className="text-xs sm:text-sm font-medium mt-2">
-                      Size:{" "}
+                      المقاس: {/* Translated size label */}
                       <span className="px-2 bg-white text-black border border-gray-400 rounded-md">
                         {item?.size}
                       </span>
@@ -160,11 +165,12 @@ const Cart = () => {
                         updateQuantity(item._id, item.size, item.quantity - 1)
                       }
                       disabled={item.quantity <= 1}
-                      className={`bg-white text-black border border-gray-400 px-3 py-1 rounded-md transition duration-200 ease-in-out text-xs sm:text-sm ${
-                        item.quantity <= 1
-                          ? "opacity-50 cursor-not-allowed"
-                          : "hover:bg-black hover:text-white"
-                      }`}
+                      className={`bg-white text-black border border-gray-400 px-3 
+                        py-1 rounded-md transition duration-200 ease-in-out text-xs sm:text-sm ${
+                          item.quantity <= 1
+                            ? "opacity-50 cursor-not-allowed"
+                            : "hover:bg-black hover:text-white"
+                        }`}
                     >
                       -
                     </button>
@@ -181,7 +187,8 @@ const Cart = () => {
                       onClick={() =>
                         updateQuantity(item._id, item.size, item.quantity + 1)
                       }
-                      className="bg-white text-black border border-gray-400 px-3 py-1 rounded-md hover:bg-black hover:text-white transition duration-200 ease-in-out text-xs sm:text-sm"
+                      className="bg-white text-black border border-gray-400 px-3 py-1 rounded-md 
+                      hover:bg-black hover:text-white transition duration-200 ease-in-out text-xs sm:text-sm"
                     >
                       +
                     </button>
@@ -190,7 +197,7 @@ const Cart = () => {
                   {/* Delete Icon */}
                   <img
                     src={assets.bin_icon}
-                    alt="Delete Item"
+                    alt="حذف العنصر"
                     className="w-5 sm:w-6 cursor-pointer hover:scale-110 duration-200"
                     onClick={() => showDeleteConfirmation(item._id, item.size)}
                   />
@@ -200,12 +207,13 @@ const Cart = () => {
           })}
         </div>
       )}
-
       {/* Cart Summary */}
       {cartData.length > 0 && (
         <div className="mt-8">
           <div className="rounded-lg shadow-md p-4 w-full sm:w-[400px] mx-auto">
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<div>جار التحميل...</div>}>
+              {" "}
+              {/* Translated loading text */}
               <CartTotal
                 applyPromoCode={() => {}}
                 discount={0}
@@ -218,8 +226,9 @@ const Cart = () => {
                 onClick={() => navigate("/place-order")}
                 className="bg-white border border-gray-400 text-black text-sm sm:text-base px-6 py-2 hover:bg-black hover:text-white transition duration-300 ease-in-out rounded-md w-full"
               >
-                PROCEED TO CHECKOUT
-              </button>
+                المتابعة إلى الدفع
+              </button>{" "}
+              {/* Translated checkout button */}
             </div>
           </div>
         </div>

@@ -42,7 +42,7 @@ const Product = () => {
     toast(
       ({ closeToast }) => (
         <div>
-          <p>Are you sure you want to delete this review?</p>
+          <p>هل أنت متأكد أنك تريد حذف هذا التقييم؟</p>
           <div className="flex gap-3 mt-3">
             <button
               onClick={() => {
@@ -51,13 +51,13 @@ const Product = () => {
               }}
               className="bg-red-500 text-white px-3 py-1 rounded"
             >
-              Yes
+              نعم
             </button>
             <button
               onClick={() => closeToast()}
               className="bg-gray-300 px-3 py-1 rounded"
             >
-              No
+              لا
             </button>
           </div>
         </div>
@@ -108,7 +108,7 @@ const Product = () => {
   const handleSubmitReview = async (e) => {
     e.preventDefault();
     if (!token) {
-      toast.warning("Please login first");
+      toast.warning("يرجى تسجيل الدخول أولاً");
       return;
     }
     try {
@@ -122,7 +122,7 @@ const Product = () => {
       fetchReviews();
       setRating(1);
       setComment("");
-      toast.success("Review submitted successfully");
+      toast.success("تم إرسال التقييم بنجاح");
     } catch (error) {
       toast.error(error.message);
     } finally {
@@ -139,7 +139,7 @@ const Product = () => {
           headers: { token },
         }
       );
-      toast.success("Review deleted successfully");
+      toast.success("تم حذف التقييم بنجاح");
       fetchReviews();
     } catch (error) {
       toast.error(error.message);
@@ -161,7 +161,7 @@ const Product = () => {
   };
 
   const loginFirst = () => {
-    toast.error("Please login first");
+    toast.error("يرجى تسجيل الدخول أولاً");
   };
 
   if (loading) {
@@ -177,7 +177,10 @@ const Product = () => {
   }
 
   return (
-    <div className="pt-10 transition-opacity ease-in duration-500 opacity-100 px-4 sm:px-6 md:px-10">
+    <div
+      className="pt-10 transition-opacity ease-in duration-500 opacity-100 px-4 sm:px-6 md:px-10"
+      dir="rtl"
+    >
       {/* Product Data */}
       <div className="flex flex-col gap-12 sm:flex-row">
         {/* Product Image */}
@@ -241,7 +244,7 @@ const Product = () => {
                   {productData.price}
                 </span>
                 <span className=" ml-2 text-red-600 text-lg">
-                  ({discountRate.toFixed(1)}% discount)
+                  (خصم {discountRate.toFixed(1)}%)
                 </span>
               </>
             )}
@@ -251,7 +254,7 @@ const Product = () => {
           </p>
           {/* Size Selection */}
           <div className="flex flex-col gap-4 my-8">
-            <p className="text-lg font-semibold">Select Size</p>
+            <p className="text-lg font-semibold">اختر المقاس</p>
             <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-3">
               {productData.sizes.map((item, index) => (
                 <button
@@ -278,14 +281,14 @@ const Product = () => {
                 className="bg-white hover:bg-black hover:text-white text-black border border-gray-400 py-3 px-8 w-full 
                rounded-md active:bg-gray-700 transition duration-300"
               >
-                Add to Cart
+                أضف إلى السلة
               </button>
               {getCartCount() > 0 && (
                 <Link
                   className="flex justify-end items-center text-gray-500 hover:text-black transition duration-300 "
                   to={"/cart"}
                 >
-                  View full cart <span className="text-xl ml-1">&rarr;</span>
+                  عرض السلة <span className="text-xl mr-1">&larr;</span>
                 </Link>
               )}
             </div>
@@ -294,14 +297,14 @@ const Product = () => {
               onClick={loginFirst}
               className="bg-black hover:opacity-70 text-white py-3 px-8 rounded-md active:bg-gray-700 md:w-[350px] w-full"
             >
-              Add to Cart
+              أضف إلى السلة
             </button>
           )}
           <hr className="mt-8 sm:w-4/5" />
           <div className="text-sm text-gray-500 mt-5 flex flex-col gap-1">
-            <p>100% Original product.</p>
-            <p>Cash on delivery is available on this product.</p>
-            <p>Easy return and exchange policy within 7 days.</p>
+            <p>منتج أصلي 100%.</p>
+            <p>الدفع عند الاستلام متاح لهذا المنتج.</p>
+            <p>سياسة استرجاع واستبدال سهلة خلال 7 أيام.</p>
           </div>
         </div>
       </div>
@@ -311,7 +314,7 @@ const Product = () => {
         {/* Review List Section */}
         <div className="flex-1 w-full">
           <h2 className="font-semibold text-xl flex items-center gap-2 mb-4">
-            Reviews ({reviews.length})
+            التقييمات ({reviews.length})
             <span className="ml-2 text-yellow-500">
               {calculateAverageRating(reviews)} ★
             </span>
@@ -345,7 +348,7 @@ const Product = () => {
                         <div className="flex items-center gap-2 justify-between w-full">
                           <p className="text-base font-semibold">
                             {currentUser?._id === review.userId?._id
-                              ? "Your review"
+                              ? "تقييمك"
                               : review.userId.firstName}
                           </p>
                           <p className="text-gray-500 text-xs">
@@ -400,7 +403,7 @@ const Product = () => {
               ))
             ) : (
               <p className="text-gray-500 mt-4">
-                No reviews available for this product.
+                لا توجد تقييمات متاحة لهذا المنتج.
               </p>
             )}
           </div>
@@ -409,14 +412,14 @@ const Product = () => {
         {/* Review Form Section */}
         {!userReview && token && (
           <div className="w-full lg:w-[380px]">
-            <h3 className="font-semibold text-xl mb-4">Write a Review</h3>
+            <h3 className="font-semibold text-xl mb-4">اكتب تقييمًا</h3>
             <form
               onSubmit={handleSubmitReview}
               className="flex flex-col gap-4 p-6 border border-gray-200 rounded-lg bg-white shadow-md"
             >
               <div>
                 <label htmlFor="rating" className="block text-sm font-medium">
-                  Rating: <span className="text-gray-500">min 1 - max 5</span>
+                  التقييم: <span className="text-gray-500">من 1 إلى 5</span>
                 </label>
                 <div className="flex items-center gap-1 mt-2">
                   {[...Array(5)].map((_, index) => (
@@ -442,13 +445,13 @@ const Product = () => {
 
               <div>
                 <label htmlFor="comment" className="block text-sm font-medium">
-                  Write your review:
+                  اكتب تقييمك:
                 </label>
                 <textarea
                   id="comment"
                   value={comment}
                   onChange={(e) => setComment(e.target.value)}
-                  placeholder="Describe your experience with this product."
+                  placeholder="صف تجربتك مع هذا المنتج."
                   required
                   className="border border-gray-400 rounded p-4 mt-2 w-full h-32 resize-none"
                 />
@@ -458,7 +461,7 @@ const Product = () => {
                 type="submit"
                 className="bg-white border border-gray-400 text-black py-3 px-6 rounded-md hover:bg-black hover:text-white duration-300 transition-all"
               >
-                Submit Review
+                إرسال التقييم
               </button>
             </form>
           </div>

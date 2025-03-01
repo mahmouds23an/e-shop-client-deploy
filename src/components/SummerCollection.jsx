@@ -33,14 +33,14 @@ const SummerCollection = () => {
   }
 
   return (
-    <div className="my-10">
+    <div className="my-10" dir="rtl">
       <div className="text-center py-8 text-3xl">
-        <Title text1={"SUMMER"} text2={"COLLECTION"} />
+        <Title text1={"مجموعة"} text2={"الصيف"} />
         <p className="w-3/4 m-auto text-xs sm:text-sm md:text-base text-gray-800">
-          Hurry up and check out our latest summer collection
+          أسرع واختار من أحدث مجموعة صيفية لدينا
           <Link to="/collection/summer">
-            <span className="text-gray-400 hover:underline hover:cursor-pointer hover:text-black ml-2 duration-200">
-              show more
+            <span className="text-gray-400 hover:underline hover:cursor-pointer hover:text-black mr-2 duration-200">
+              عرض المزيد
             </span>
           </Link>
         </p>

@@ -37,11 +37,12 @@ const NewArrival = () => {
   }
 
   return (
-    <div className="my-10">
+    <div className="my-10" dir="rtl">
       <div className="text-center py-8 text-3xl">
-        <Title text1={"NEW"} text2={"ARRIVALS"} />
+        {/* Translated Title to Arabic */}
+        <Title text1={"المنتجات الواصلة"} text2={"حديثا"} />
         <p className="w-3/4 m-auto text-xs sm:text-sm md:text-base text-gray-500">
-          Shop the latest collection and discover your next favorite items
+          تسوق أحدث المجموعات واكتشف العناصر المفضلة لديك والواصلة حديثا
         </p>
       </div>
       {/* Rendering Products */}
@@ -58,7 +59,7 @@ const NewArrival = () => {
             />
           ))
         ) : (
-          <p>No new products available.</p>
+          <p>لا توجد منتجات جديدة متاحة.</p>
         )}
       </div>
       <div className="text-center mt-8">
@@ -66,7 +67,7 @@ const NewArrival = () => {
           onClick={() => navigate("/")}
           className="px-4 py-2 bg-black text-white rounded hover:opacity-80 transition duration-200"
         >
-          Go Back to Home
+          العودة إلى الصفحة الرئيسية
         </button>
       </div>
     </div>

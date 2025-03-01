@@ -27,7 +27,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
         className="px-2 py-1 rounded-lg bg-white text-gray-700 border 
         border-gray-200 hover:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        <ChevronLeft />
+        <ChevronRight />
       </button>
 
       {startPage > 1 && (
@@ -82,7 +82,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
         className="px-2 py-1 rounded-lg bg-white text-gray-700 border 
         border-gray-200 hover:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        <ChevronRight />
+        <ChevronLeft />
       </button>
     </div>
   );

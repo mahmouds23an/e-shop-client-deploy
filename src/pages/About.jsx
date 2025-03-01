@@ -1,12 +1,14 @@
 import { assets } from "../assets/frontend_assets/assets";
 import FeedBackBox from "../components/FeedBackBox";
-import Title from "../components/Title";
 import auraLogoAbout from "../assets/frontend_assets/s23anNavWhite.png";
-import { ArrowRight, CheckCircle2, Leaf, HeartHandshake } from "lucide-react";
+import { CheckCircle2, Leaf, HeartHandshake } from "lucide-react";
 
 const About = () => {
   return (
-    <div className="min-h-screen py-20 px-4 sm:px-6 lg:px-8 -mb-44 -mt-11">
+    <div
+      className="min-h-screen py-20 px-4 sm:px-6 lg:px-8 -mb-44 -mt-11"
+      dir="rtl"
+    >
       {/* Hero Section */}
       <div className="max-w-7xl mx-auto text-center mb-16">
         <div className="relative mb-8 group">
@@ -23,8 +25,8 @@ const About = () => {
               className="w-96 mb-6 animate-fade-in"
             />
             <p className="text-white text-xl max-w-2xl mx-auto px-4 leading-relaxed animate-slide-up">
-              Your trusted destination for premium cotton products, where
-              quality meets comfort in every thread.
+              وجهتك الموثوقة لمنتجات القطن الفاخرة، حيث الجودة تلتقي بالراحة في
+              كل خيط.
             </p>
           </div>
         </div>
@@ -35,80 +37,29 @@ const About = () => {
         <div className="md:w-1/2">
           <img
             src={assets.about_img}
-            className="w-full rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 hidden md:block object-cover h-[600px]"
+            className="w-full rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 hidden md:block object-cover h-[400px]"
             alt="Our Products"
           />
         </div>
         <div className="flex flex-col justify-center md:w-1/2 space-y-8">
           <div className="prose prose-lg">
             <p className="text-gray-700 leading-relaxed mb-6">
-              At Elsakaan Store, we believe that comfort and quality go hand in hand. Our
-              carefully crafted collection of underwear, socks, towels, and
-              textiles is designed to meet the needs of men, women, and children
-              alike.
+              في متجر السقعان، نؤمن بأن الراحة والجودة يسيران جنبًا إلى جنب.
+              مجموعة منتجاتنا المصممة بعناية من الملابس الداخلية والجوارب
+              والمناشف والمنسوجات مصممة لتلبية احتياجات الرجال والنساء والأطفال.
             </p>
             <p className="text-gray-700 leading-relaxed">
-              Using only the finest materials—100% cotton or a blend of 95%
-              cotton and 5% Lycra—we ensure that every product offers
-              unparalleled softness, breathability, and durability.
+              باستخدام أفضل المواد - 100% قطن أو مزيج من 95% قطن و5% ليكرا -
+              نضمن أن كل منتج يوفر نعومة ومتانة لا مثيل لهم..
             </p>
-          </div>
-
-          {/* Lycra Section */}
-          <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center">
-              The Power of Lycra
-              <ArrowRight className="ml-2 h-5 w-5 text-blue-500" />
-            </h2>
-            <p className="text-gray-700 mb-6">
-              Lycra, also known as spandex or elastane, is a revolutionary
-              synthetic fiber that transforms ordinary garments into
-              extraordinary comfort wear.
-            </p>
-            <div className="grid grid-cols-1 gap-4">
-              {[
-                {
-                  title: "Enhanced Comfort",
-                  desc: "Perfect elasticity for unrestricted movement",
-                },
-                {
-                  title: "Shape Retention",
-                  desc: "Maintains garment form through countless washes",
-                },
-                {
-                  title: "Breathability",
-                  desc: "Natural ventilation with cotton blend technology",
-                },
-                {
-                  title: "Durability",
-                  desc: "Superior resistance to daily wear and tear",
-                },
-              ].map((item) => (
-                <div
-                  key={item.title}
-                  className="flex items-start space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors"
-                >
-                  <CheckCircle2 className="h-5 w-5 text-green-500 mt-1 flex-shrink-0" />
-                  <div>
-                    <h3 className="font-semibold text-gray-900">
-                      {item.title}
-                    </h3>
-                    <p className="text-gray-600">{item.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
 
           <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-8 rounded-2xl">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">
-              Our Mission
-            </h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">مهمتنا</h2>
             <p className="text-gray-700 leading-relaxed">
-              To set a new standard in the textile industry by offering
-              sustainable, high-quality products that prioritize both comfort
-              and style. We aim to create a seamless shopping experience where
-              customers can trust the quality of every purchase.
+              نهدف إلى وضع معيار جديد في صناعة النسيج من خلال تقديم منتجات عالية
+              الجودة ومستدامة تعطي الأولوية للراحة والأناقة. نهدف إلى توفير
+              تجربة تسوق سلسة حيث يمكن للعملاء الوثوق بجودة كل عملية شراء.
             </p>
           </div>
         </div>
@@ -116,28 +67,24 @@ const About = () => {
 
       {/* Why Choose Aura */}
       <div className="max-w-7xl mx-auto mb-20">
-        <div className="text-center mb-12">
-          <Title text1="Why" text2="Choose Us" />
-        </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {[
             {
               icon: <CheckCircle2 className="h-8 w-8 text-blue-500" />,
-              title: "Quality Assurance",
-              description:
-                "Premium Egyptian cotton and cotton-blend fabrics ensuring superior comfort and durability.",
+              title: "ضمان الجودة",
+              description: "أقمشة قطنية مصرية فاخرة  تضمن راحة ومتانة فائقة.",
             },
             {
               icon: <Leaf className="h-8 w-8 text-green-500" />,
-              title: "Sustainability",
+              title: "الاستدامة",
               description:
-                "Committed to eco-friendly practices and ethical manufacturing processes.",
+                "ملتزمون بممارسات صديقة للبيئة وعمليات تصنيع أخلاقية.",
             },
             {
               icon: <HeartHandshake className="h-8 w-8 text-purple-500" />,
-              title: "Exceptional Service",
+              title: "خدمة استثنائية",
               description:
-                "Dedicated support team always ready to assist with any inquiries.",
+                "فريق دعم مخصص دائمًا على استعداد لمساعدتك في أي استفسارات.",
             },
           ].map((feature) => (
             <div

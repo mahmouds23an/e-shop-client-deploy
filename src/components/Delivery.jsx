@@ -15,7 +15,10 @@ const Delivery = () => {
   ];
 
   return (
-    <div className="min-h-screen py-16 px-4 sm:px-6 lg:px-8 -mt-11 -mb-44">
+    <div
+      className="min-h-screen py-16 px-4 sm:px-6 lg:px-8 -mt-11 -mb-44"
+      dir="rtl"
+    >
       {/* Hero Section */}
       <div className="max-w-7xl mx-auto text-center mb-12">
         <div className="relative mb-6">
@@ -27,7 +30,7 @@ const Delivery = () => {
           <div className="absolute inset-0 bg-black opacity-40 rounded-2xl" />
           <div className="absolute inset-0 flex items-center justify-center flex-col gap-2">
             <h1 className="text-4xl md:text-5xl font-bold text-white">
-              Delivery Information
+              معلومات التوصيل
             </h1>
             <div className="flex items-center gap-3 bg-white/90 px-4 py-2 rounded-full">
               <img
@@ -36,15 +39,16 @@ const Delivery = () => {
                 className="w-8 h-8 object-contain"
               />
               <span className="text-gray-800 font-semibold">
-                Delivered by Egypt Post (البريد المصري)
+                التوصيل عن طريق البريد المصري
               </span>
             </div>
           </div>
         </div>
         <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-          We partner with Egypt Post (البريد المصري) to provide reliable
-          delivery services across Egypt. Check our delivery fees for different
-          locations below.
+          نتعاون مع البريد المصري لتوفير خدمات توصيل موثوقة في جميع أنحاء مصر.
+        </p>
+        <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+          تحقق من رسوم التوصيل للمواقع المختلفة أدناه.
         </p>
       </div>
 
@@ -53,9 +57,9 @@ const Delivery = () => {
         <div className="bg-white rounded-xl shadow-lg overflow-hidden">
           <div className="bg-[#003366] py-4 px-5 flex items-center justify-between">
             <div>
-              <h2 className="text-xl font-bold text-white">Delivery Fees</h2>
+              <h2 className="text-xl font-bold text-white">رسوم التوصيل</h2>
               <p className="text-white/80 text-sm mt-1">
-                Egypt Post Official Delivery Rates
+                أسعار التوصيل الرسمية للبريد المصري
               </p>
             </div>
             <img
@@ -80,7 +84,7 @@ const Delivery = () => {
                         <span className="text-sm text-gray-800">{city}</span>
                       </div>
                       <span className="inline-flex items-center px-3 py-0.5 text-sm rounded-full bg-[#003366]/10 text-[#003366] font-medium">
-                        {fee} EGP
+                        {fee} جنيه
                       </span>
                     </div>
                   ))}
@@ -101,9 +105,11 @@ const Delivery = () => {
               className="w-6 h-6"
             />
           </div>
-          <h3 className="text-lg font-semibold mb-1.5">Nationwide Coverage</h3>
+          <h3 className="text-lg font-semibold mb-1.5">
+            تغطية في جميع أنحاء مصر
+          </h3>
           <p className="text-gray-600 text-sm">
-            Egypt Post&apos;s extensive network reaches every corner of Egypt
+            شبكة البريد المصري تغطي كل زاوية في مصر
           </p>
         </div>
 
@@ -115,9 +121,9 @@ const Delivery = () => {
               className="w-6 h-6"
             />
           </div>
-          <h3 className="text-lg font-semibold mb-1.5">Official Tracking</h3>
+          <h3 className="text-lg font-semibold mb-1.5">تتبع الطلبات</h3>
           <p className="text-gray-600 text-sm">
-            Track your package through Egypt Post&apos;s official system
+            تتبع طلبك من خلال موقعنا بالتعاون مع نظام البريد المصري
           </p>
         </div>
 
@@ -129,10 +135,9 @@ const Delivery = () => {
               className="w-6 h-6"
             />
           </div>
-          <h3 className="text-lg font-semibold mb-1.5">Trusted Service</h3>
+          <h3 className="text-lg font-semibold mb-1.5">خدمة موثوقة</h3>
           <p className="text-gray-600 text-sm">
-            Egypt&apos;s official postal service with over 150 years of
-            experience
+            خدمة بريد مصر الرسمية مع أكثر من 150 عامًا من الخبرة
           </p>
         </div>
       </div>
@@ -141,11 +146,11 @@ const Delivery = () => {
       <div className="max-w-2xl mx-auto mt-12 text-center">
         <div className="bg-white p-6 rounded-xl shadow-lg">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <h2 className="text-xl font-bold">Need Help?</h2>
+            <h2 className="text-xl font-bold">هل تحتاج إلى مساعدة؟</h2>
           </div>
           <p className="text-gray-600 text-sm mb-5">
-            If you have any questions about our delivery service through Egypt
-            Post, our support team is ready to assist you 24/7.
+            إذا كان لديك أي أسئلة حول خدمة التوصيل عبر البريد المصري، فريق الدعم
+            لدينا جاهز لمساعدتك .
           </p>
           <div className="flex justify-center gap-4">
             <a
@@ -160,7 +165,7 @@ const Delivery = () => {
                   alt="WhatsApp"
                   className="w-5 h-5"
                 />
-                Contact Support
+                اتصل بالدعم
               </button>
             </a>
           </div>

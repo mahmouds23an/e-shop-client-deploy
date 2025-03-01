@@ -57,7 +57,7 @@ const PlaceOrder = () => {
     email: currentUser?.email || "",
     street: "",
     city: "",
-    country: "Egypt",
+    country: "مصر", // Translated to Arabic
     phone: "",
   });
 
@@ -70,7 +70,7 @@ const PlaceOrder = () => {
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     if (!validatePhoneNumber(formData.phone)) {
-      toast.error("Invalid phone number.");
+      toast.error("رقم الهاتف غير صحيح.");
       return;
     }
     try {
@@ -120,7 +120,7 @@ const PlaceOrder = () => {
                   { id: promo._id },
                   { headers: { token } }
                 );
-                toast.success("Promo code marked as used.");
+                toast.success("تم استخدام كود الخصم.");
               }
             }
 
@@ -189,7 +189,7 @@ const PlaceOrder = () => {
       try {
         const savedToken = token || localStorage.getItem("token");
         if (!savedToken) {
-          toast.error("Authentication token is missing.");
+          toast.error("رمز المصادقة مفقود.");
           return;
         }
         const response = await axios.all([
@@ -216,7 +216,7 @@ const PlaceOrder = () => {
 
   const applyPromoCode = (code) => {
     if (!code.trim()) {
-      toast.error("Please enter a promo code.");
+      toast.error("الرجاء إدخال كود الخصم.");
       return;
     }
 
@@ -226,7 +226,7 @@ const PlaceOrder = () => {
 
       setDiscount(discountAmount);
       setAppliedPromoCode(code);
-      toast.success(`First Order Promo applied! You saved 25%.`, {
+      toast.success(`تم تطبيق خصم الطلب الأول! وفرت 25%.`, {
         duration: 4000,
       });
       return;
@@ -241,7 +241,7 @@ const PlaceOrder = () => {
     );
 
     if (!promo) {
-      toast.error("Invalid promo code.", { duration: 4000 });
+      toast.error("كود الخصم غير صالح.", { duration: 4000 });
       setDiscount(0);
       setAppliedPromoCode("");
       return;
@@ -250,7 +250,7 @@ const PlaceOrder = () => {
     const discountAmount = (getCartAmount() * promo.discountPercentage) / 100;
     setDiscount(discountAmount);
     setAppliedPromoCode(code);
-    toast.success(`Promo code ${code} applied!`, { duration: 4000 });
+    toast.success(`تم تطبيق كود الخصم ${code}!`, { duration: 4000 });
   };
 
   if (!token) return <UnAuthorized />;
@@ -262,13 +262,15 @@ const PlaceOrder = () => {
     <form
       onSubmit={onSubmitHandler}
       className="max-w-7xl mx-auto md:px-4 md:py-8 py-2 -mb-28"
+      dir="rtl" // Added RTL direction
     >
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 border border-gray-400 rounded-md">
         {/* Delivery Information Section */}
         <div className="bg-white rounded-xl shadow-sm p-6">
           <div className="flex items-center gap-3 mb-6 border-b border-gray-400 pb-4">
             <Truck className="w-6 h-6 text-primary" />
-            <h2 className="text-2xl font-semibold">Delivery Information</h2>
+            <h2 className="text-2xl font-semibold">معلومات التوصيل</h2>{" "}
+            {/* Translated heading */}
           </div>
 
           <div className="space-y-6">
@@ -277,7 +279,10 @@ const PlaceOrder = () => {
               <div className="space-y-2">
                 <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
                   <User className="w-4 h-4" />
-                  First Name <span className={required}>{requiredVar}</span>
+                  الاسم الأول <span className={required}>
+                    {requiredVar}
+                  </span>{" "}
+                  {/* Translated label */}
                 </label>
                 <input
                   type="text"
@@ -293,7 +298,10 @@ const PlaceOrder = () => {
               <div className="space-y-2">
                 <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
                   <User className="w-4 h-4" />
-                  Last Name <span className={required}>{requiredVar}</span>
+                  الاسم الأخير <span className={required}>
+                    {requiredVar}
+                  </span>{" "}
+                  {/* Translated label */}
                 </label>
                 <input
                   type="text"
@@ -311,7 +319,9 @@ const PlaceOrder = () => {
             <div className="space-y-2">
               <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
                 <Mail className="w-4 h-4" />
-                Email Address <span className={required}>{requiredVar}</span>
+                البريد الإلكتروني{" "}
+                <span className={required}>{requiredVar}</span>{" "}
+                {/* Translated label */}
               </label>
               <input
                 type="email"
@@ -328,7 +338,8 @@ const PlaceOrder = () => {
             <div className="space-y-2">
               <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
                 <MapPin className="w-4 h-4" />
-                Street Address <span className={required}>{requiredVar}</span>
+                العنوان <span className={required}>{requiredVar}</span>{" "}
+                {/* Translated label */}
               </label>
               <input
                 type="text"
@@ -345,7 +356,8 @@ const PlaceOrder = () => {
               <div className="space-y-2 w-full md:w-[50%]">
                 <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
                   <Building2 className="w-4 h-4" />
-                  City <span className={required}>{requiredVar}</span>
+                  المدينة <span className={required}>{requiredVar}</span>{" "}
+                  {/* Translated label */}
                 </label>
                 <CitySelect
                   value={formData.city}
@@ -356,8 +368,9 @@ const PlaceOrder = () => {
 
               <div className="space-y-2 w-full md:w-[50%]">
                 <label className="text-sm font-medium text-gray-700">
-                  Country
-                </label>
+                  الدولة
+                </label>{" "}
+                {/* Translated label */}
                 <input
                   type="text"
                   name="country"
@@ -372,7 +385,8 @@ const PlaceOrder = () => {
             <div className="space-y-2">
               <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
                 <Phone className="w-4 h-4" />
-                Phone Number <span className={required}>{requiredVar}</span>
+                رقم الهاتف <span className={required}>{requiredVar}</span>{" "}
+                {/* Translated label */}
               </label>
               <input
                 type="tel"
@@ -388,12 +402,12 @@ const PlaceOrder = () => {
             <div className="space-y-2">
               <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
                 <Clipboard className="w-4 h-4" />
-                Order Notes (Optional)
+                ملاحظات الطلب (اختياري) {/* Translated label */}
               </label>
               <textarea
                 value={orderNote}
                 onChange={(e) => setOrderNote(e.target.value)}
-                placeholder="Any special instructions for your order?"
+                placeholder="هل لديك أي تعليمات خاصة لطلبك؟"
                 className="w-full px-4 py-2 border border-gray-400 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors h-24 resize-none"
               />
             </div>
@@ -405,7 +419,8 @@ const PlaceOrder = () => {
           <div className="bg-white rounded-xl shadow-sm p-6">
             <div className="flex items-center gap-3 mb-6 border-b border-gray-400 pb-4">
               <CreditCard className="w-6 h-6 text-primary" />
-              <h2 className="text-2xl font-semibold">Payment Details</h2>
+              <h2 className="text-2xl font-semibold">تفاصيل الدفع</h2>{" "}
+              {/* Translated heading */}
             </div>
 
             <CartTotal
@@ -418,7 +433,8 @@ const PlaceOrder = () => {
             <div className="mt-8 space-y-4">
               <div className="flex items-center gap-3">
                 <LucideLassoSelect className="w-6 h-6 text-primary" />
-                <h2 className="text-2xl font-semibold">Payment Methods</h2>
+                <h2 className="text-2xl font-semibold">طرق الدفع</h2>{" "}
+                {/* Translated heading */}
               </div>
 
               <div className="space-y-3">
@@ -438,7 +454,8 @@ const PlaceOrder = () => {
                     }`}
                   />
                   <CoinsIcon className="h-6 mx-4" />
-                  <span className="font-medium">Cash on Delivery</span>
+                  <span className="font-medium">الدفع عند الاستلام</span>{" "}
+                  {/* Translated label */}
                 </div>
 
                 <div className="flex items-center p-4 border border-gray-400 rounded-lg opacity-50 cursor-not-allowed">
@@ -446,7 +463,7 @@ const PlaceOrder = () => {
                   <CreditCardIcon className="h-6 mx-4" />
                   <img className="h-6 mx-4" src={assets.paymob} alt="" />
                   <span className="text-sm text-gray-800">
-                    &quot; Coming Soon &quot;
+                    &quot; قريبًا &quot; {/* Translated label */}
                   </span>
                 </div>
               </div>
@@ -464,12 +481,13 @@ const PlaceOrder = () => {
               `}
             >
               {loading
-                ? "Processing..."
-                : `Place Order ( Total ${
+                ? "جار الطلب..."
+                : `تأكيد الطلب ( الإجمالي ${
                     Number(getCartAmount()) +
                     (Number(delivery_fee) || 0) -
                     (Number(discount) || 0)
-                  }.00 EGP )`}
+                  }.00 جنيه )`}{" "}
+              {/* Translated button text */}
             </button>
           </div>
         </div>
