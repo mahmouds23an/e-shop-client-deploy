@@ -88,7 +88,7 @@ const Navbar = () => {
         <img src={auraLogoNavNew} alt="Logo" className="w-32 h-14" />
       </Link>
 
-      <ul className="hidden lg:flex gap-5 text-sm text-gray-700">
+      <ul className="hidden lg:flex gap-5 text-xl text-gray-700">
         <NavLink to="/" className="uppercase text-gray-400 hover:text-black">
           الرئيسية
         </NavLink>
@@ -96,7 +96,7 @@ const Navbar = () => {
           to="/collection"
           className="uppercase text-gray-400 hover:text-black"
         >
-          المجموعات
+          المنتجات
         </NavLink>
         <NavLink
           to="/about"
@@ -213,7 +213,7 @@ const Navbar = () => {
           }
         >
           <FaThLarge className="text-2xl" />
-          <span className="mt-1">المجموعات</span>
+          <span className="mt-1">المنتجات</span>
         </NavLink>
         <NavLink
           to="/about"
